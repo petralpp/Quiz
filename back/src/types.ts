@@ -1,5 +1,6 @@
 export interface Quiz {
   category: string;
+  subcategory: string;
   name: string;
   description: string;
   questions: object[];

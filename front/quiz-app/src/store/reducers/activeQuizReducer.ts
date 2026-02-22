@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { Quiz } from "../types";
+import type { Quiz } from "../../types";
 
 type State = {
   isActive: boolean;
@@ -11,6 +11,7 @@ const initialState: State = {
   quiz: {
     _id: "",
     category: "",
+    subcategory: "",
     name: "",
     description: "",
     questions: [],

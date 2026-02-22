@@ -1,4 +1,4 @@
-import { useAppSelector } from "../hooks";
+import { useAppSelector } from "../store/hooks";
 import type { CorrectAnswer } from "../types";
 import { CheckCircleIcon } from "@heroicons/react/16/solid";
 import { XCircleIcon } from "@heroicons/react/16/solid";

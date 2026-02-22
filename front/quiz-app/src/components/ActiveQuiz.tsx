@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { useAppSelector, useAppDispatch } from "../hooks";
+import { useAppSelector, useAppDispatch } from "../store/hooks";
 import type { Quiz } from "../types";
-import { endQuiz } from "../reducers/activeQuizReducer";
-import { resetAnswers } from "../reducers/answersReducer";
+import { endQuiz } from "../store/reducers/activeQuizReducer";
+import { resetAnswers } from "../store/reducers/answersReducer";
 import CurrentQuestion from "./CurrentQuestion";
 import Result from "./Result";
 

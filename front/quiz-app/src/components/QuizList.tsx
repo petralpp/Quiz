@@ -1,7 +1,13 @@
 import type { Quiz } from "../types";
-import { useAppSelector, useAppDispatch } from "../hooks";
-import { setSelectedQuiz } from "../reducers/selectedQuizReducer";
+import { useAppSelector, useAppDispatch } from "../store/hooks";
+import { setSelectedQuiz } from "../store/reducers/selectedQuizReducer";
 import CategorySection from "./CategorySection";
+import Navigation from "./Navigation";
+import { useState } from "react";
+import {
+  selectEducationQuizzes,
+  selectEntertainmentQuizzes
+} from "../store/selectors";
 
 interface Props {
   toggleOverlay(): void;
@@ -9,10 +15,9 @@ interface Props {
 
 const QuizList = ({ toggleOverlay }: Props) => {
   const dispatch = useAppDispatch();
-  const entertainmentList: Quiz[] = useAppSelector(
-    (state) => state.entertainmentQuizzes
-  );
-  const educationList: Quiz[] = useAppSelector((state) => state.educationQuizzes);
+  const entertainmentList: Quiz[] = useAppSelector(selectEntertainmentQuizzes);
+  const educationList: Quiz[] = useAppSelector(selectEducationQuizzes);
+  const [category, setCategory] = useState<string>("Education");
 
   const handleClick = (name: string, category: string) => {
     let quiz = null;
@@ -25,6 +30,7 @@ const QuizList = ({ toggleOverlay }: Props) => {
       dispatch(
         setSelectedQuiz({
           category: quiz.category,
+          subcategory: quiz.subcategory,
           name: quiz.name,
           description: quiz.description,
           questions: quiz.questions.length
@@ -35,18 +41,10 @@ const QuizList = ({ toggleOverlay }: Props) => {
   };
 
   return (
-    <div className="h-full grid grid-cols-2 gap-4 py-4 px-4">
-      <CategorySection
-        quizList={entertainmentList}
-        category="Entertainment"
-        handleClick={handleClick}
-      />
-      <CategorySection
-        quizList={educationList}
-        category="Education"
-        handleClick={handleClick}
-      />
-    </div>
+    <>
+      <Navigation category={category} setCategory={setCategory} />
+      <CategorySection category={category} handleClick={handleClick} />
+    </>
   );
 };
 

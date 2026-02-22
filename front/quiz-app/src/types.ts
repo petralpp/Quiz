@@ -1,6 +1,7 @@
 export interface Quiz {
   _id: string;
   category: string;
+  subcategory: string;
   name: string;
   description: string;
   questions: QuizQuestions[];
@@ -25,6 +26,7 @@ export interface CorrectAnswer {
 
 export interface QuizDescription {
   category: string;
+  subcategory: string;
   name: string;
   description: string;
   questions: number;

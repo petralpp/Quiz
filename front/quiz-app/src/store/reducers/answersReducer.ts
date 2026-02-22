@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { Dispatch } from "@reduxjs/toolkit";
-import quizService from "../services/quizService";
-import type { CorrectAnswer } from "../types";
+import quizService from "../../services/quizService";
+import type { CorrectAnswer } from "../../types";
 
 type State = {
   playerAnswers: string[];

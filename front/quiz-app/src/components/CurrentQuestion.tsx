@@ -5,9 +5,9 @@ import {
   type FormEvent,
   useEffect
 } from "react";
-import { useAppSelector, useAppDispatch } from "../hooks";
+import { useAppSelector, useAppDispatch } from "../store/hooks";
 import type { Quiz } from "../types";
-import { setPlayerAnswer, getRightAnswers } from "../reducers/answersReducer";
+import { setPlayerAnswer, getRightAnswers } from "../store/reducers/answersReducer";
 
 interface Props {
   setQuizState: Dispatch<SetStateAction<boolean>>;

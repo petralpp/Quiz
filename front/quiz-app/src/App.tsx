@@ -6,16 +6,18 @@ import QuizList from "./components/QuizList";
 import ActiveQuiz from "./components/ActiveQuiz";
 import QuizOVerlay from "./components/QuizOverlay";
 
-import { useAppSelector, useAppDispatch } from "./hooks";
-import { setEducationList } from "./reducers/educationReducer";
-import { setEntertainmentList } from "./reducers/entertainmentReducer";
-import { startQuiz } from "./reducers/activeQuizReducer";
+import { useAppSelector, useAppDispatch } from "./store/hooks";
+import { setEducationList } from "./store/reducers/educationReducer";
+import { setEntertainmentList } from "./store/reducers/entertainmentReducer";
+import { startQuiz } from "./store/reducers/activeQuizReducer";
+import {
+  selectEducationQuizzes,
+  selectEntertainmentQuizzes
+} from "./store/selectors";
 
 function App() {
-  const entertainmentList: Quiz[] = useAppSelector(
-    (state) => state.entertainmentQuizzes
-  );
-  const educationList: Quiz[] = useAppSelector((state) => state.educationQuizzes);
+  const entertainmentList: Quiz[] = useAppSelector(selectEntertainmentQuizzes);
+  const educationList: Quiz[] = useAppSelector(selectEducationQuizzes);
   const selectedQuiz: QuizDescription = useAppSelector(
     (state) => state.selectedQuiz
   );
@@ -70,7 +72,7 @@ function App() {
       {isActive ? (
         <ActiveQuiz />
       ) : (
-        <div className="h-[70vh]">
+        <div className="">
           <QuizList toggleOverlay={toggleOverlay} />
           <QuizOVerlay
             isOpen={overlayIsOpen}

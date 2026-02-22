@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { QuizDescription } from "../types";
+import type { QuizDescription } from "../../types";
 
 const initialState: QuizDescription = {
   category: "",
+  subcategory: "",
   name: "",
   description: "",
   questions: 0

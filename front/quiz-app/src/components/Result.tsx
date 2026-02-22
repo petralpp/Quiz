@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { CorrectAnswer } from "../types";
 import ResultTable from "./ResultTable";
-import { useAppSelector } from "../hooks";
+import { useAppSelector } from "../store/hooks";
 
 const Result = () => {
   const [showAnswers, setShowAnswers] = useState<boolean>(false);

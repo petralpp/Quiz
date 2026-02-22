@@ -6,6 +6,10 @@ const quizSchema = new Schema<Quiz>({
     type: String,
     required: true
   },
+  subcategory: {
+    type: String,
+    required: true
+  },
   name: {
     type: String,
     required: true
