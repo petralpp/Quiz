@@ -6,19 +6,15 @@ export interface Quiz {
   questions: object[];
   answersId: string;
 }
-/*
-export interface QuizQuestions {
-  question: string;
-  choices: string[];
-}*/
-
-/*
-export interface CorrectAnswer {
-  question: string;
-  answer: string;
-}*/
 
 export interface QuizAnswers {
   quizName: string;
   answers: object[];
+}
+
+export interface User {
+  username: string;
+  name: string;
+  passwordHash: string;
+  quizzes: Array;
 }

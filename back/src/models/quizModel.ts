@@ -30,12 +30,4 @@ const quizSchema = new Schema<Quiz>({
   }
 });
 
-/*
-quizSchema.set("toJSON", {
-  transform: (_document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString();
-  }
-});
-*/
-
 export const QuizModel = mongoose.model("Quiz", quizSchema);
