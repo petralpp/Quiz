@@ -22,7 +22,12 @@ const Navigation = ({ category, setCategory }: Props) => {
       >
         Entertainment <FilmIcon className="text-center inline size-5 ml-2" />
       </div>
-      <div className="px-3 font-semibold">My quizzes</div>
+      <div
+        onClick={() => setCategory("User")}
+        className={`px-3 rounded-t-md font-semibold ${category === "User" ? "bg-white" : "hover:text-gray-50"}`}
+      >
+        My quizzes
+      </div>
     </div>
   );
 };

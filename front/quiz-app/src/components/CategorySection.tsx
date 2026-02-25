@@ -11,7 +11,7 @@ const CategorySection = ({ category, handleClick }: Props) => {
 
   return (
     <div className="h-max py-4 bg-white">
-      {category && (
+      {grouped && (
         <div>
           {Object.entries(grouped).map(([subcategory, quizzes], i) => (
             <div key={i}>
@@ -32,6 +32,9 @@ const CategorySection = ({ category, handleClick }: Props) => {
             </div>
           ))}
         </div>
+      )}
+      {Object.keys(grouped).length === 0 && (
+        <p className="text-center">Nothing here!</p>
       )}
     </div>
   );

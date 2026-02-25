@@ -15,6 +15,7 @@ interface Props {
 
 const QuizList = ({ toggleOverlay }: Props) => {
   const dispatch = useAppDispatch();
+  const isActive = useAppSelector((state) => state.activeQuiz.isActive);
   const entertainmentList: Quiz[] = useAppSelector(selectEntertainmentQuizzes);
   const educationList: Quiz[] = useAppSelector(selectEducationQuizzes);
   const [category, setCategory] = useState<string>("Education");
@@ -41,10 +42,12 @@ const QuizList = ({ toggleOverlay }: Props) => {
   };
 
   return (
-    <>
-      <Navigation category={category} setCategory={setCategory} />
-      <CategorySection category={category} handleClick={handleClick} />
-    </>
+    !isActive && (
+      <>
+        <Navigation category={category} setCategory={setCategory} />
+        <CategorySection category={category} handleClick={handleClick} />
+      </>
+    )
   );
 };
 

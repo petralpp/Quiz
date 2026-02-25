@@ -7,13 +7,20 @@ export const selectEntertainmentQuizzes = (state: RootState) =>
 
 export const selectEducationQuizzes = (state: RootState) => state.educationQuizzes;
 
+export const selectUserQuizzes = (state: RootState) => state.userQuizzes;
+
 export const selectGroupedQuizzesByCategory = (category: string) =>
   createSelector(
     [
-      (state: RootState) =>
-        category === "Entertainment"
-          ? state.entertainmentQuizzes
-          : state.educationQuizzes
+      (state: RootState) => {
+        if (category === "Entertainment") {
+          return state.entertainmentQuizzes;
+        } else if (category === "Education") {
+          return state.educationQuizzes;
+        } else {
+          return state.userQuizzes;
+        }
+      }
     ],
     (quizzes) => {
       const grouped: Record<string, Quiz[]> = {};

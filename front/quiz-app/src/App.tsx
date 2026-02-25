@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import type { Quiz, QuizDescription } from "./types";
 import quizService from "./services/quizService";
 
+import TopBar from "./components/TopBar";
 import QuizList from "./components/QuizList";
 import ActiveQuiz from "./components/ActiveQuiz";
 import QuizOVerlay from "./components/QuizOverlay";
@@ -21,7 +22,6 @@ function App() {
   const selectedQuiz: QuizDescription = useAppSelector(
     (state) => state.selectedQuiz
   );
-  const isActive = useAppSelector((state) => state.activeQuiz.isActive);
   const [overlayIsOpen, setOverlayIsOpen] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 
@@ -61,27 +61,10 @@ function App() {
 
   return (
     <div className="bg-linear-to-r from-indigo-500 to-purple-500 h-screen font-sans text-lg">
-      <div className="flex justify-between items-center px-4">
-        <h1 className="text-center text-4xl p-5 mb-2 font-bold text-white leading-tight">
-          Quiz!
-        </h1>
-        <button className="px-4 py-2 bg-amber-600 hover:bg-indigo-600 text-white rounded">
-          Create
-        </button>
-      </div>
-      {isActive ? (
-        <ActiveQuiz />
-      ) : (
-        <div className="">
-          <QuizList toggleOverlay={toggleOverlay} />
-          <QuizOVerlay
-            isOpen={overlayIsOpen}
-            onClose={toggleOverlay}
-            quiz={selectedQuiz}
-            start={start}
-          />
-        </div>
-      )}
+      <TopBar />
+      <ActiveQuiz />
+      <QuizList toggleOverlay={toggleOverlay} />
+      <QuizOVerlay isOpen={overlayIsOpen} onClose={toggleOverlay} start={start} />
     </div>
   );
 }

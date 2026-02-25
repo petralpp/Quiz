@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import entertainmentReducer from "./reducers/entertainmentReducer";
 import educationReducer from "./reducers/educationReducer";
+import userQuizzesReducer from "./reducers/userQuizzesReducer";
 import selectedQuizReducer from "./reducers/selectedQuizReducer";
 import activeQuizReducer from "./reducers/activeQuizReducer";
 import answersReducer from "./reducers/answersReducer";
@@ -8,6 +9,7 @@ import answersReducer from "./reducers/answersReducer";
 const rootReducer = combineReducers({
   entertainmentQuizzes: entertainmentReducer,
   educationQuizzes: educationReducer,
+  userQuizzes: userQuizzesReducer,
   selectedQuiz: selectedQuizReducer,
   activeQuiz: activeQuizReducer,
   answers: answersReducer
