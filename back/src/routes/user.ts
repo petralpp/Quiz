@@ -6,15 +6,22 @@ const router = express.Router();
 
 router.post("/register", async (req: Request, res: Response, next: NextFunction) => {
   console.log("Backend: Registering the user");
-  const { username, name, password } = req.body;
-
   try {
+    const { username, name, password } = req.body;
     const newUser = parseUser(username, name, password);
-
-    console.log("Parsettu käyttäjä: ", newUser);
-    const savedUser = await userService.addUser(username, name, password);
-    console.log(savedUser);
+    const savedUser = await userService.addUser(newUser);
     res.status(201).json(savedUser);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/login", async (req: Request, res: Response, next: NextFunction) => {
+  console.log("Backend: Login user");
+  try {
+    const { username, password } = req.body;
+    const validatedUser = await userService.validateUser(username, password);
+    res.status(201).json(validatedUser);
   } catch (error) {
     next(error);
   }
