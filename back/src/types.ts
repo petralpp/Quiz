@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 export interface Quiz {
   category: string;
   subcategory: string;
@@ -16,5 +18,11 @@ export interface User {
   username: string;
   name: string;
   passwordHash: string;
-  quizzes: Array;
+  quizzes: Array<mongoose.Schema.Types.ObjectId>;
+}
+
+export interface NewUser {
+  username: string;
+  name: string;
+  password: string;
 }
