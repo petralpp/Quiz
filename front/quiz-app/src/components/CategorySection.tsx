@@ -1,42 +1,53 @@
-import { useAppSelector } from "../store/hooks";
-import { selectGroupedQuizzesByCategory } from "../store/selectors";
+import type { Quiz } from "../types";
+import { useAppSelector, useAppDispatch } from "../store/hooks";
+import { setSelectedQuiz } from "../store/reducers/selectedQuizReducer";
+import QuizList from "./QuizList";
+import Navigation from "./Navigation";
+import { useState } from "react";
+import {
+  selectEducationQuizzes,
+  selectEntertainmentQuizzes
+} from "../store/selectors";
 
 interface Props {
-  category: string;
-  handleClick(name: string, category: string, subcategory: string): void;
+  toggleOverlay(): void;
 }
 
-const CategorySection = ({ category, handleClick }: Props) => {
-  const grouped = useAppSelector(selectGroupedQuizzesByCategory(category));
+const CategorySection = ({ toggleOverlay }: Props) => {
+  const dispatch = useAppDispatch();
+  const isActive = useAppSelector((state) => state.activeQuiz.isActive);
+  const entertainmentList: Quiz[] = useAppSelector(selectEntertainmentQuizzes);
+  const educationList: Quiz[] = useAppSelector(selectEducationQuizzes);
+  const [category, setCategory] = useState<string>("Education");
+
+  const handleClick = (name: string, category: string) => {
+    let quiz = null;
+    if (category === "Entertainment") {
+      quiz = entertainmentList?.find((q) => q.name === name);
+    } else {
+      quiz = educationList?.find((q) => q.name === name);
+    }
+    if (quiz) {
+      dispatch(
+        setSelectedQuiz({
+          category: quiz.category,
+          subcategory: quiz.subcategory,
+          name: quiz.name,
+          description: quiz.description,
+          questions: quiz.questions.length
+        })
+      );
+      toggleOverlay();
+    }
+  };
 
   return (
-    <div className="h-max py-4 bg-white">
-      {grouped && (
-        <div>
-          {Object.entries(grouped).map(([subcategory, quizzes], i) => (
-            <div key={i}>
-              <h2 className="text-xl pl-3 pt-3 font-semibold">{subcategory}</h2>
-              <div className="flex gap-3 pl-3 pt-3 py-3">
-                {quizzes.map((el, j) => (
-                  <div
-                    key={j}
-                    onClick={() => handleClick(el.name, el.category, el.subcategory)}
-                    className="bg-blue-600 hover:bg-blue-700 shadow-md hover:shadow-xl rounded-2xl flex items-center justify-center text-center min-w-50 h-30"
-                  >
-                    <h3 className="text-white px-1 text-base lg:text-lg">
-                      {el.name}
-                    </h3>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-      {Object.keys(grouped).length === 0 && (
-        <p className="text-center">Nothing here!</p>
-      )}
-    </div>
+    !isActive && (
+      <>
+        <Navigation category={category} setCategory={setCategory} />
+        <QuizList category={category} handleClick={handleClick} />
+      </>
+    )
   );
 };
 

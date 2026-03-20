@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import type { Quiz, QuizDescription } from "./types";
 import quizService from "./services/quizService";
 
 import TopBar from "./components/TopBar";
-import QuizList from "./components/QuizList";
+import CategorySection from "./components/CategorySection";
 import ActiveQuiz from "./components/ActiveQuiz";
-import QuizOVerlay from "./components/QuizOverlay";
+import QuizOverlay from "./components/QuizOverlay";
 
 import { useAppSelector, useAppDispatch } from "./store/hooks";
 import { setEducationList } from "./store/reducers/educationReducer";
@@ -15,6 +16,7 @@ import {
   selectEducationQuizzes,
   selectEntertainmentQuizzes
 } from "./store/selectors";
+import CreationPage from "./components/CreationPage";
 
 function App() {
   const entertainmentList: Quiz[] = useAppSelector(selectEntertainmentQuizzes);
@@ -60,12 +62,20 @@ function App() {
   };
 
   return (
-    <div className="bg-linear-to-r from-indigo-500 to-purple-500 h-screen font-sans text-lg">
-      <TopBar />
-      <ActiveQuiz />
-      <QuizList toggleOverlay={toggleOverlay} />
-      <QuizOVerlay isOpen={overlayIsOpen} onClose={toggleOverlay} start={start} />
-    </div>
+    <Router>
+      <div className="bg-linear-to-r from-indigo-500 to-purple-500 h-screen font-sans text-lg">
+        <TopBar />
+        <ActiveQuiz />
+        <QuizOverlay isOpen={overlayIsOpen} onClose={toggleOverlay} start={start} />
+        <Routes>
+          <Route
+            path="/"
+            element={<CategorySection toggleOverlay={toggleOverlay} />}
+          />
+          <Route path="/create" element={<CreationPage />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

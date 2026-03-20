@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import testUtils from "./test_data";
-import CategorySection from "../components/CategorySection";
+import QuizList from "../components/QuizList";
 import type { Mock, Procedure } from "@vitest/spy";
 
 const testData = testUtils.getSeparatedData();
@@ -10,7 +10,7 @@ const mockHandler: Mock<Procedure> = vi.fn();
 describe("CategorySection component", () => {
   beforeEach(() => {
     render(
-      <CategorySection
+      <QuizList
         quizList={testData.education}
         category="Education"
         handleClick={mockHandler}
@@ -42,11 +42,7 @@ describe("CategorySection component", () => {
 describe("CategorySection component without a quiz list", () => {
   it("doesn't render anything", () => {
     render(
-      <CategorySection
-        quizList={null}
-        category="Entertainment"
-        handleClick={mockHandler}
-      />
+      <QuizList quizList={null} category="Entertainment" handleClick={mockHandler} />
     );
     const categoryTitle = screen.queryByText("Entertainment");
     expect(categoryTitle).not.toBeInTheDocument();

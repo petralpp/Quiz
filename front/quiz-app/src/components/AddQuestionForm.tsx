@@ -1,0 +1,145 @@
+import { useState } from "react";
+
+export type QuizQuestion = {
+  question: string;
+  choices: string[];
+  correctAnswer: string;
+};
+
+type AddQuestionFormProps = {
+  onAddQuestion: (question: QuizQuestion) => void;
+};
+
+const AddQuestionForm = ({ onAddQuestion }: AddQuestionFormProps) => {
+  const [questionText, setQuestionText] = useState("");
+  const [choices, setChoices] = useState<string[]>(["", ""]);
+  const [correctAnswer, setCorrectAnswer] = useState("");
+
+  const handleChoiceChange = (index: number, value: string) => {
+    const updated = [...choices];
+    updated[index] = value;
+    setChoices(updated);
+
+    // If the correct answer text changes, keep it synced
+    if (correctAnswer === choices[index]) {
+      setCorrectAnswer(value);
+    }
+  };
+
+  const addChoice = () => {
+    if (choices.length < 5) {
+      setChoices((prev) => [...prev, ""]);
+    }
+  };
+
+  const removeChoice = (index: number) => {
+    if (choices.length <= 2) return;
+
+    const removedValue = choices[index];
+    const updated = choices.filter((_, i) => i !== index);
+
+    setChoices(updated);
+
+    if (correctAnswer === removedValue) {
+      setCorrectAnswer("");
+    }
+  };
+
+  const isValid =
+    questionText.trim().length > 0 &&
+    choices.length >= 2 &&
+    choices.length <= 5 &&
+    choices.every((c) => c.trim().length > 0) &&
+    correctAnswer.length > 0;
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!isValid) return;
+
+    onAddQuestion({
+      question: questionText.trim(),
+      choices: choices.map((c) => c.trim()),
+      correctAnswer
+    });
+
+    // Reset form
+    setQuestionText("");
+    setChoices(["", ""]);
+    setCorrectAnswer("");
+  };
+
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className="p-6 bg-white rounded-2xl shadow-md space-y-4"
+    >
+      <h2 className="text-xl font-semibold">Add Question</h2>
+      <div>
+        <label className="block mb-1 font-medium">Question</label>
+        <input
+          type="text"
+          value={questionText}
+          onChange={(e) => setQuestionText(e.target.value)}
+          className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Enter question text"
+        />
+      </div>
+      <div className="space-y-3">
+        <label className="block font-medium">Choices (2–5)</label>
+
+        {choices.map((choice, index) => (
+          <div key={index} className="flex items-center gap-3">
+            <input
+              type="radio"
+              name="correctAnswer"
+              checked={correctAnswer === choice}
+              disabled={!choice.trim()}
+              onChange={() => setCorrectAnswer(choice)}
+            />
+
+            <input
+              type="text"
+              value={choice}
+              onChange={(e) => handleChoiceChange(index, e.target.value)}
+              className="flex-1 border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder={`Choice ${index + 1}`}
+            />
+
+            {choices.length > 2 && (
+              <button
+                type="button"
+                onClick={() => removeChoice(index)}
+                className="text-red-500 hover:text-red-700"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+        ))}
+
+        {choices.length < 5 && (
+          <button
+            type="button"
+            onClick={addChoice}
+            className="text-blue-600 hover:underline text-sm"
+          >
+            + Add choice
+          </button>
+        )}
+      </div>
+      <button
+        type="submit"
+        disabled={!isValid}
+        className={`px-4 py-2 rounded-lg text-white ${
+          isValid
+            ? "bg-blue-600 hover:bg-blue-700"
+            : "bg-gray-400 cursor-not-allowed"
+        }`}
+      >
+        Add Question
+      </button>
+    </form>
+  );
+};
+
+export default AddQuestionForm;

@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/react";
 import testUtils from "./test_data";
-import QuizList from "../components/QuizList";
+import QuizList from "../components/CategorySection";
 import type { Mock, Procedure } from "@vitest/spy";
 import { renderWithProviders } from "./test_utils";
 import { setupStore } from "../store";
