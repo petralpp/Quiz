@@ -2,12 +2,16 @@ import { Link } from "react-router-dom";
 import AddQuizForm from "./AddQuizForm";
 import type { NewQuiz } from "../types";
 import { useState } from "react";
+import quizService from "../services/quizService";
 
 const CreationPage = () => {
   const [message, setMessage] = useState("");
   const handleSubmit = (newQuiz: NewQuiz) => {
-    console.log(newQuiz);
-    setMessage("Quiz saved!");
+    quizService.createQuiz(newQuiz);
+    setMessage(`Quiz '${newQuiz.name}' saved!`);
+    setTimeout(() => {
+      setMessage("");
+    }, 10000);
   };
   return (
     <div className="h-max py-4 px-2 bg-white">

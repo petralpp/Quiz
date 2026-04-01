@@ -13,14 +13,16 @@ export interface NewQuiz {
   subcategory: string;
   name: string;
   description: string;
-  questions: QuizQuestions[];
+  questions: Questions[];
 }
 
-export type NewQuestion = {
+export type Questions = NewQuestion | QuizQuestions;
+
+export interface NewQuestion {
   question: string;
   choices: string[];
   correctAnswer: string;
-};
+}
 
 export interface QuizQuestions {
   question: string;
