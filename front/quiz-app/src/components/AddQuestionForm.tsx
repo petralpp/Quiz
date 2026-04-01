@@ -1,16 +1,11 @@
 import { useState } from "react";
+import type { NewQuestion } from "../types";
 
-export type QuizQuestion = {
-  question: string;
-  choices: string[];
-  correctAnswer: string;
-};
+interface Props {
+  onAddQuestion: (question: NewQuestion) => void;
+}
 
-type AddQuestionFormProps = {
-  onAddQuestion: (question: QuizQuestion) => void;
-};
-
-const AddQuestionForm = ({ onAddQuestion }: AddQuestionFormProps) => {
+const AddQuestionForm = ({ onAddQuestion }: Props) => {
   const [questionText, setQuestionText] = useState("");
   const [choices, setChoices] = useState<string[]>(["", ""]);
   const [correctAnswer, setCorrectAnswer] = useState("");
@@ -74,6 +69,7 @@ const AddQuestionForm = ({ onAddQuestion }: AddQuestionFormProps) => {
       className="p-6 bg-white rounded-2xl shadow-md space-y-4"
     >
       <h2 className="text-xl font-semibold">Add Question</h2>
+      <p>At least 1 question is required</p>
       <div>
         <label className="block mb-1 font-medium">Question</label>
         <input
@@ -85,7 +81,8 @@ const AddQuestionForm = ({ onAddQuestion }: AddQuestionFormProps) => {
         />
       </div>
       <div className="space-y-3">
-        <label className="block font-medium">Choices (2–5)</label>
+        <label className="block font-medium">Choices (2-5)</label>
+        <p>Mark one of the choices as the correct one</p>
 
         {choices.map((choice, index) => (
           <div key={index} className="flex items-center gap-3">

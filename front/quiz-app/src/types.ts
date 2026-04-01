@@ -8,6 +8,20 @@ export interface Quiz {
   answersId: string;
 }
 
+export interface NewQuiz {
+  category: string;
+  subcategory: string;
+  name: string;
+  description: string;
+  questions: QuizQuestions[];
+}
+
+export type NewQuestion = {
+  question: string;
+  choices: string[];
+  correctAnswer: string;
+};
+
 export interface QuizQuestions {
   question: string;
   choices: string[];

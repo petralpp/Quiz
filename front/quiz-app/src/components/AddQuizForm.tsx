@@ -1,46 +1,53 @@
 import { useState } from "react";
 import AddQuestionForm from "./AddQuestionForm";
-import type { QuizQuestion } from "./AddQuestionForm";
+import type { NewQuiz, NewQuestion } from "../types";
 
-export type Quiz = {
-  title: string;
-  category: string;
-  questions: QuizQuestion[];
-};
+interface Props {
+  onSubmitQuiz: (quiz: NewQuiz) => void;
+}
 
-type AddQuizFormProps = {
-  onSubmitQuiz: (quiz: Quiz) => void;
-};
-
-export default function AddQuizForm({ onSubmitQuiz }: AddQuizFormProps) {
+const AddQuizForm = ({ onSubmitQuiz }: Props) => {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
-  const [questions, setQuestions] = useState<QuizQuestion[]>([]);
+  const [subcategory, setSubcategory] = useState("");
+  const [description, setDescription] = useState("");
+  const [questions, setQuestions] = useState<NewQuestion[]>([]);
 
-  const handleAddQuestion = (question: QuizQuestion) => {
+  const addQuestion = (question: NewQuestion) => {
     setQuestions((prev) => [...prev, question]);
   };
 
-  const handleRemoveQuestion = (index: number) => {
+  const removeQuestion = (index: number) => {
     setQuestions((prev) => prev.filter((_, i) => i !== index));
   };
 
+  // Täl hetkel subcat ja descr pakollisii, täytyy tehä muokkauksii jos haluu ne vapaaehtosiks
   const isValid =
-    title.trim().length > 0 && category.trim().length > 0 && questions.length > 0;
+    title.trim().length > 0 &&
+    category.trim().length > 0 &&
+    subcategory.trim().length > 0 &&
+    description.trim().length > 0 &&
+    questions.length > 0;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!isValid) return;
+    // Joku ilmotus syystä ois hyvä olla
 
+    // HUOMAA et questionit pitää viel eriksee käsitellä, ne ei oo nyt oikees muodos, mut tehää se backendin palvelussa esim?
     onSubmitQuiz({
-      title: title.trim(),
+      name: title.trim(),
+      description: description.trim(),
       category: category.trim(),
+      subcategory: subcategory.trim(),
       questions
     });
 
     // Reset form
     setTitle("");
+    setDescription("");
     setCategory("");
+    setSubcategory("");
     setQuestions([]);
   };
 
@@ -51,28 +58,54 @@ export default function AddQuizForm({ onSubmitQuiz }: AddQuizFormProps) {
         className="bg-white p-6 rounded-2xl shadow-md space-y-4"
       >
         <h1 className="text-2xl font-bold">Create New Quiz</h1>
-
+        <p>All fields are required</p>
         {/* Title */}
         <div>
-          <label className="block mb-1 font-medium">Quiz Title</label>
+          <label className="block mb-1 font-medium">Quiz Title *</label>
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Enter quiz title"
+            required
           />
         </div>
 
         {/* Category */}
         <div>
-          <label className="block mb-1 font-medium">Category</label>
+          <label className="block mb-1 font-medium">Category *</label>
           <input
             type="text"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="e.g. Entertainment, Education"
+            required
+          />
+        </div>
+
+        {/* Subcategory */}
+        <div>
+          <label className="block mb-1 font-medium">Subcategory *</label>
+          <input
+            type="text"
+            value={subcategory}
+            onChange={(e) => setSubcategory(e.target.value)}
+            className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="e.g. Films, Psychology"
+          />
+        </div>
+
+        {/* Description */}
+        <div>
+          <label className="block mb-1 font-medium">Description *</label>
+          <input
+            type="text"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Describe the quiz"
           />
         </div>
 
@@ -104,7 +137,7 @@ export default function AddQuizForm({ onSubmitQuiz }: AddQuizFormProps) {
 
                   <button
                     type="button"
-                    onClick={() => handleRemoveQuestion(index)}
+                    onClick={() => removeQuestion(index)}
                     className="text-red-500 hover:text-red-700 text-sm"
                   >
                     Remove
@@ -115,7 +148,6 @@ export default function AddQuizForm({ onSubmitQuiz }: AddQuizFormProps) {
           </div>
         )}
 
-        {/* Submit Quiz */}
         <button
           type="submit"
           disabled={!isValid}
@@ -129,8 +161,9 @@ export default function AddQuizForm({ onSubmitQuiz }: AddQuizFormProps) {
         </button>
       </form>
 
-      {/* Question Form */}
-      <AddQuestionForm onAddQuestion={handleAddQuestion} />
+      <AddQuestionForm onAddQuestion={addQuestion} />
     </div>
   );
-}
+};
+
+export default AddQuizForm;
