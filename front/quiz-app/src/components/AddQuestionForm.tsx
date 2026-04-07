@@ -42,9 +42,10 @@ const AddQuestionForm = ({ onAddQuestion }: Props) => {
 
   const isValid =
     questionText.trim().length > 0 &&
+    questionText.trim().length <= 1000 &&
     choices.length >= 2 &&
     choices.length <= 5 &&
-    choices.every((c) => c.trim().length > 0) &&
+    choices.every((c) => c.trim().length > 0 && c.trim().length <= 500) &&
     correctAnswer.length > 0;
 
   const handleSubmit = (e: React.FormEvent) => {

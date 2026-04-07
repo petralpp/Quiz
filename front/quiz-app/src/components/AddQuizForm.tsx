@@ -24,9 +24,13 @@ const AddQuizForm = ({ onSubmitQuiz }: Props) => {
   // Täl hetkel subcat ja descr pakollisii, täytyy tehä muokkauksii jos haluu ne vapaaehtosiks
   const isValid =
     title.trim().length > 0 &&
+    title.trim().length <= 100 &&
     category.trim().length > 0 &&
+    category.trim().length <= 100 &&
     subcategory.trim().length > 0 &&
+    subcategory.trim().length <= 100 &&
     description.trim().length > 0 &&
+    description.trim().length <= 1500 &&
     questions.length > 0;
 
   const handleSubmit = (e: React.FormEvent) => {
