@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+body {
+  @apply bg-linear-to-r from-indigo-500 to-purple-500;
+}
+
 .btn-blue {
   @apply px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded;
 }
@@ -10,6 +14,10 @@
 
 .btn-orange {
   @apply px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded;
+}
+
+.btn-white {
+  @apply px-4 py-2 bg-white hover:bg-orange-400 text-gray-800 rounded;
 }
 
 .overlay {

@@ -17,6 +17,7 @@ import {
   selectEntertainmentQuizzes
 } from "./store/selectors";
 import CreationPage from "./components/CreationPage";
+import LoginRegister from "./components/LoginRegister";
 
 function App() {
   const entertainmentList: Quiz[] = useAppSelector(selectEntertainmentQuizzes);
@@ -63,7 +64,7 @@ function App() {
 
   return (
     <Router>
-      <div className="bg-linear-to-r from-indigo-500 to-purple-500 h-screen font-sans text-lg">
+      <div className="font-sans text-lg">
         <TopBar />
         <ActiveQuiz />
         <QuizOverlay isOpen={overlayIsOpen} onClose={toggleOverlay} start={start} />
@@ -73,6 +74,7 @@ function App() {
             element={<CategorySection toggleOverlay={toggleOverlay} />}
           />
           <Route path="/create" element={<CreationPage />} />
+          <Route path="/register" element={<LoginRegister />} />
         </Routes>
       </div>
     </Router>
