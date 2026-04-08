@@ -15,7 +15,6 @@ const AddQuestionForm = ({ onAddQuestion }: Props) => {
     updated[index] = value;
     setChoices(updated);
 
-    // If the correct answer text changes, keep it synced
     if (correctAnswer === choices[index]) {
       setCorrectAnswer(value);
     }
@@ -42,10 +41,9 @@ const AddQuestionForm = ({ onAddQuestion }: Props) => {
 
   const isValid =
     questionText.trim().length > 0 &&
-    questionText.trim().length <= 1000 &&
     choices.length >= 2 &&
     choices.length <= 5 &&
-    choices.every((c) => c.trim().length > 0 && c.trim().length <= 500) &&
+    choices.every((c) => c.trim().length > 0) &&
     correctAnswer.length > 0;
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -72,14 +70,17 @@ const AddQuestionForm = ({ onAddQuestion }: Props) => {
       <h2 className="text-xl font-semibold">Add Question</h2>
       <p>At least 1 question is required</p>
       <div>
-        <label className="block mb-1 font-medium">Question</label>
-        <input
-          type="text"
-          value={questionText}
-          onChange={(e) => setQuestionText(e.target.value)}
-          className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Enter question text"
-        />
+        <label className="block mb-1 font-medium">
+          Question
+          <input
+            type="text"
+            value={questionText}
+            maxLength={200}
+            onChange={(e) => setQuestionText(e.target.value)}
+            className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter question text"
+          />
+        </label>
       </div>
       <div className="space-y-3">
         <label className="block font-medium">Choices (2-5)</label>
@@ -98,6 +99,7 @@ const AddQuestionForm = ({ onAddQuestion }: Props) => {
             <input
               type="text"
               value={choice}
+              maxLength={200}
               onChange={(e) => handleChoiceChange(index, e.target.value)}
               className="flex-1 border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder={`Choice ${index + 1}`}

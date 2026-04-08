@@ -21,24 +21,17 @@ const AddQuizForm = ({ onSubmitQuiz }: Props) => {
     setQuestions((prev) => prev.filter((_, i) => i !== index));
   };
 
-  // Täl hetkel subcat ja descr pakollisii, täytyy tehä muokkauksii jos haluu ne vapaaehtosiks
   const isValid =
     title.trim().length > 0 &&
-    title.trim().length <= 100 &&
     category.trim().length > 0 &&
-    category.trim().length <= 100 &&
     subcategory.trim().length > 0 &&
-    subcategory.trim().length <= 100 &&
     description.trim().length > 0 &&
-    description.trim().length <= 1500 &&
     questions.length > 0;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!isValid) return;
-    // Joku ilmotus syystä ois hyvä olla
 
-    // HUOMAA et questionit pitää viel eriksee käsitellä, ne ei oo nyt oikees muodos, mut tehää se backendin palvelussa esim?
     onSubmitQuiz({
       name: title.trim(),
       description: description.trim(),
@@ -47,7 +40,6 @@ const AddQuizForm = ({ onSubmitQuiz }: Props) => {
       questions
     });
 
-    // Reset form
     setTitle("");
     setDescription("");
     setCategory("");
@@ -63,64 +55,72 @@ const AddQuizForm = ({ onSubmitQuiz }: Props) => {
       >
         <h1 className="text-2xl font-bold">Create New Quiz</h1>
         <p>All fields are required</p>
-        {/* Title */}
+
         <div>
-          <label className="block mb-1 font-medium">Quiz Title *</label>
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter quiz title"
-            required
-          />
+          <label className="block mb-1 font-medium">
+            Quiz Title *
+            <input
+              type="text"
+              value={title}
+              maxLength={100}
+              onChange={(e) => setTitle(e.target.value)}
+              className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter quiz title"
+              required
+            />
+          </label>
         </div>
 
-        {/* Category */}
         <div>
-          <label className="block mb-1 font-medium">Category *</label>
-          <input
-            type="text"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="e.g. Entertainment, Education"
-            required
-          />
+          <label className="block mb-1 font-medium">
+            Category *
+            <input
+              type="text"
+              value={category}
+              maxLength={100}
+              onChange={(e) => setCategory(e.target.value)}
+              className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="e.g. Entertainment, Education"
+              required
+            />
+          </label>
         </div>
 
-        {/* Subcategory */}
         <div>
-          <label className="block mb-1 font-medium">Subcategory *</label>
-          <input
-            type="text"
-            value={subcategory}
-            onChange={(e) => setSubcategory(e.target.value)}
-            className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="e.g. Films, Psychology"
-          />
+          <label className="block mb-1 font-medium">
+            Subcategory *
+            <input
+              type="text"
+              value={subcategory}
+              maxLength={100}
+              onChange={(e) => setSubcategory(e.target.value)}
+              className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="e.g. Films, Psychology"
+            />
+          </label>
         </div>
 
-        {/* Description */}
         <div>
-          <label className="block mb-1 font-medium">Description *</label>
-          <input
-            type="text"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Describe the quiz"
-          />
+          <label className="block mb-1 font-medium">
+            Description *
+            <input
+              type="text"
+              value={description}
+              maxLength={1000}
+              onChange={(e) => setDescription(e.target.value)}
+              className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Describe the quiz"
+            />
+          </label>
         </div>
 
-        {/* Questions Preview */}
         {questions.length > 0 && (
           <div className="space-y-4">
             <h2 className="text-lg font-semibold">Added Questions</h2>
 
             {questions.map((q, index) => (
               <div key={index} className="border rounded-xl p-4 bg-gray-50">
-                <div className="flex justify-between items-start">
+                <div className="flex justify-between overflow-auto items-start">
                   <div>
                     <p className="font-medium">{q.question}</p>
                     <ul className="list-disc ml-5 text-sm mt-2">
@@ -129,7 +129,7 @@ const AddQuizForm = ({ onSubmitQuiz }: Props) => {
                           key={i}
                           className={
                             choice === q.correctAnswer
-                              ? "font-semibold text-green-600"
+                              ? "font-semibold text-green-600 underline"
                               : ""
                           }
                         >
