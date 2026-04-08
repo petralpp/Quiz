@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import userService from "../services/userService";
 
 const LoginRegister = () => {
   const [loginUsername, setLoginUsername] = useState("");
@@ -11,13 +12,22 @@ const LoginRegister = () => {
 
   const [message, setMessage] = useState("");
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!LoginIsValid) return;
-    setMessage(`Logged in as ${loginUsername}.`);
-    setTimeout(() => {
-      setMessage("");
-    }, 6000);
+    const userObject = await userService.login(loginUsername, loginPassword);
+    if (userObject) {
+      console.log("Käyttäjäobjekti: ", userObject);
+      setMessage(`Logged in as ${userObject.username}, hello ${userObject.name}.`);
+      setTimeout(() => {
+        setMessage("");
+      }, 6000);
+    } else {
+      setMessage("Something went wrong.");
+      setTimeout(() => {
+        setMessage("");
+      }, 6000);
+    }
 
     setLoginUsername("");
     setLoginPassword("");
