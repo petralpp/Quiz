@@ -6,6 +6,7 @@ import userQuizzesReducer from "./reducers/userQuizzesReducer";
 import selectedQuizReducer from "./reducers/selectedQuizReducer";
 import activeQuizReducer from "./reducers/activeQuizReducer";
 import answersReducer from "./reducers/answersReducer";
+import notificationReducer from "./reducers/notificationReducer";
 
 const rootReducer = combineReducers({
   entertainmentQuizzes: entertainmentReducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   userQuizzes: userQuizzesReducer,
   selectedQuiz: selectedQuizReducer,
   activeQuiz: activeQuizReducer,
-  answers: answersReducer
+  answers: answersReducer,
+  notification: notificationReducer
 });
 
 export function setupStore() {

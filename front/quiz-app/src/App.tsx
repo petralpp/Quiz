@@ -14,19 +14,19 @@ import { setEducationList } from "./store/reducers/educationReducer";
 import { setEntertainmentList } from "./store/reducers/entertainmentReducer";
 import { startQuiz } from "./store/reducers/activeQuizReducer";
 import {
+  selectedQuizDescription,
   selectEducationQuizzes,
   selectEntertainmentQuizzes
 } from "./store/selectors";
 import CreationPage from "./components/CreationPage";
 import LoginRegister from "./components/LoginRegister";
 import { clearUser, setUser } from "./store/reducers/userReducer";
+import Notification from "./components/Notification";
 
 function App() {
   const entertainmentList: Quiz[] = useAppSelector(selectEntertainmentQuizzes);
   const educationList: Quiz[] = useAppSelector(selectEducationQuizzes);
-  const selectedQuiz: QuizDescription = useAppSelector(
-    (state) => state.selectedQuiz
-  );
+  const selectedQuiz: QuizDescription = useAppSelector(selectedQuizDescription);
   const [overlayIsOpen, setOverlayIsOpen] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 
@@ -77,6 +77,7 @@ function App() {
     <Router>
       <div className="font-sans text-lg">
         <TopBar handleLogout={handleLogout} />
+        <Notification />
         <ActiveQuiz />
         <QuizOverlay isOpen={overlayIsOpen} onClose={toggleOverlay} start={start} />
         <Routes>

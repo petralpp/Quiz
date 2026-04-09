@@ -7,9 +7,13 @@ export const selectEntertainmentQuizzes = (state: RootState) =>
 
 export const selectEducationQuizzes = (state: RootState) => state.educationQuizzes;
 
+export const selectedQuizDescription = (state: RootState) => state.selectedQuiz;
+
 export const selectUser = (state: RootState) => state.userInfo.user;
 
 export const selectUserQuizzes = (state: RootState) => state.userQuizzes;
+
+export const notification = (state: RootState) => state.notification;
 
 export const selectGroupedQuizzesByCategory = (category: string) =>
   createSelector(

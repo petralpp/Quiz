@@ -3,6 +3,8 @@ import type { AppDispatch } from "../store";
 import userService from "../../services/userService";
 import storageService from "../../services/storageService";
 import type { User } from "../../types";
+import { setNotification } from "./notificationReducer";
+import { AxiosError } from "axios";
 
 type UserState = {
   user: User | null;
@@ -34,9 +36,17 @@ export const loginUser = (username: string, password: string) => {
         //blogService.setToken(userObject.token)
 
         dispatch(setUser(user));
+        return true;
       }
     } catch (error: unknown) {
-      if (error instanceof Error) console.log(error.message);
+      if (error instanceof AxiosError) {
+        dispatch(setNotification(error.response?.data.error, 5));
+        return false;
+      } else if (error instanceof Error) {
+        dispatch(setNotification(error.message, 5));
+        return false;
+      }
+      console.log("Error: ", error);
     }
   };
 };

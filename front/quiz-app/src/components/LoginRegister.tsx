@@ -13,25 +13,22 @@ const LoginRegister = () => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [message, setMessage] = useState("");
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!LoginIsValid) return;
-    dispatch(loginUser(loginUsername, loginPassword));
+    const loggedIn = await dispatch(loginUser(loginUsername, loginPassword));
 
-    setLoginUsername("");
-    setLoginPassword("");
-    navigate("/");
+    if (loggedIn) {
+      setLoginUsername("");
+      setLoginPassword("");
+      navigate("/");
+    }
   };
 
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
     if (!RegisterIsValid) return;
-    setMessage(`Registered and logged in as ${registerUsername}.`);
-    setTimeout(() => {
-      setMessage("");
-    }, 6000);
 
     setRegisterUsername("");
     setRegisterPassword("");
@@ -52,12 +49,7 @@ const LoginRegister = () => {
       <Link to="/">
         <button className="btn-white mx-4">Back</button>
       </Link>
-      {message !== "" && (
-        <p className="bg-green-500 text-white rounded text-center mx-auto my-2 w-1/3 px-4 py-2">
-          {message}
-        </p>
-      )}
-      <div className="flex justify-around flex-wrap max-w-3xl max-h-screen m-auto">
+      <div className="flex justify-around flex-wrap gap-2 max-w-3xl m-auto py-2">
         <div className="bg-white rounded-2xl p-6">
           <form className="space-y-4">
             <h2 className="text-xl font-semibold">Login</h2>
