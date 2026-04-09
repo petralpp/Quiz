@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { loginUser } from "../store/reducers/userReducer";
+import { loginUser, registerUser } from "../store/reducers/userReducer";
 import { useAppDispatch } from "../store/hooks";
 
 const LoginRegister = () => {
@@ -26,14 +26,19 @@ const LoginRegister = () => {
     }
   };
 
-  const handleRegister = (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!RegisterIsValid) return;
+    const isRegistered = await dispatch(
+      registerUser(registerUsername, registerPassword, name)
+    );
 
-    setRegisterUsername("");
-    setRegisterPassword("");
-    setName("");
-    navigate("/");
+    if (isRegistered) {
+      setRegisterUsername("");
+      setRegisterPassword("");
+      setName("");
+      navigate("/");
+    }
   };
 
   const LoginIsValid =
@@ -49,7 +54,7 @@ const LoginRegister = () => {
       <Link to="/">
         <button className="btn-white mx-4">Back</button>
       </Link>
-      <div className="flex justify-around flex-wrap gap-2 max-w-3xl m-auto py-2">
+      <div className="flex justify-evenly flex-wrap gap-1 m-auto py-2">
         <div className="bg-white rounded-2xl p-6">
           <form className="space-y-4">
             <h2 className="text-xl font-semibold">Login</h2>
@@ -94,6 +99,7 @@ const LoginRegister = () => {
         <div className="bg-white rounded-2xl p-6">
           <form className="space-y-4">
             <h2 className="text-xl font-semibold">Register</h2>
+            <p className="text-md">Accepted characters: a-zA-ZÅåÄäÖö</p>
             <div>
               <label>
                 Username
@@ -134,6 +140,10 @@ const LoginRegister = () => {
                   className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="14-25 characters"
                 ></input>
+                <p className="text-sm">
+                  Must contain at least one number, one uppercase and one lowercase
+                  character
+                </p>
               </label>
             </div>
             <button

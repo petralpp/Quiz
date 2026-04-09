@@ -22,6 +22,7 @@ import CreationPage from "./components/CreationPage";
 import LoginRegister from "./components/LoginRegister";
 import { clearUser, setUser } from "./store/reducers/userReducer";
 import Notification from "./components/Notification";
+import { setNotification } from "./store/reducers/notificationReducer";
 
 function App() {
   const entertainmentList: Quiz[] = useAppSelector(selectEntertainmentQuizzes);
@@ -57,6 +58,7 @@ function App() {
   const handleLogout = () => {
     storageService.removeUser("quizAppUser");
     dispatch(clearUser());
+    dispatch(setNotification("Logged out successfully", 5));
   };
 
   const start = () => {

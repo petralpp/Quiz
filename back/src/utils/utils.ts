@@ -2,9 +2,9 @@ import { z } from "zod";
 import { NewUser } from "../types";
 
 export const NewUserSchema = z.object({
-  username: z.string().regex(/^[a-zA-Z0-9]{4,15}$/),
+  username: z.string().regex(/^[a-zA-Z0-9åÅäÄöÖ]{4,15}$/),
   name: z.string().regex(/^[a-zA-ZåÅäÄöÖ]{3,20}$/),
-  password: z.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)\S{14,25}$/)
+  password: z.string().regex(/^(?=.*[a-zåäö])(?=.*[A-ZÅÄÖ])(?=.*\d)\S{14,25}$/)
 });
 
 export const NewQuizSchema = z.object({

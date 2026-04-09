@@ -40,13 +40,52 @@ export const loginUser = (username: string, password: string) => {
       }
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
-        dispatch(setNotification(error.response?.data.error, 5));
+        if (error.response) {
+          dispatch(setNotification(error.response?.data.error, 5));
+        } else if (error.request) {
+          dispatch(setNotification(error.request, 5));
+        } else {
+          dispatch(setNotification(error.message, 5));
+        }
         return false;
       } else if (error instanceof Error) {
         dispatch(setNotification(error.message, 5));
         return false;
       }
       console.log("Error: ", error);
+    }
+  };
+};
+
+export const registerUser = (username: string, password: string, name: string) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const user: User = await userService.register(username, password, name);
+      if (user) {
+        storageService.addUser("quizAppUser", user);
+        //blogService.setToken(userObject.token)
+
+        dispatch(setUser(user));
+        return true;
+      }
+    } catch (error: unknown) {
+      console.log("Error: ", error);
+      if (error instanceof AxiosError) {
+        if (error.response) {
+          dispatch(setNotification(error.response.data.error, 5));
+        } else if (error.request) {
+          dispatch(setNotification(error.request, 5));
+        } else {
+          dispatch(setNotification(error.message, 5));
+        }
+        return false;
+      } else if (error instanceof Error) {
+        dispatch(setNotification(error.message, 5));
+        return false;
+      } else {
+        dispatch(setNotification("Something went wrong", 5));
+        return false;
+      }
     }
   };
 };

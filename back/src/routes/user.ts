@@ -16,7 +16,7 @@ router.post("/register", async (req: Request, res: Response, next: NextFunction)
     const savedUser = await userService.addUser(newUser);
 
     res.status(201).json(savedUser);
-  } catch (error) {
+  } catch (error: unknown) {
     next(error);
   }
 });
