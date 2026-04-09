@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import type { Quiz, QuizDescription } from "./types";
 import quizService from "./services/quizService";
+import storageService from "./services/storageService";
 
 import TopBar from "./components/TopBar";
 import CategorySection from "./components/CategorySection";
@@ -18,6 +19,7 @@ import {
 } from "./store/selectors";
 import CreationPage from "./components/CreationPage";
 import LoginRegister from "./components/LoginRegister";
+import { clearUser, setUser } from "./store/reducers/userReducer";
 
 function App() {
   const entertainmentList: Quiz[] = useAppSelector(selectEntertainmentQuizzes);
@@ -46,7 +48,16 @@ function App() {
         dispatch(setEducationList(education));
       }
     });
+    const foundUser = storageService.getUser("quizAppUser");
+    if (foundUser) {
+      dispatch(setUser(foundUser));
+    }
   }, [dispatch]);
+
+  const handleLogout = () => {
+    storageService.removeUser("quizAppUser");
+    dispatch(clearUser());
+  };
 
   const start = () => {
     let quizElement = null;
@@ -65,7 +76,7 @@ function App() {
   return (
     <Router>
       <div className="font-sans text-lg">
-        <TopBar />
+        <TopBar handleLogout={handleLogout} />
         <ActiveQuiz />
         <QuizOverlay isOpen={overlayIsOpen} onClose={toggleOverlay} start={start} />
         <Routes>

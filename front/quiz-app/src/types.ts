@@ -47,3 +47,9 @@ export interface QuizDescription {
   description: string;
   questions: number;
 }
+
+export interface User {
+  token: string;
+  username: string;
+  name: string;
+}

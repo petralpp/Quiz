@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import userService from "../services/userService";
+import { Link, useNavigate } from "react-router-dom";
+import { loginUser } from "../store/reducers/userReducer";
+import { useAppDispatch } from "../store/hooks";
 
 const LoginRegister = () => {
   const [loginUsername, setLoginUsername] = useState("");
@@ -10,27 +11,18 @@ const LoginRegister = () => {
   const [registerPassword, setRegisterPassword] = useState("");
   const [name, setName] = useState("");
 
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [message, setMessage] = useState("");
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!LoginIsValid) return;
-    const userObject = await userService.login(loginUsername, loginPassword);
-    if (userObject) {
-      console.log("Käyttäjäobjekti: ", userObject);
-      setMessage(`Logged in as ${userObject.username}, hello ${userObject.name}.`);
-      setTimeout(() => {
-        setMessage("");
-      }, 6000);
-    } else {
-      setMessage("Something went wrong.");
-      setTimeout(() => {
-        setMessage("");
-      }, 6000);
-    }
+    dispatch(loginUser(loginUsername, loginPassword));
 
     setLoginUsername("");
     setLoginPassword("");
+    navigate("/");
   };
 
   const handleRegister = (e: React.FormEvent) => {
@@ -44,6 +36,7 @@ const LoginRegister = () => {
     setRegisterUsername("");
     setRegisterPassword("");
     setName("");
+    navigate("/");
   };
 
   const LoginIsValid =
