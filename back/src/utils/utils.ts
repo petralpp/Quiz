@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { NewUser, NewQuiz, NewAnswers } from "../types";
+import { NewUser, NewQuiz, CorrectAnswer } from "../types";
 import { Request } from "express";
 
 export const NewUserSchema = z.object({
@@ -26,10 +26,12 @@ export const CorrectAnswerSchema = z.object({
   answer: z.string()
 });
 
-export const NewAnswersSchema = z.object({
-  quizName: z.string(),
-  answers: z.array(CorrectAnswerSchema)
-});
+export const NewAnswersSchema = z.array(
+  z.object({
+    question: z.string(),
+    answer: z.string()
+  })
+);
 
 export const parseUser = (
   username: unknown,
@@ -40,13 +42,11 @@ export const parseUser = (
 };
 
 export const parseQuiz = (quiz: unknown): NewQuiz => {
-  return NewQuizSchema.parse({
-    quiz
-  });
+  return NewQuizSchema.parse(quiz);
 };
 
-export const parseAnswers = (answers: unknown): NewAnswers => {
-  return NewAnswersSchema.parse({ answers });
+export const parseAnswers = (answers: unknown): CorrectAnswer[] => {
+  return NewAnswersSchema.parse(answers);
 };
 
 export const getTokenFrom = (request: Request) => {

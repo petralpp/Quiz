@@ -43,6 +43,7 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
     const { quiz, answers } = req.body;
     const validatedQuiz = parseQuiz(quiz);
     const validatedAnswers = parseAnswers(answers);
+
     const newAnswers = new AnswersModel({
       quizName: quiz.name,
       answers: validatedAnswers

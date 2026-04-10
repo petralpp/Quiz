@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { QuizAnswers, Quiz, NewQuiz } from "../types";
+import type { QuizAnswers, Quiz, NewQuiz, User } from "../types";
 import { createNewAnswers, createNewQuiz } from "./utils";
 
 const getAllQuizzes = async () => {
@@ -20,15 +20,21 @@ const getAnswers = async (id: string) => {
   }
 };
 
-const createQuiz = async (quiz: NewQuiz) => {
+const createQuiz = async (quiz: NewQuiz, user: User) => {
   const modifiedQuiz = createNewQuiz(quiz);
   const modifiedAnswers = createNewAnswers(quiz.questions);
-  console.log("Muokattu quiz: ", modifiedQuiz);
-  console.log("Muokatut vastaukset: ", modifiedAnswers);
-  const response = await axios.post("/api/quiz/", {
-    quiz: modifiedQuiz,
-    answers: modifiedAnswers
-  });
+
+  const config = {
+    headers: { Authorization: `Bearer ${user.token}` }
+  };
+  const response = await axios.post(
+    "/api/quiz/",
+    {
+      quiz: modifiedQuiz,
+      answers: modifiedAnswers
+    },
+    config
+  );
   return response.data;
 };
 

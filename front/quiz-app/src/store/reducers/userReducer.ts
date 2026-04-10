@@ -33,7 +33,6 @@ export const loginUser = (username: string, password: string) => {
       const user: User = await userService.login(username, password);
       if (user) {
         storageService.addUser("quizAppUser", user);
-        //blogService.setToken(userObject.token)
 
         dispatch(setUser(user));
         return true;
@@ -63,7 +62,6 @@ export const registerUser = (username: string, password: string, name: string) =
       const user: User = await userService.register(username, password, name);
       if (user) {
         storageService.addUser("quizAppUser", user);
-        //blogService.setToken(userObject.token)
 
         dispatch(setUser(user));
         return true;

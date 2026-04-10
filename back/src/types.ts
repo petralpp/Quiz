@@ -29,11 +29,6 @@ export interface QuizAnswers {
   answers: CorrectAnswer[];
 }
 
-export interface NewAnswers {
-  quizName: string;
-  answers: CorrectAnswer[];
-}
-
 export interface CorrectAnswer {
   question: string;
   answer: string;

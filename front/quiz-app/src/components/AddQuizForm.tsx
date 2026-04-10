@@ -1,11 +1,11 @@
 import { useState } from "react";
 import AddQuestionForm from "./AddQuestionForm";
-import type { NewQuiz, NewQuestion } from "../types";
+import type { NewQuiz, NewQuestion, User } from "../types";
 import { useAppSelector } from "../store/hooks";
 import { selectUser } from "../store/selectors";
 
 interface Props {
-  onSubmitQuiz: (quiz: NewQuiz) => void;
+  onSubmitQuiz: (quiz: NewQuiz, user: User) => void;
 }
 
 const AddQuizForm = ({ onSubmitQuiz }: Props) => {
@@ -36,14 +36,16 @@ const AddQuizForm = ({ onSubmitQuiz }: Props) => {
     if (!isValid) return;
     if (!loggedInUser) return;
 
-    onSubmitQuiz({
-      user: loggedInUser,
-      name: title.trim(),
-      description: description.trim(),
-      category: category.trim(),
-      subcategory: subcategory.trim(),
-      questions
-    });
+    onSubmitQuiz(
+      {
+        name: title.trim(),
+        description: description.trim(),
+        category: category.trim(),
+        subcategory: subcategory.trim(),
+        questions
+      },
+      loggedInUser
+    );
 
     setTitle("");
     setDescription("");

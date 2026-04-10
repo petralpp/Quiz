@@ -1,15 +1,15 @@
 import { Link } from "react-router-dom";
 import AddQuizForm from "./AddQuizForm";
-import type { NewQuiz } from "../types";
+import type { NewQuiz, User } from "../types";
 import quizService from "../services/quizService";
 import { useAppDispatch } from "../store/hooks";
 import { setNotification } from "../store/reducers/notificationReducer";
 
 const CreationPage = () => {
   const dispatch = useAppDispatch();
-  const handleSubmit = async (newQuiz: NewQuiz) => {
+  const handleSubmit = async (newQuiz: NewQuiz, user: User) => {
     try {
-      const quiz = await quizService.createQuiz(newQuiz);
+      const quiz = await quizService.createQuiz(newQuiz, user);
       if (quiz) {
         dispatch(setNotification(`New quiz ${quiz.name} added!`, 5));
       }

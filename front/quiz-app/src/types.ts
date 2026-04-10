@@ -9,7 +9,6 @@ export interface Quiz {
 }
 
 export interface NewQuiz {
-  user: User;
   category: string;
   subcategory: string;
   name: string;
