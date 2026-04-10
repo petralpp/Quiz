@@ -1,6 +1,8 @@
 import { useState } from "react";
 import AddQuestionForm from "./AddQuestionForm";
 import type { NewQuiz, NewQuestion } from "../types";
+import { useAppSelector } from "../store/hooks";
+import { selectUser } from "../store/selectors";
 
 interface Props {
   onSubmitQuiz: (quiz: NewQuiz) => void;
@@ -12,6 +14,7 @@ const AddQuizForm = ({ onSubmitQuiz }: Props) => {
   const [subcategory, setSubcategory] = useState("");
   const [description, setDescription] = useState("");
   const [questions, setQuestions] = useState<NewQuestion[]>([]);
+  const loggedInUser = useAppSelector(selectUser);
 
   const addQuestion = (question: NewQuestion) => {
     setQuestions((prev) => [...prev, question]);
@@ -31,8 +34,10 @@ const AddQuizForm = ({ onSubmitQuiz }: Props) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!isValid) return;
+    if (!loggedInUser) return;
 
     onSubmitQuiz({
+      user: loggedInUser,
       name: title.trim(),
       description: description.trim(),
       category: category.trim(),
@@ -154,7 +159,7 @@ const AddQuizForm = ({ onSubmitQuiz }: Props) => {
 
         <button
           type="submit"
-          disabled={!isValid}
+          disabled={!isValid && !loggedInUser}
           className={`px-4 py-2 rounded-lg text-white ${
             isValid
               ? "bg-green-600 hover:bg-green-700"

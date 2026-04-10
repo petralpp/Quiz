@@ -23,6 +23,12 @@ export const errorMiddleware = (
     res.status(400).json({ error: "Username or password is incorrect" });
   } else if (error instanceof z.ZodError) {
     res.status(400).send({ error: "Input in wrong format" });
+  } else if (error.name === "JsonWebTokenError") {
+    res.status(401).json({ error: "token missing or invalid" });
+  } else if (error.name === "TokenExpiredError") {
+    res.status(401).json({
+      error: "token expired"
+    });
   } else {
     res.status(500).send({ error: "Something went wrong: " });
   }

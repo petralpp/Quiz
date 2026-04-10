@@ -20,11 +20,16 @@ const getAnswers = async (id: string) => {
   }
 };
 
-const createQuiz = (quiz: NewQuiz) => {
+const createQuiz = async (quiz: NewQuiz) => {
   const modifiedQuiz = createNewQuiz(quiz);
   const modifiedAnswers = createNewAnswers(quiz.questions);
   console.log("Muokattu quiz: ", modifiedQuiz);
   console.log("Muokatut vastaukset: ", modifiedAnswers);
+  const response = await axios.post("/api/quiz/", {
+    quiz: modifiedQuiz,
+    answers: modifiedAnswers
+  });
+  return response.data;
 };
 
 export default { getAllQuizzes, getAnswers, createQuiz };

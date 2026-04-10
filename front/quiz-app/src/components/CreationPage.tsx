@@ -1,28 +1,28 @@
 import { Link } from "react-router-dom";
 import AddQuizForm from "./AddQuizForm";
 import type { NewQuiz } from "../types";
-import { useState } from "react";
 import quizService from "../services/quizService";
+import { useAppDispatch } from "../store/hooks";
+import { setNotification } from "../store/reducers/notificationReducer";
 
 const CreationPage = () => {
-  const [message, setMessage] = useState("");
-  const handleSubmit = (newQuiz: NewQuiz) => {
-    quizService.createQuiz(newQuiz);
-    setMessage(`Quiz '${newQuiz.name}' saved!`);
-    setTimeout(() => {
-      setMessage("");
-    }, 10000);
+  const dispatch = useAppDispatch();
+  const handleSubmit = async (newQuiz: NewQuiz) => {
+    try {
+      const quiz = await quizService.createQuiz(newQuiz);
+      if (quiz) {
+        dispatch(setNotification(`New quiz ${quiz.name} added!`, 5));
+      }
+    } catch (error: unknown) {
+      console.log(error);
+      if (error instanceof Error) dispatch(setNotification(error.message, 5));
+    }
   };
   return (
     <div className="h-max py-4 px-2 bg-white">
       <Link to="/">
         <button className="btn-blue lg:float-left">Back</button>
       </Link>
-      {message !== "" && (
-        <p className="bg-green-500 text-white rounded text-center m-auto w-1/3 px-4 py-2">
-          {message}
-        </p>
-      )}
       <AddQuizForm onSubmitQuiz={handleSubmit} />
     </div>
   );
