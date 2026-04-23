@@ -18,13 +18,7 @@ const userSchema = new Schema<User>({
   passwordHash: {
     type: String,
     required: true
-  },
-  quizzes: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Quiz"
-    }
-  ]
+  }
 });
 
 export const UserModel = mongoose.model("User", userSchema);

@@ -22,6 +22,7 @@ const LoginRegister = () => {
     if (loggedIn) {
       setLoginUsername("");
       setLoginPassword("");
+      // tähä thunk kutsu
       navigate("/");
     }
   };

@@ -10,6 +10,17 @@ export interface Quiz {
   answersId: string;
 }
 
+export interface UserQuiz {
+  _id: mongoose.Types.ObjectId;
+  userId: mongoose.Types.ObjectId;
+  category: string;
+  subcategory: string;
+  name: string;
+  description: string;
+  questions: QuizQuestions[];
+  answersId: string;
+}
+
 export interface QuizQuestions {
   question: string;
   choices: string[];
@@ -39,7 +50,6 @@ export interface User {
   username: string;
   name: string;
   passwordHash: string;
-  quizzes: Array<mongoose.Types.ObjectId>;
 }
 
 export interface NewUser {

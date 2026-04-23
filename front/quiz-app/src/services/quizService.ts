@@ -11,6 +11,19 @@ const getAllQuizzes = async () => {
   }
 };
 
+const getUserQuizzes = async (user: User) => {
+  try {
+    const config = {
+      headers: { Authorization: `Bearer ${user.token}` }
+    };
+
+    const response = await axios.get("/api/quiz/userquizzes", config);
+    return response.data;
+  } catch (error: unknown) {
+    if (error instanceof Error) console.log(error.message);
+  }
+};
+
 const getAnswers = async (id: string) => {
   try {
     const response = await axios.get<QuizAnswers>(`/api/quiz/answers/${id}`);
@@ -38,4 +51,4 @@ const createQuiz = async (quiz: NewQuiz, user: User) => {
   return response.data;
 };
 
-export default { getAllQuizzes, getAnswers, createQuiz };
+export default { getAllQuizzes, getUserQuizzes, getAnswers, createQuiz };

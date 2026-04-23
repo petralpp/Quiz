@@ -6,7 +6,8 @@ import Navigation from "./Navigation";
 import { useState } from "react";
 import {
   selectEducationQuizzes,
-  selectEntertainmentQuizzes
+  selectEntertainmentQuizzes,
+  selectUserQuizzes
 } from "../store/selectors";
 
 interface Props {
@@ -18,16 +19,21 @@ const CategorySection = ({ toggleOverlay }: Props) => {
   const isActive = useAppSelector((state) => state.activeQuiz.isActive);
   const entertainmentList: Quiz[] = useAppSelector(selectEntertainmentQuizzes);
   const educationList: Quiz[] = useAppSelector(selectEducationQuizzes);
+  const userList: Quiz[] = useAppSelector(selectUserQuizzes);
   const [category, setCategory] = useState<string>("Education");
 
   const handleClick = (name: string, category: string) => {
     let quiz = null;
     if (category === "Entertainment") {
       quiz = entertainmentList?.find((q) => q.name === name);
-    } else {
+    } else if (category === "Education") {
       quiz = educationList?.find((q) => q.name === name);
+    } else {
+      console.log("quiz näyttää tältä handleClickissä: ", quiz);
+      quiz = userList?.find((q) => q.name === name);
     }
     if (quiz) {
+      console.log("Löytykö quiz handleClickissä?: ", quiz);
       dispatch(
         setSelectedQuiz({
           category: quiz.category,

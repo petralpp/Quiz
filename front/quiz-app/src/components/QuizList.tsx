@@ -3,7 +3,7 @@ import { selectGroupedQuizzesByCategory } from "../store/selectors";
 
 interface Props {
   category: string;
-  handleClick(name: string, category: string, subcategory: string): void;
+  handleClick(name: string, category: string): void;
 }
 
 const QuizList = ({ category, handleClick }: Props) => {
@@ -20,7 +20,7 @@ const QuizList = ({ category, handleClick }: Props) => {
                 {quizzes.map((el, j) => (
                   <div
                     key={j}
-                    onClick={() => handleClick(el.name, el.category, el.subcategory)}
+                    onClick={() => handleClick(el.name, el.category)}
                     className="bg-blue-600 hover:bg-blue-700 shadow-md hover:shadow-xl rounded-2xl flex items-center justify-center text-center min-w-50 h-30"
                   >
                     <h3 className="text-white px-1 text-base lg:text-lg">

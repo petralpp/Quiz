@@ -8,6 +8,7 @@ export const userQuizzesSlice = createSlice({
   initialState,
   reducers: {
     setUserQuizList(_state, action) {
+      console.log("Reducerissa, action payload: ", action.payload);
       return action.payload;
     }
   }

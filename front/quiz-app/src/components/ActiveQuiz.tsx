@@ -20,6 +20,7 @@ const ActiveQuiz = () => {
   const quit = () => {
     dispatch(resetAnswers());
     dispatch(endQuiz());
+    setQuizOn(true);
   };
 
   return (

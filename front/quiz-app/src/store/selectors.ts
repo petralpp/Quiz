@@ -35,7 +35,6 @@ export const selectGroupedQuizzesByCategory = (category: string) =>
         grouped[quiz.subcategory] ??= [];
         grouped[quiz.subcategory].push(quiz);
       }
-
       return grouped;
     }
   );

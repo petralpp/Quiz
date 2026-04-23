@@ -23,6 +23,7 @@ import LoginRegister from "./components/LoginRegister";
 import { clearUser, setUser } from "./store/reducers/userReducer";
 import Notification from "./components/Notification";
 import { setNotification } from "./store/reducers/notificationReducer";
+import { setUserQuizList } from "./store/reducers/userQuizzesReducer";
 
 function App() {
   const entertainmentList: Quiz[] = useAppSelector(selectEntertainmentQuizzes);
@@ -52,6 +53,12 @@ function App() {
     const foundUser = storageService.getUser("quizAppUser");
     if (foundUser) {
       dispatch(setUser(foundUser));
+      quizService.getUserQuizzes(foundUser).then((data) => {
+        if (data) {
+          console.log("Käyttäjän quizzit: ", data);
+          dispatch(setUserQuizList(data));
+        }
+      });
     }
   }, [dispatch]);
 
