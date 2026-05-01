@@ -14,7 +14,6 @@ export const selectedQuizSlice = createSlice({
   initialState,
   reducers: {
     setSelectedQuiz(_state, action) {
-      console.log("Valitun quizzin reduceris, payload: ", action.payload);
       return action.payload;
     }
   }

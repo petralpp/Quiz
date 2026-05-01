@@ -21,6 +21,7 @@ import {
 import CreationPage from "./components/CreationPage";
 import LoginRegister from "./components/LoginRegister";
 import { clearUser, setUser } from "./store/reducers/userReducer";
+import { clearUserQuizList } from "./store/reducers/userQuizzesReducer";
 import Notification from "./components/Notification";
 import { setNotification } from "./store/reducers/notificationReducer";
 import { setUserQuizList } from "./store/reducers/userQuizzesReducer";
@@ -55,7 +56,6 @@ function App() {
       dispatch(setUser(foundUser));
       quizService.getUserQuizzes(foundUser).then((data) => {
         if (data) {
-          console.log("Käyttäjän quizzit: ", data);
           dispatch(setUserQuizList(data));
         }
       });
@@ -65,6 +65,7 @@ function App() {
   const handleLogout = () => {
     storageService.removeUser("quizAppUser");
     dispatch(clearUser());
+    dispatch(clearUserQuizList());
     dispatch(setNotification("Logged out successfully", 5));
   };
 

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser, registerUser } from "../store/reducers/userReducer";
 import { useAppDispatch } from "../store/hooks";
+import { fetchUserQuizzes } from "../store/reducers/userQuizzesReducer";
 
 const LoginRegister = () => {
   const [loginUsername, setLoginUsername] = useState("");
@@ -17,12 +18,12 @@ const LoginRegister = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!LoginIsValid) return;
-    const loggedIn = await dispatch(loginUser(loginUsername, loginPassword));
+    const loggedInUser = await dispatch(loginUser(loginUsername, loginPassword));
 
-    if (loggedIn) {
+    if (loggedInUser) {
       setLoginUsername("");
       setLoginPassword("");
-      // tähä thunk kutsu
+      dispatch(fetchUserQuizzes(loggedInUser));
       navigate("/");
     }
   };

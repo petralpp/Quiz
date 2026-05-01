@@ -29,11 +29,9 @@ const CategorySection = ({ toggleOverlay }: Props) => {
     } else if (category === "Education") {
       quiz = educationList?.find((q) => q.name === name);
     } else {
-      console.log("quiz näyttää tältä handleClickissä: ", quiz);
       quiz = userList?.find((q) => q.name === name);
     }
     if (quiz) {
-      console.log("Löytykö quiz handleClickissä?: ", quiz);
       dispatch(
         setSelectedQuiz({
           category: quiz.category,

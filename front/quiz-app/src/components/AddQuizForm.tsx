@@ -11,7 +11,6 @@ interface Props {
 const AddQuizForm = ({ onSubmitQuiz }: Props) => {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
-  const [subcategory, setSubcategory] = useState("");
   const [description, setDescription] = useState("");
   const [questions, setQuestions] = useState<NewQuestion[]>([]);
   const loggedInUser = useAppSelector(selectUser);
@@ -27,7 +26,6 @@ const AddQuizForm = ({ onSubmitQuiz }: Props) => {
   const isValid =
     title.trim().length > 0 &&
     category.trim().length > 0 &&
-    subcategory.trim().length > 0 &&
     description.trim().length > 0 &&
     questions.length > 0;
 
@@ -40,8 +38,8 @@ const AddQuizForm = ({ onSubmitQuiz }: Props) => {
       {
         name: title.trim(),
         description: description.trim(),
-        category: category.trim(),
-        subcategory: subcategory.trim(),
+        category: "UserQuiz",
+        subcategory: category.trim(),
         questions
       },
       loggedInUser
@@ -50,7 +48,6 @@ const AddQuizForm = ({ onSubmitQuiz }: Props) => {
     setTitle("");
     setDescription("");
     setCategory("");
-    setSubcategory("");
     setQuestions([]);
   };
 
@@ -89,20 +86,6 @@ const AddQuizForm = ({ onSubmitQuiz }: Props) => {
               className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="e.g. Entertainment, Education"
               required
-            />
-          </label>
-        </div>
-
-        <div>
-          <label className="block mb-1 font-medium">
-            Subcategory *
-            <input
-              type="text"
-              value={subcategory}
-              maxLength={100}
-              onChange={(e) => setSubcategory(e.target.value)}
-              className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="e.g. Films, Psychology"
             />
           </label>
         </div>

@@ -35,7 +35,7 @@ export const loginUser = (username: string, password: string) => {
         storageService.addUser("quizAppUser", user);
 
         dispatch(setUser(user));
-        return true;
+        return user;
       }
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
