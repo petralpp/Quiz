@@ -10,8 +10,7 @@ const addUser = async (newUser: NewUser) => {
   const user = new UserModel({
     username,
     name,
-    passwordHash,
-    quizzes: []
+    passwordHash
   });
 
   const savedUser = await user.save();

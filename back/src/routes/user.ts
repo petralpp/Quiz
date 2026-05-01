@@ -15,7 +15,16 @@ router.post("/register", async (req: Request, res: Response, next: NextFunction)
     const newUser = parseUser(username, name, password);
     const savedUser = await userService.addUser(newUser);
 
-    res.status(201).json(savedUser);
+    const userForToken = {
+      username: savedUser.username,
+      id: savedUser._id
+    };
+    const secret = config.SECRET as string;
+    const token = jwt.sign(userForToken, secret, { expiresIn: 60 * 60 });
+
+    res
+      .status(201)
+      .json({ token, username: savedUser.username, name: savedUser.name });
   } catch (error: unknown) {
     next(error);
   }
@@ -40,9 +49,7 @@ router.post("/login", async (req: Request, res: Response, next: NextFunction) =>
       username: user.username,
       id: user._id
     };
-
     const secret = config.SECRET as string;
-
     const token = jwt.sign(userForToken, secret, { expiresIn: 60 * 60 });
 
     res.status(201).json({ token, username: user.username, name: user.name });

@@ -16,7 +16,8 @@ import { startQuiz } from "./store/reducers/activeQuizReducer";
 import {
   selectedQuizDescription,
   selectEducationQuizzes,
-  selectEntertainmentQuizzes
+  selectEntertainmentQuizzes,
+  selectUserQuizzes
 } from "./store/selectors";
 import CreationPage from "./components/CreationPage";
 import LoginRegister from "./components/LoginRegister";
@@ -29,6 +30,7 @@ import { setUserQuizList } from "./store/reducers/userQuizzesReducer";
 function App() {
   const entertainmentList: Quiz[] = useAppSelector(selectEntertainmentQuizzes);
   const educationList: Quiz[] = useAppSelector(selectEducationQuizzes);
+  const userList: Quiz[] = useAppSelector(selectUserQuizzes);
   const selectedQuiz: QuizDescription = useAppSelector(selectedQuizDescription);
   const [overlayIsOpen, setOverlayIsOpen] = useState<boolean>(false);
   const dispatch = useAppDispatch();
@@ -38,27 +40,46 @@ function App() {
   };
 
   useEffect(() => {
-    quizService.getAllQuizzes().then((data) => {
-      if (data) {
-        const entertainment: Quiz[] = [];
-        const education: Quiz[] = [];
-        data.forEach((quiz) =>
-          quiz.category === "Entertainment"
-            ? entertainment.push(quiz)
-            : education.push(quiz)
-        );
-        dispatch(setEntertainmentList(entertainment));
-        dispatch(setEducationList(education));
-      }
-    });
+    quizService
+      .getAllQuizzes()
+      .then((data) => {
+        if (data) {
+          const entertainment: Quiz[] = [];
+          const education: Quiz[] = [];
+          data.forEach((quiz) =>
+            quiz.category === "Entertainment"
+              ? entertainment.push(quiz)
+              : education.push(quiz)
+          );
+          dispatch(setEntertainmentList(entertainment));
+          dispatch(setEducationList(education));
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        dispatch(setNotification(error.message, 6));
+      });
     const foundUser = storageService.getUser("quizAppUser");
     if (foundUser) {
       dispatch(setUser(foundUser));
-      quizService.getUserQuizzes(foundUser).then((data) => {
-        if (data) {
-          dispatch(setUserQuizList(data));
-        }
-      });
+      quizService
+        .getUserQuizzes(foundUser)
+        .then((data) => {
+          if (data) {
+            dispatch(setUserQuizList(data));
+          }
+        })
+        .catch((error) => {
+          if (error.status === 401) {
+            dispatch(setNotification("Session expired", 6));
+            dispatch(clearUser());
+            storageService.removeUser("quizAppUser");
+          } else {
+            dispatch(
+              setNotification("Something went wrong when fetching user quizzes", 6)
+            );
+          }
+        });
     }
   }, [dispatch]);
 
@@ -75,8 +96,10 @@ function App() {
       quizElement = entertainmentList.find(
         (quiz) => quiz.name === selectedQuiz.name
       );
-    } else {
+    } else if (selectedQuiz.category === "Education") {
       quizElement = educationList.find((quiz) => quiz.name === selectedQuiz.name);
+    } else {
+      quizElement = userList.find((quiz) => quiz.name === selectedQuiz.name);
     }
     if (quizElement) {
       dispatch(startQuiz(quizElement));

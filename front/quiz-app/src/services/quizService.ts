@@ -3,25 +3,17 @@ import type { QuizAnswers, Quiz, NewQuiz, User } from "../types";
 import { createNewAnswers, createNewQuiz } from "./utils";
 
 const getAllQuizzes = async () => {
-  try {
-    const response = await axios.get<Quiz[]>("/api/quiz");
-    return response.data;
-  } catch (error: unknown) {
-    if (error instanceof Error) console.log(error.message);
-  }
+  const response = await axios.get<Quiz[]>("/api/quiz");
+  return response.data;
 };
 
 const getUserQuizzes = async (user: User) => {
-  try {
-    const config = {
-      headers: { Authorization: `Bearer ${user.token}` }
-    };
+  const config = {
+    headers: { Authorization: `Bearer ${user.token}` }
+  };
 
-    const response = await axios.get("/api/quiz/userquizzes", config);
-    return response.data;
-  } catch (error: unknown) {
-    if (error instanceof Error) console.log(error.message);
-  }
+  const response = await axios.get("/api/quiz/userquizzes", config);
+  return response.data;
 };
 
 const getAnswers = async (id: string) => {
