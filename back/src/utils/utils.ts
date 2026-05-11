@@ -9,15 +9,15 @@ export const NewUserSchema = z.object({
 });
 
 export const QuestionSchema = z.object({
-  question: z.string(),
-  choices: z.array(z.string())
+  question: z.string().max(150),
+  choices: z.array(z.string().max(150))
 });
 
 export const NewQuizSchema = z.object({
-  category: z.string(),
-  subcategory: z.string(),
-  name: z.string(),
-  description: z.string(),
+  category: z.string().max(30),
+  subcategory: z.string().max(30),
+  name: z.string().max(35),
+  description: z.string().max(450),
   questions: z.array(QuestionSchema)
 });
 

@@ -43,7 +43,6 @@ function App() {
           }
         })
         .catch((error) => {
-          console.log(error);
           if (error.status === 401) {
             dispatch(setNotification("Session expired", 6));
             dispatch(clearUser());

@@ -56,7 +56,6 @@ const QuestionForm = ({ onAddQuestion }: Props) => {
       correctAnswer
     });
 
-    // Reset form
     setQuestionText("");
     setChoices(["", ""]);
     setCorrectAnswer("");
@@ -75,7 +74,7 @@ const QuestionForm = ({ onAddQuestion }: Props) => {
           <input
             type="text"
             value={questionText}
-            maxLength={200}
+            maxLength={150}
             onChange={(e) => setQuestionText(e.target.value)}
             className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Enter question text"
@@ -99,7 +98,7 @@ const QuestionForm = ({ onAddQuestion }: Props) => {
             <input
               type="text"
               value={choice}
-              maxLength={200}
+              maxLength={150}
               onChange={(e) => handleChoiceChange(index, e.target.value)}
               className="flex-1 border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder={`Choice ${index + 1}`}
