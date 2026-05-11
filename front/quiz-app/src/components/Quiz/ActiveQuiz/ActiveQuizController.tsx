@@ -1,8 +1,11 @@
 import { useState } from "react";
-import { useAppSelector, useAppDispatch } from "../../../store/hooks";
+
 import type { Quiz } from "../../../types";
+
+import { useAppSelector, useAppDispatch } from "../../../store/hooks";
 import { endQuiz } from "../../../store/reducers/activeQuizReducer";
 import { resetAnswers } from "../../../store/reducers/answersReducer";
+
 import CurrentQuestion from "./CurrentQuestion";
 import Result from "./Result";
 
@@ -12,7 +15,7 @@ const ActiveQuizController = () => {
   const activeQuiz: Quiz = useAppSelector((state) => state.activeQuiz.quiz);
   const [showQuestion, setShowQuestion] = useState<boolean>(true);
 
-  const handleRestart = () => {
+  const restart = () => {
     dispatch(resetAnswers());
     setShowQuestion(true);
   };
@@ -41,7 +44,7 @@ const ActiveQuizController = () => {
           <div>
             <Result />
             <div className="text-center m-4">
-              <button onClick={handleRestart} className="btn-blue">
+              <button onClick={restart} className="btn-blue">
                 Try again
               </button>
             </div>

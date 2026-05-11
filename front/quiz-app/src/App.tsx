@@ -1,13 +1,11 @@
 import { useEffect } from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
-import type { Quiz } from "./types";
 import quizService from "./services/quizService";
 import storageService from "./services/storageService";
 
 import { useAppDispatch } from "./store/hooks";
-import { setEducationList } from "./store/reducers/educationReducer";
-import { setEntertainmentList } from "./store/reducers/entertainmentReducer";
+import { setQuizzes } from "./store/reducers/quizReducer";
 import { clearUser, setUser } from "./store/reducers/userReducer";
 import { setNotification } from "./store/reducers/notificationReducer";
 import { setUserQuizList } from "./store/reducers/userQuizzesReducer";
@@ -27,15 +25,7 @@ function App() {
       .getAllQuizzes()
       .then((data) => {
         if (data) {
-          const entertainment: Quiz[] = [];
-          const education: Quiz[] = [];
-          data.forEach((quiz) =>
-            quiz.category === "Entertainment"
-              ? entertainment.push(quiz)
-              : education.push(quiz)
-          );
-          dispatch(setEntertainmentList(entertainment));
-          dispatch(setEducationList(education));
+          dispatch(setQuizzes(data));
         }
       })
       .catch((error) => {
@@ -53,6 +43,7 @@ function App() {
           }
         })
         .catch((error) => {
+          console.log(error);
           if (error.status === 401) {
             dispatch(setNotification("Session expired", 6));
             dispatch(clearUser());

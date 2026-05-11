@@ -20,8 +20,8 @@ interface Props {
 
 const CurrentQuestion = ({ setShowQuestion }: Props) => {
   const dispatch = useAppDispatch();
-  const [answer, setAnswer] = useState<string>("");
   const activeQuiz: Quiz = useAppSelector((state) => state.activeQuiz.quiz);
+  const [answer, setAnswer] = useState<string>("");
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [currentQuestion, setCurrentQuestion] = useState<string>("");
   const [currentOptions, setCurrentOptions] = useState<string[]>([]);

@@ -3,9 +3,10 @@ import type { RootState } from "./store";
 import type { Quiz } from "../types";
 
 export const selectEntertainmentQuizzes = (state: RootState) =>
-  state.entertainmentQuizzes;
+  state.quizzes.entertainmentList;
 
-export const selectEducationQuizzes = (state: RootState) => state.educationQuizzes;
+export const selectEducationQuizzes = (state: RootState) =>
+  state.quizzes.educationList;
 
 export const selectedQuizDescription = (state: RootState) => state.selectedQuiz;
 
@@ -20,9 +21,9 @@ export const selectGroupedQuizzesByCategory = (category: string) =>
     [
       (state: RootState) => {
         if (category === "Entertainment") {
-          return state.entertainmentQuizzes;
+          return state.quizzes.entertainmentList;
         } else if (category === "Education") {
-          return state.educationQuizzes;
+          return state.quizzes.educationList;
         } else {
           return state.userQuizzes;
         }

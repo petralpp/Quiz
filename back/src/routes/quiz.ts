@@ -113,11 +113,7 @@ router.get(
       }
 
       const userQuizzes = await quizService.getUserQuizzes(user._id.toString());
-      if (!userQuizzes) {
-        res.status(404).send("Quizzes for user not found");
-      } else {
-        res.send(userQuizzes);
-      }
+      res.send(userQuizzes);
     } catch (error: unknown) {
       next(error);
     }

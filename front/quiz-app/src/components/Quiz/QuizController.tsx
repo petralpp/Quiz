@@ -59,10 +59,7 @@ const QuizController = () => {
     if (quiz) {
       dispatch(
         setSelectedQuiz({
-          category: quiz.category,
-          subcategory: quiz.subcategory,
-          name: quiz.name,
-          description: quiz.description,
+          ...quiz,
           questions: quiz.questions.length
         })
       );
