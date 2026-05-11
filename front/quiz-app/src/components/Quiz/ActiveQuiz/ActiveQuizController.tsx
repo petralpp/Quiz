@@ -1,26 +1,26 @@
 import { useState } from "react";
-import { useAppSelector, useAppDispatch } from "../store/hooks";
-import type { Quiz } from "../types";
-import { endQuiz } from "../store/reducers/activeQuizReducer";
-import { resetAnswers } from "../store/reducers/answersReducer";
+import { useAppSelector, useAppDispatch } from "../../../store/hooks";
+import type { Quiz } from "../../../types";
+import { endQuiz } from "../../../store/reducers/activeQuizReducer";
+import { resetAnswers } from "../../../store/reducers/answersReducer";
 import CurrentQuestion from "./CurrentQuestion";
 import Result from "./Result";
 
-const ActiveQuiz = () => {
+const ActiveQuizController = () => {
   const dispatch = useAppDispatch();
   const isActive = useAppSelector((state) => state.activeQuiz.isActive);
   const activeQuiz: Quiz = useAppSelector((state) => state.activeQuiz.quiz);
-  const [quizOn, setQuizOn] = useState<boolean>(true);
+  const [showQuestion, setShowQuestion] = useState<boolean>(true);
 
   const handleRestart = () => {
     dispatch(resetAnswers());
-    setQuizOn(true);
+    setShowQuestion(true);
   };
 
   const quit = () => {
     dispatch(resetAnswers());
     dispatch(endQuiz());
-    setQuizOn(true);
+    setShowQuestion(true);
   };
 
   return (
@@ -35,8 +35,8 @@ const ActiveQuiz = () => {
         <h2 className="text-center mt-2 text-xl font-semibold text-gray-800">
           {activeQuiz.name} ({activeQuiz.questions.length} questions)
         </h2>
-        {quizOn ? (
-          <CurrentQuestion setQuizState={setQuizOn} />
+        {showQuestion ? (
+          <CurrentQuestion setShowQuestion={setShowQuestion} />
         ) : (
           <div>
             <Result />
@@ -52,4 +52,4 @@ const ActiveQuiz = () => {
   );
 };
 
-export default ActiveQuiz;
+export default ActiveQuizController;

@@ -1,5 +1,5 @@
-import { useAppSelector } from "../store/hooks";
-import { selectGroupedQuizzesByCategory } from "../store/selectors";
+import { useAppSelector } from "../../store/hooks";
+import { selectGroupedQuizzesByCategory } from "../../store/selectors";
 
 interface Props {
   category: string;
@@ -33,9 +33,7 @@ const QuizList = ({ category, handleClick }: Props) => {
           ))}
         </div>
       )}
-      {Object.keys(grouped).length === 0 && (
-        <p className="text-center">Nothing here!</p>
-      )}
+      {Object.keys(grouped).length === 0 && <p className="text-center">Empty</p>}
     </div>
   );
 };

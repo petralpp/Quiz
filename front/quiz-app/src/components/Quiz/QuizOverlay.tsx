@@ -1,5 +1,5 @@
-import { useAppSelector } from "../store/hooks";
-import type { QuizDescription } from "../types";
+import { useAppSelector } from "../../store/hooks";
+import type { QuizDescription } from "../../types";
 
 interface Props {
   isOpen: boolean;

@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
-import AddQuizForm from "./AddQuizForm";
-import type { NewQuiz, User } from "../types";
-import quizService from "../services/quizService";
-import { useAppDispatch } from "../store/hooks";
-import { setNotification } from "../store/reducers/notificationReducer";
+import QuizForm from "./QuizForm";
+import type { NewQuiz, User } from "../../types";
+import quizService from "../../services/quizService";
+import { useAppDispatch } from "../../store/hooks";
+import { setNotification } from "../../store/reducers/notificationReducer";
+import { addUserQuiz } from "../../store/reducers/userQuizzesReducer";
 
 const CreationPage = () => {
   const dispatch = useAppDispatch();
@@ -12,6 +13,7 @@ const CreationPage = () => {
       const quiz = await quizService.createQuiz(newQuiz, user);
       if (quiz) {
         dispatch(setNotification(`New quiz ${quiz.name} added!`, 5));
+        dispatch(addUserQuiz(quiz));
       }
     } catch (error: unknown) {
       console.log(error);
@@ -23,7 +25,7 @@ const CreationPage = () => {
       <Link to="/">
         <button className="btn-blue lg:float-left">Back</button>
       </Link>
-      <AddQuizForm onSubmitQuiz={handleSubmit} />
+      <QuizForm onSubmitQuiz={handleSubmit} />
     </div>
   );
 };

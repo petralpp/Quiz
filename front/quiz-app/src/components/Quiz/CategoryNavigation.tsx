@@ -7,7 +7,7 @@ interface Props {
   setCategory: Dispatch<SetStateAction<string>>;
 }
 
-const Navigation = ({ category, setCategory }: Props) => {
+const CategoryNavigation = ({ category, setCategory }: Props) => {
   return (
     <div className="flex ml-2">
       <div
@@ -32,4 +32,4 @@ const Navigation = ({ category, setCategory }: Props) => {
   );
 };
 
-export default Navigation;
+export default CategoryNavigation;

@@ -1,14 +1,14 @@
 import { useState } from "react";
-import AddQuestionForm from "./AddQuestionForm";
-import type { NewQuiz, NewQuestion, User } from "../types";
-import { useAppSelector } from "../store/hooks";
-import { selectUser } from "../store/selectors";
+import QuestionForm from "./QuestionForm";
+import type { NewQuiz, NewQuestion, User } from "../../types";
+import { useAppSelector } from "../../store/hooks";
+import { selectUser } from "../../store/selectors";
 
 interface Props {
   onSubmitQuiz: (quiz: NewQuiz, user: User) => void;
 }
 
-const AddQuizForm = ({ onSubmitQuiz }: Props) => {
+const QuizForm = ({ onSubmitQuiz }: Props) => {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
@@ -84,7 +84,7 @@ const AddQuizForm = ({ onSubmitQuiz }: Props) => {
               maxLength={100}
               onChange={(e) => setCategory(e.target.value)}
               className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="e.g. Entertainment, Education"
+              placeholder="e.g. Music, Sports"
               required
             />
           </label>
@@ -155,9 +155,9 @@ const AddQuizForm = ({ onSubmitQuiz }: Props) => {
         </button>
       </form>
 
-      <AddQuestionForm onAddQuestion={addQuestion} />
+      <QuestionForm onAddQuestion={addQuestion} />
     </div>
   );
 };
 
-export default AddQuizForm;
+export default QuizForm;

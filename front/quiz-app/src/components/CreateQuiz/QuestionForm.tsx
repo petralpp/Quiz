@@ -1,11 +1,11 @@
 import { useState } from "react";
-import type { NewQuestion } from "../types";
+import type { NewQuestion } from "../../types";
 
 interface Props {
   onAddQuestion: (question: NewQuestion) => void;
 }
 
-const AddQuestionForm = ({ onAddQuestion }: Props) => {
+const QuestionForm = ({ onAddQuestion }: Props) => {
   const [questionText, setQuestionText] = useState("");
   const [choices, setChoices] = useState<string[]>(["", ""]);
   const [correctAnswer, setCorrectAnswer] = useState("");
@@ -142,4 +142,4 @@ const AddQuestionForm = ({ onAddQuestion }: Props) => {
   );
 };
 
-export default AddQuestionForm;
+export default QuestionForm;

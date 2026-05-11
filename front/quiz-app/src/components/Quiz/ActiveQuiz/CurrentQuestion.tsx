@@ -5,15 +5,20 @@ import {
   type FormEvent,
   useEffect
 } from "react";
-import { useAppSelector, useAppDispatch } from "../store/hooks";
-import type { Quiz } from "../types";
-import { setPlayerAnswer, getRightAnswers } from "../store/reducers/answersReducer";
+
+import type { Quiz } from "../../../types";
+
+import { useAppSelector, useAppDispatch } from "../../../store/hooks";
+import {
+  setPlayerAnswer,
+  getRightAnswers
+} from "../../../store/reducers/answersReducer";
 
 interface Props {
-  setQuizState: Dispatch<SetStateAction<boolean>>;
+  setShowQuestion: Dispatch<SetStateAction<boolean>>;
 }
 
-const CurrentQuestion = ({ setQuizState }: Props) => {
+const CurrentQuestion = ({ setShowQuestion }: Props) => {
   const dispatch = useAppDispatch();
   const [answer, setAnswer] = useState<string>("");
   const activeQuiz: Quiz = useAppSelector((state) => state.activeQuiz.quiz);
@@ -28,20 +33,20 @@ const CurrentQuestion = ({ setQuizState }: Props) => {
     setCurrentOptions(options);
   }, [activeQuiz, currentIndex]);
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleAnswerSubmit = async (e: FormEvent) => {
     e.preventDefault();
     dispatch(setPlayerAnswer(answer));
     const index = currentIndex + 1;
     if (index === activeQuiz.questions.length) {
       dispatch(getRightAnswers(activeQuiz.answersId));
-      setQuizState(false);
+      setShowQuestion(false);
     } else {
       setCurrentIndex(index);
     }
     setAnswer("");
   };
 
-  const handleChange = (text: string) => {
+  const changeAnswer = (text: string) => {
     setAnswer(text);
   };
 
@@ -50,14 +55,14 @@ const CurrentQuestion = ({ setQuizState }: Props) => {
       <p className="mt-3 text-base md:text-lg lg:text-xl">
         {currentIndex + 1}. {currentQuestion}
       </p>
-      <form onSubmit={handleSubmit} className="m-2">
+      <form onSubmit={handleAnswerSubmit} className="m-2">
         {currentOptions.map((option) => (
           <div key={option} className="mb-3">
             <label className="">
               <input
                 type="radio"
                 name="option"
-                onChange={() => handleChange(option)}
+                onChange={() => changeAnswer(option)}
               />
               <p className="inline ml-2 text-base md:text-lg lg:text-xl">{option}</p>
             </label>

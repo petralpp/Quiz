@@ -17,12 +17,8 @@ const getUserQuizzes = async (user: User) => {
 };
 
 const getAnswers = async (id: string) => {
-  try {
-    const response = await axios.get<QuizAnswers>(`/api/quiz/answers/${id}`);
-    return response.data;
-  } catch (error: unknown) {
-    if (error instanceof Error) console.log(error.message);
-  }
+  const response = await axios.get<QuizAnswers>(`/api/quiz/answers/${id}`);
+  return response.data;
 };
 
 const createQuiz = async (quiz: NewQuiz, user: User) => {
