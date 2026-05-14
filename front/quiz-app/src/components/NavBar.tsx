@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Bars4Icon } from "@heroicons/react/24/outline";
+import { Bars4Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
 import type { User } from "../types";
 import storageService from "../services/storageService";
@@ -39,7 +39,10 @@ const NavBar = () => {
             className="md:hidden overlay-background"
             onClick={() => setShowMobileMenu(!showMobileMenu)}
           >
-            <div className="fixed right-5 top-9 bg-indigo-600 rounded flex flex-col">
+            <div className="fixed flex flex-col gap-2 p-4 w-[60%] right-0 top-0 bg-indigo-500 rounded text-lg text-center">
+              <div className="cursor-pointer text-white">
+                <XMarkIcon className="size-7 justify-self-end" />
+              </div>
               <Link to="/create">
                 <div className="px-4 py-2 hover:bg-amber-600 text-white rounded">
                   Create
