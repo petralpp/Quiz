@@ -1,3 +1,6 @@
+# Tests until component designs are done
+src/tests
+
 # Logs
 logs
 *.log

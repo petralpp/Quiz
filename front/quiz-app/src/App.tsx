@@ -10,7 +10,7 @@ import { clearUser, setUser } from "./store/reducers/userReducer";
 import { setNotification } from "./store/reducers/notificationReducer";
 import { setUserQuizList } from "./store/reducers/userQuizzesReducer";
 
-import PageTop from "./components/PageTop";
+import NavBar from "./components/NavBar";
 import QuizController from "./components/Quiz/QuizController";
 import CreationPage from "./components/CreateQuiz/CreationPage";
 import Register from "./components/User/Register";
@@ -59,7 +59,7 @@ function App() {
   return (
     <Router>
       <div className="font-sans text-lg">
-        <PageTop />
+        <NavBar />
         <Notification />
         <Routes>
           <Route path="/" element={<QuizController />} />

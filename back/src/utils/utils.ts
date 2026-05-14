@@ -21,15 +21,10 @@ export const NewQuizSchema = z.object({
   questions: z.array(QuestionSchema)
 });
 
-export const CorrectAnswerSchema = z.object({
-  question: z.string(),
-  answer: z.string()
-});
-
 export const NewAnswersSchema = z.array(
   z.object({
-    question: z.string(),
-    answer: z.string()
+    question: z.string().max(150),
+    answer: z.string().max(150)
   })
 );
 

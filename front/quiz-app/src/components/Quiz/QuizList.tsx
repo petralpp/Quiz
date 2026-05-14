@@ -21,7 +21,7 @@ const QuizList = ({ category, handleClick }: Props) => {
                   <div
                     key={j}
                     onClick={() => handleClick(el.name, el.category)}
-                    className="bg-blue-600 hover:bg-blue-700 shadow-md hover:shadow-xl rounded-2xl flex items-center justify-center text-center min-w-50 h-30"
+                    className="bg-indigo-500 hover:bg-blue-700 shadow-md hover:shadow-xl rounded-2xl flex items-center justify-center text-center min-w-50 h-30"
                   >
                     <h3 className="text-white px-1 text-base lg:text-lg">
                       {el.name}
