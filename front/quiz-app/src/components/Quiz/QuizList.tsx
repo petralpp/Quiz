@@ -12,20 +12,18 @@ const QuizList = ({ category, handleClick }: Props) => {
   return (
     <div className="h-max py-4 bg-white">
       {grouped && (
-        <div>
+        <div className="px-3">
           {Object.entries(grouped).map(([subcategory, quizzes], i) => (
             <div key={i}>
-              <h2 className="text-xl pl-3 pt-3 font-semibold">{subcategory}</h2>
-              <div className="flex flex-wrap gap-3 pl-3 pt-3 py-3">
+              <h2 className="pt-3 text-xl font-semibold">{subcategory}</h2>
+              <div className="flex gap-3 py-3 overflow-x-scroll scrollbar-hidden">
                 {quizzes.map((el, j) => (
                   <div
                     key={j}
                     onClick={() => handleClick(el.name, el.category)}
-                    className="bg-indigo-500 hover:bg-blue-700 shadow-md hover:shadow-xl rounded-2xl flex items-center justify-center text-center min-w-50 h-30"
+                    className="cursor-pointer flex items-center justify-center min-w-50 h-30 bg-indigo-500 hover:bg-blue-700 shadow-md hover:shadow-xl rounded-2xl text-center"
                   >
-                    <h3 className="text-white px-1 text-base lg:text-lg">
-                      {el.name}
-                    </h3>
+                    <p className="px-1 text-white text-base lg:text-lg">{el.name}</p>
                   </div>
                 ))}
               </div>

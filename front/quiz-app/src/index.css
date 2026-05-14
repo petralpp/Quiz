@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+@utility scrollbar-hidden {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 body {
   @apply bg-linear-to-r from-indigo-500 to-purple-500;
 }
