@@ -13,7 +13,7 @@ const CategoryNavigation = ({ category, setCategory }: Props) => {
   const user = useAppSelector(selectUser);
 
   return (
-    <div className="flex ml-2">
+    <div className="flex text-center">
       <div
         onClick={() => setCategory("Education")}
         className={`cursor-pointer px-3 rounded-t-md font-semibold ${category === "Education" ? "bg-white" : "hover:text-gray-50"}`}
