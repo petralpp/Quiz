@@ -64,7 +64,7 @@ const QuestionForm = ({ onAddQuestion }: Props) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="p-6 bg-white rounded-2xl shadow-md space-y-4"
+      className="p-5 bg-white rounded-2xl shadow-md space-y-4"
     >
       <h2 className="text-xl font-semibold">Add Question</h2>
       <p>At least 1 question is required</p>
@@ -86,7 +86,7 @@ const QuestionForm = ({ onAddQuestion }: Props) => {
         <p>Mark one of the choices as the correct one</p>
 
         {choices.map((choice, index) => (
-          <div key={index} className="flex items-center gap-3">
+          <div key={index} className="flex items-center gap-3 max-w-full">
             <input
               type="radio"
               name="correctAnswer"
@@ -100,7 +100,7 @@ const QuestionForm = ({ onAddQuestion }: Props) => {
               value={choice}
               maxLength={150}
               onChange={(e) => handleChoiceChange(index, e.target.value)}
-              className="flex-1 border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="flex-1 border max-w-50 md:max-w-full rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder={`Choice ${index + 1}`}
             />
 

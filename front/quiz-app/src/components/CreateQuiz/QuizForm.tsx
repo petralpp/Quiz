@@ -52,10 +52,10 @@ const QuizForm = ({ onSubmitQuiz }: Props) => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 space-y-6">
+    <div className="max-w-3xl mx-auto p-5 space-y-6">
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-6 rounded-2xl shadow-md space-y-4"
+        className="bg-white p-5 rounded-2xl shadow-md space-y-4"
       >
         <h1 className="text-2xl font-bold">Create New Quiz</h1>
         <p>All fields are required</p>
