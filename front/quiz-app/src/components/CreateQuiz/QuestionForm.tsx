@@ -108,7 +108,7 @@ const QuestionForm = ({ onAddQuestion }: Props) => {
               <button
                 type="button"
                 onClick={() => removeChoice(index)}
-                className="text-red-500 hover:text-red-700"
+                className="cursor-pointer text-red-500 hover:text-red-700"
               >
                 ✕
               </button>
@@ -120,7 +120,7 @@ const QuestionForm = ({ onAddQuestion }: Props) => {
           <button
             type="button"
             onClick={addChoice}
-            className="text-blue-600 hover:underline text-sm"
+            className="cursor-pointer text-blue-600 hover:underline"
           >
             + Add choice
           </button>
@@ -129,11 +129,7 @@ const QuestionForm = ({ onAddQuestion }: Props) => {
       <button
         type="submit"
         disabled={!isValid}
-        className={`px-4 py-2 rounded-lg text-white ${
-          isValid
-            ? "bg-blue-600 hover:bg-blue-700"
-            : "bg-gray-400 cursor-not-allowed"
-        }`}
+        className={isValid ? "btn btn-blue" : "btn-blue-disabled"}
       >
         Add Question
       </button>

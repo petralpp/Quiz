@@ -29,10 +29,7 @@ const ActiveQuizController = () => {
   return (
     isActive && (
       <div className="bg-white p-3">
-        <button
-          className="px-4 py-2 ml-2 absolute rounded bg-red-500 text-white"
-          onClick={quit}
-        >
+        <button className="btn btn-red ml-2" onClick={quit}>
           Quit
         </button>
         <h2 className="text-center mt-2 text-xl font-semibold text-gray-800">
@@ -44,7 +41,10 @@ const ActiveQuizController = () => {
           <div>
             <Result />
             <div className="text-center m-4">
-              <button onClick={restart} className="btn-blue">
+              <button
+                onClick={restart}
+                className="btn btn-white border-2 border-solid"
+              >
                 Try again
               </button>
             </div>

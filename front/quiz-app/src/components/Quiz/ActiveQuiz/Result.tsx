@@ -32,13 +32,16 @@ const Result = () => {
       </h2>
       {showAnswers ? (
         <>
-          <button onClick={() => setShowAnswers(false)} className="btn-orange mt-2">
+          <button
+            onClick={() => setShowAnswers(false)}
+            className="btn btn-blue mt-2"
+          >
             Hide
           </button>
           <ResultTable />
         </>
       ) : (
-        <button onClick={() => setShowAnswers(true)} className="btn-orange m-2">
+        <button onClick={() => setShowAnswers(true)} className="btn btn-blue m-2">
           Show answers
         </button>
       )}

@@ -77,26 +77,22 @@ const NavBar = () => {
       <div className="hidden md:flex gap-2">
         {user && <p className="font-semibold">Hello {user.name}</p>}
         <Link to="/create">
-          <button className="cursor-pointer px-4 py-2 bg-indigo-600 hover:bg-amber-600 text-white font-semibold rounded">
-            Create
-          </button>
+          <button className="btn btn-blue font-semibold">Create</button>
         </Link>
         {user ? (
           <button
             onClick={handleLogout}
-            className="cursor-pointer px-4 py-2 bg-white hover:bg-amber-600 text-indigo-500 hover:text-white font-semibold rounded"
+            className="btn bg-white hover:bg-amber-600 text-indigo-500 hover:text-white font-semibold"
           >
             Logout
           </button>
         ) : (
           <>
             <Link to="/login">
-              <button className="cursor-pointer px-4 py-2 bg-white hover:bg-amber-600 text-indigo-500 hover:text-white font-semibold rounded">
-                Login
-              </button>
+              <button className="btn btn-white font-semibold">Login</button>
             </Link>
             <Link to="/register">
-              <button className="cursor-pointer px-4 py-2 bg-white hover:bg-amber-600 text-indigo-500 hover:text-white font-semibold rounded">
+              <button className="btn bg-white hover:bg-amber-600 text-indigo-500 hover:text-white font-semibold">
                 Register
               </button>
             </Link>

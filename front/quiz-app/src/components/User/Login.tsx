@@ -31,7 +31,7 @@ const Login = () => {
   return (
     <div>
       <Link to="/">
-        <button className="btn-white mx-4">Back</button>
+        <button className="btn btn-white mx-4">Back</button>
       </Link>
       <div className="flex justify-evenly flex-wrap gap-1 m-auto py-2">
         <div className="bg-white rounded-2xl p-6">
@@ -69,7 +69,7 @@ const Login = () => {
               type="submit"
               disabled={!LoginIsValid}
               onClick={handleLogin}
-              className={LoginIsValid ? "btn-blue" : "btn-blue-disabled"}
+              className={LoginIsValid ? "btn btn-blue" : "btn-blue-disabled"}
             >
               Login
             </button>

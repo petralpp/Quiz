@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import QuizForm from "./QuizForm";
 import type { NewQuiz, User } from "../../types";
 import quizService from "../../services/quizService";
@@ -22,9 +21,6 @@ const CreationPage = () => {
   };
   return (
     <div className="h-max py-4 px-2 bg-white">
-      <Link to="/">
-        <button className="btn-blue lg:float-left">Back</button>
-      </Link>
       <QuizForm onSubmitQuiz={handleSubmit} />
     </div>
   );

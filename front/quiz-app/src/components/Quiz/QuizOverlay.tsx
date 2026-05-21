@@ -14,7 +14,7 @@ const QuizOverlay = ({ isOpen, onClose, start }: Props) => {
     <>
       {isOpen && (
         <div className="overlay-background" onClick={onClose}>
-          <div className="overlay md:h-full md:max-w-3/5">
+          <div className="overlay md:h-full md:max-w-2/5">
             <div className="mb-4">
               <h2 className="text-center font-semibold text-2xl mb-3">
                 {quiz.name}
@@ -27,11 +27,11 @@ const QuizOverlay = ({ isOpen, onClose, start }: Props) => {
             <div className="w-full m-auto flex justify-between">
               <button
                 onClick={onClose}
-                className="px-4 py-2 border-2 border-solid border-gray-500 bg-white hover:bg-gray-100 text-gray-950 rounded"
+                className="btn btn-white border-2 border-solid"
               >
                 Cancel
               </button>
-              <button onClick={start} className="btn-blue">
+              <button onClick={start} className="btn btn-blue">
                 Start
               </button>
             </div>

@@ -1,8 +1,11 @@
 import { useState } from "react";
-import QuestionForm from "./QuestionForm";
+import { Link } from "react-router-dom";
+
 import type { NewQuiz, NewQuestion, User } from "../../types";
 import { useAppSelector } from "../../store/hooks";
 import { selectUser } from "../../store/selectors";
+
+import QuestionForm from "./QuestionForm";
 
 interface Props {
   onSubmitQuiz: (quiz: NewQuiz, user: User) => void;
@@ -113,7 +116,7 @@ const QuizForm = ({ onSubmitQuiz }: Props) => {
                 <div className="flex justify-between overflow-auto items-start">
                   <div>
                     <p className="font-medium">{q.question}</p>
-                    <ul className="list-disc ml-5 text-sm mt-2">
+                    <ul className="list-disc ml-5 mt-2">
                       {q.choices.map((choice, i) => (
                         <li
                           key={i}
@@ -128,31 +131,31 @@ const QuizForm = ({ onSubmitQuiz }: Props) => {
                       ))}
                     </ul>
                   </div>
-
-                  <button
-                    type="button"
-                    onClick={() => removeQuestion(index)}
-                    className="text-red-500 hover:text-red-700 text-sm"
-                  >
-                    Remove
-                  </button>
                 </div>
+                <button
+                  type="button"
+                  onClick={() => removeQuestion(index)}
+                  className="btn btn-red mt-4 text-sm"
+                >
+                  Remove
+                </button>
               </div>
             ))}
           </div>
         )}
 
-        <button
-          type="submit"
-          disabled={!isValid && !loggedInUser}
-          className={`px-4 py-2 rounded-lg text-white ${
-            isValid
-              ? "bg-green-600 hover:bg-green-700"
-              : "bg-gray-400 cursor-not-allowed"
-          }`}
-        >
-          Save Quiz
-        </button>
+        <div className="flex justify-between">
+          <Link to="/">
+            <button className="btn btn-white border-2 border-solid">Cancel </button>
+          </Link>
+          <button
+            type="submit"
+            disabled={!isValid && !loggedInUser}
+            className={isValid ? "btn btn-blue" : "btn-blue-disabled"}
+          >
+            Save Quiz
+          </button>
+        </div>
       </form>
 
       <QuestionForm onAddQuestion={addQuestion} />

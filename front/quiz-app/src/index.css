@@ -10,20 +10,28 @@ body {
   @apply bg-linear-to-r from-indigo-500 to-purple-500;
 }
 
+.btn {
+  @apply cursor-pointer px-4 py-2 rounded;
+}
+
 .btn-blue {
-  @apply px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded;
+  @apply bg-indigo-600 hover:bg-orange-400 text-white;
 }
 
 .btn-blue-disabled {
-  @apply px-4 py-2 bg-indigo-200 text-white rounded;
+  @apply cursor-not-allowed px-4 py-2 rounded bg-indigo-200 text-white;
 }
 
 .btn-orange {
-  @apply px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded;
+  @apply bg-orange-500 hover:bg-orange-600 text-white;
 }
 
 .btn-white {
-  @apply px-4 py-2 bg-white hover:bg-orange-400 text-gray-800 rounded;
+  @apply bg-white hover:bg-orange-400 text-indigo-500 hover:text-white font-semibold;
+}
+
+.btn-red {
+  @apply bg-red-500 hover:bg-orange-400 text-white;
 }
 
 .overlay {

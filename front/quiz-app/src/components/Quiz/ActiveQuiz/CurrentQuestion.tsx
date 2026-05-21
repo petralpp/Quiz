@@ -70,7 +70,7 @@ const CurrentQuestion = ({ setShowQuestion }: Props) => {
         ))}
         <div className="text-center">
           {answer ? (
-            <button type="submit" className="btn-blue">
+            <button type="submit" className="btn btn-blue">
               Next
             </button>
           ) : (

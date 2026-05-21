@@ -35,7 +35,7 @@ const Register = () => {
   return (
     <div>
       <Link to="/">
-        <button className="btn-white mx-4">Back</button>
+        <button className="btn btn-white mx-4">Back</button>
       </Link>
       <div className="flex justify-evenly flex-wrap gap-1 m-auto py-2">
         <div className="bg-white rounded-2xl p-6">
@@ -92,7 +92,7 @@ const Register = () => {
               type="submit"
               disabled={!RegisterIsValid}
               onClick={handleRegister}
-              className={RegisterIsValid ? "btn-blue" : "btn-blue-disabled"}
+              className={RegisterIsValid ? "btn btn-blue" : "btn-blue-disabled"}
             >
               Register
             </button>
