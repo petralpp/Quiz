@@ -53,7 +53,7 @@ const QuestionForm = ({ onAddQuestion }: Props) => {
     onAddQuestion({
       question: questionText.trim(),
       choices: choices.map((c) => c.trim()),
-      correctAnswer
+      correctAnswer: correctAnswer.trim()
     });
 
     setQuestionText("");
