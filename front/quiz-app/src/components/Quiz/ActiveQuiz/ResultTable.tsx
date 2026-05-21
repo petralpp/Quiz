@@ -14,8 +14,8 @@ const ResultTable = () => {
   );
 
   return (
-    <table className="my-3">
-      <thead className="bg-linear-to-r from-emerald-400 to-sky-500 text-white">
+    <table className="my-3 ">
+      <thead className="bg-indigo-500 text-white">
         <tr className="">
           <td className="p-3 font-bold border-0 rounded-tl-xl">Question</td>
           <td className="p-3 font-bold">Correct answer</td>

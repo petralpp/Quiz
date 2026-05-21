@@ -80,10 +80,7 @@ const NavBar = () => {
           <button className="btn btn-blue font-semibold">Create</button>
         </Link>
         {user ? (
-          <button
-            onClick={handleLogout}
-            className="btn bg-white hover:bg-amber-600 text-indigo-500 hover:text-white font-semibold"
-          >
+          <button onClick={handleLogout} className="btn btn-white font-semibold">
             Logout
           </button>
         ) : (
@@ -92,9 +89,7 @@ const NavBar = () => {
               <button className="btn btn-white font-semibold">Login</button>
             </Link>
             <Link to="/register">
-              <button className="btn bg-white hover:bg-amber-600 text-indigo-500 hover:text-white font-semibold">
-                Register
-              </button>
+              <button className="btn btn-white font-semibold">Register</button>
             </Link>
           </>
         )}

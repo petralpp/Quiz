@@ -107,11 +107,10 @@ const QuizForm = ({ onSubmitQuiz }: Props) => {
           </label>
         </div>
 
-        {questions.length > 0 && (
-          <div className="space-y-4">
-            <h2 className="text-lg font-semibold">Added Questions</h2>
-
-            {questions.map((q, index) => (
+        <div className="space-y-4">
+          <h2 className="text-lg font-semibold">Questions *</h2>
+          {questions.length > 0 ? (
+            questions.map((q, index) => (
               <div key={index} className="border rounded-xl p-4 bg-gray-50">
                 <div className="flex justify-between overflow-auto items-start">
                   <div>
@@ -140,10 +139,17 @@ const QuizForm = ({ onSubmitQuiz }: Props) => {
                   Remove
                 </button>
               </div>
-            ))}
-          </div>
-        )}
+            ))
+          ) : (
+            <p className="italic">No questions added</p>
+          )}
+        </div>
 
+        {!loggedInUser && (
+          <p className="text-red-700 text-xl">
+            Only logged in users can create quizzes
+          </p>
+        )}
         <div className="flex justify-between">
           <Link to="/">
             <button className="btn btn-white border-2 border-solid">Cancel </button>
@@ -151,7 +157,9 @@ const QuizForm = ({ onSubmitQuiz }: Props) => {
           <button
             type="submit"
             disabled={!isValid && !loggedInUser}
-            className={isValid ? "btn btn-blue" : "btn-blue-disabled"}
+            className={
+              isValid && loggedInUser ? "btn btn-blue" : "btn-blue-disabled"
+            }
           >
             Save Quiz
           </button>
