@@ -52,20 +52,22 @@ const CurrentQuestion = ({ setShowQuestion }: Props) => {
 
   return (
     <div className="flex flex-col items-center">
-      <p className="mt-3 text-base md:text-lg lg:text-xl">
+      <p className="wrap-anywhere mt-3 text-base md:text-lg lg:text-xl">
         {currentIndex + 1}. {currentQuestion}
       </p>
       <form onSubmit={handleAnswerSubmit} className="m-2">
         {currentOptions.map((option, i) => (
           <div key={i} className="mb-3">
-            <label className="">
+            <label>
               <input
                 type="radio"
                 name="option"
                 checked={answer === option}
                 onChange={() => changeAnswer(option)}
               />
-              <p className="inline ml-2 text-base md:text-lg lg:text-xl">{option}</p>
+              <p className="wrap-anywhere inline ml-2 text-base md:text-lg lg:text-xl">
+                {option}
+              </p>
             </label>
           </div>
         ))}

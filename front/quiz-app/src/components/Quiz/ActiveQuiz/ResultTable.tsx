@@ -25,11 +25,11 @@ const ResultTable = () => {
       <tbody>
         {rightAnswers.map((elem, i) => (
           <tr key={i} className="even:bg-gray-300/50">
-            <td className="p-2">
+            <td className="p-2 wrap-anywhere">
               {i + 1}. {elem.question}
             </td>
-            <td className="p-2">{elem.answer}</td>
-            <td className="p-2">
+            <td className="p-2 wrap-anywhere">{elem.answer}</td>
+            <td className="p-2 wrap-anywhere">
               {playerAnswers[i]}
               {elem.answer === playerAnswers[i] ? (
                 <CheckCircleIcon className="size-5 text-green-500 inline ml-2 float-right" />

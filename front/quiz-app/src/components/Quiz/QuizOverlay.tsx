@@ -16,10 +16,12 @@ const QuizOverlay = ({ isOpen, onClose, start }: Props) => {
         <div className="overlay-background" onClick={onClose}>
           <div className="overlay md:h-full md:max-w-2/5">
             <div className="mb-4">
-              <h2 className="text-center font-semibold text-2xl mb-3">
+              <h2 className="wrap-anywhere text-center font-semibold text-2xl mb-3">
                 {quiz.name}
               </h2>
-              <p className="text-base md:text-lg lg:text-xl">{quiz.description}</p>
+              <p className="wrap-anywhere text-base md:text-lg lg:text-xl">
+                {quiz.description}
+              </p>
               <p className="mt-4 text-center font-semibold">
                 {quiz.questions} questions
               </p>

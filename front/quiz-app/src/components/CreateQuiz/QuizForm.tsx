@@ -113,7 +113,7 @@ const QuizForm = ({ onSubmitQuiz }: Props) => {
           {questions.length > 0 ? (
             questions.map((q, index) => (
               <div key={index} className="border rounded-xl p-4 bg-gray-50">
-                <div className="flex justify-between overflow-auto items-start">
+                <div className="flex justify-between wrap-anywhere items-start">
                   <div>
                     <p className="font-medium">
                       {index + 1}. {q.question}

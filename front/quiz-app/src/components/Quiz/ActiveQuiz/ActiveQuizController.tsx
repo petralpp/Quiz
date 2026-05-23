@@ -32,7 +32,7 @@ const ActiveQuizController = () => {
         <button className="btn btn-red ml-2" onClick={quit}>
           Quit
         </button>
-        <h2 className="text-center mt-2 text-xl font-semibold text-gray-800">
+        <h2 className="wrap-anywhere text-center mt-2 text-xl font-semibold text-gray-800">
           {activeQuiz.name} ({activeQuiz.questions.length} questions)
         </h2>
         {showQuestion ? (
