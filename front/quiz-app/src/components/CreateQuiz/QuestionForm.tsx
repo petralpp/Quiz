@@ -85,8 +85,7 @@ const QuestionForm = ({ onAddQuestion }: Props) => {
       onSubmit={handleSubmit}
       className="p-5 bg-white rounded-2xl shadow-md space-y-4"
     >
-      <h2 className="text-xl font-semibold">Add Question</h2>
-      <p>At least 1 question is required</p>
+      <h2 className="text-xl font-semibold">Add Question (1-30)</h2>
       <div>
         <label className="block mb-1 font-medium">
           Question

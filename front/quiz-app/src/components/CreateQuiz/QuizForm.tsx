@@ -30,7 +30,8 @@ const QuizForm = ({ onSubmitQuiz }: Props) => {
     title.trim().length > 0 &&
     category.trim().length > 0 &&
     description.trim().length > 0 &&
-    questions.length > 0;
+    questions.length > 0 &&
+    questions.length < 31;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -114,7 +115,9 @@ const QuizForm = ({ onSubmitQuiz }: Props) => {
               <div key={index} className="border rounded-xl p-4 bg-gray-50">
                 <div className="flex justify-between overflow-auto items-start">
                   <div>
-                    <p className="font-medium">{q.question}</p>
+                    <p className="font-medium">
+                      {index + 1}. {q.question}
+                    </p>
                     <ul className="list-disc ml-5 mt-2">
                       {q.choices.map((choice, i) => (
                         <li
@@ -165,8 +168,7 @@ const QuizForm = ({ onSubmitQuiz }: Props) => {
           </button>
         </div>
       </form>
-
-      <QuestionForm onAddQuestion={addQuestion} />
+      {questions.length < 30 && <QuestionForm onAddQuestion={addQuestion} />}
     </div>
   );
 };
