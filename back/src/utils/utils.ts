@@ -9,22 +9,22 @@ export const NewUserSchema = z.object({
 });
 
 export const QuestionSchema = z.object({
-  question: z.string().max(150),
-  choices: z.array(z.string().max(150))
+  question: z.string().min(1).max(150),
+  choices: z.array(z.string().min(1).max(150))
 });
 
 export const NewQuizSchema = z.object({
-  category: z.string().max(30),
-  subcategory: z.string().max(30),
-  name: z.string().max(35),
-  description: z.string().max(450),
-  questions: z.array(QuestionSchema)
+  category: z.string().min(1).max(30),
+  subcategory: z.string().min(1).max(30),
+  name: z.string().min(1).max(35),
+  description: z.string().min(1).max(450),
+  questions: z.array(QuestionSchema).min(1).max(30)
 });
 
 export const NewAnswersSchema = z.array(
   z.object({
-    question: z.string().max(150),
-    answer: z.string().max(150)
+    question: z.string().min(1).max(150),
+    answer: z.string().min(1).max(150)
   })
 );
 
