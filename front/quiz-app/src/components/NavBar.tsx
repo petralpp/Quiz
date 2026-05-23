@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Bars4Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
 import type { User } from "../types";
@@ -13,6 +13,7 @@ import { clearUserQuizList } from "../store/reducers/userQuizzesReducer";
 import { setNotification } from "../store/reducers/notificationReducer";
 
 const NavBar = () => {
+  const navigate = useNavigate();
   const user: User | null = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
   const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
@@ -21,7 +22,8 @@ const NavBar = () => {
     storageService.removeUser("quizAppUser");
     dispatch(clearUser());
     dispatch(clearUserQuizList());
-    dispatch(setNotification("Logged out successfully", 5));
+    dispatch(setNotification("Logged out successfully", 3));
+    navigate("/");
   };
 
   return (
@@ -75,7 +77,7 @@ const NavBar = () => {
       </div>
 
       <div className="hidden md:flex gap-2">
-        {user && <p className="font-semibold">Hello {user.name}</p>}
+        {user && <p className="m-2 text-white font-semibold">Hello {user.name}</p>}
         <Link to="/create">
           <button className="btn btn-blue font-semibold">Create</button>
         </Link>

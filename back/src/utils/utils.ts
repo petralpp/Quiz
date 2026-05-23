@@ -10,7 +10,11 @@ export const NewUserSchema = z.object({
 
 export const QuestionSchema = z.object({
   question: z.string().min(1).max(150),
-  choices: z.array(z.string().min(1).max(150))
+  choices: z
+    .array(z.string().min(1).max(150))
+    .refine((items) => new Set(items).size === items.length, {
+      message: "Answer choices for question have to be unique"
+    })
 });
 
 export const NewQuizSchema = z.object({
@@ -24,7 +28,7 @@ export const NewQuizSchema = z.object({
 export const NewAnswersSchema = z.array(
   z.object({
     question: z.string().min(1).max(150),
-    answer: z.string().min(1).max(150)
+    answer: z.string().max(150)
   })
 );
 
