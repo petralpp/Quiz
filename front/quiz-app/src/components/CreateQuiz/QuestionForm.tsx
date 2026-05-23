@@ -9,8 +9,15 @@ const QuestionForm = ({ onAddQuestion }: Props) => {
   const [questionText, setQuestionText] = useState("");
   const [choices, setChoices] = useState<string[]>(["", ""]);
   const [correctAnswer, setCorrectAnswer] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChoiceChange = (index: number, value: string) => {
+    if (choices.find((c) => c === value)) {
+      setErrorMessage("Choices have to be unique");
+    } else {
+      setErrorMessage("");
+    }
+
     const updated = [...choices];
     updated[index] = value;
     setChoices(updated);
@@ -39,11 +46,23 @@ const QuestionForm = ({ onAddQuestion }: Props) => {
     }
   };
 
+  const noDuplicates = () => {
+    const duplicates = choices.filter(
+      (value, index) =>
+        choices.indexOf(value) !== index && choices.lastIndexOf(value) === index
+    );
+    if (duplicates.length > 0) {
+      return false;
+    }
+    return true;
+  };
+
   const isValid =
     questionText.trim().length > 0 &&
     choices.length >= 2 &&
     choices.length <= 5 &&
     choices.every((c) => c.trim().length > 0) &&
+    noDuplicates() &&
     correctAnswer.length > 0;
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -55,7 +74,7 @@ const QuestionForm = ({ onAddQuestion }: Props) => {
       choices: choices.map((c) => c.trim()),
       correctAnswer: correctAnswer.trim()
     });
-
+    setErrorMessage("");
     setQuestionText("");
     setChoices(["", ""]);
     setCorrectAnswer("");
@@ -126,6 +145,7 @@ const QuestionForm = ({ onAddQuestion }: Props) => {
           </button>
         )}
       </div>
+      <p className="text-red-600">{errorMessage}</p>
       <button
         type="submit"
         disabled={!isValid}
