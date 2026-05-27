@@ -57,8 +57,8 @@ function App() {
   }, [dispatch]);
 
   return (
-    <Router>
-      <div className="font-sans text-lg">
+    <div className="h-full font-sans text-lg">
+      <Router>
         <NavBar />
         <Notification />
         <Routes>
@@ -67,8 +67,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>
-      </div>
-    </Router>
+      </Router>
+    </div>
   );
 }
 

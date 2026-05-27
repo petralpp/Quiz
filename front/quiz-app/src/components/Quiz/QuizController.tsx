@@ -70,11 +70,11 @@ const QuizController = () => {
   return isActive ? (
     <ActiveQuizController />
   ) : (
-    <>
+    <div className="flex flex-col md:flex-row h-full">
       <CategoryNavigation category={category} setCategory={setCategory} />
       <QuizList category={category} handleClick={handleClick} />
       <QuizOverlay isOpen={overlayIsOpen} onClose={toggleOverlay} start={start} />
-    </>
+    </div>
   );
 };
 

@@ -10,15 +10,15 @@ const QuizList = ({ category, handleClick }: Props) => {
   const grouped = useAppSelector(selectGroupedQuizzesByCategory(category));
 
   return (
-    <div className="h-max py-4 bg-white">
+    <div className="md:w-[85%] h-fit py-4 bg-white">
       {grouped && (
-        <div className="px-3">
+        <div className="px-4">
           {Object.entries(grouped).map(([subcategory, quizzes], i) => (
             <div key={i}>
               <h2 className="pt-3 wrap-anywhere text-xl font-semibold">
                 {subcategory}
               </h2>
-              <div className="flex gap-3 py-3 overflow-x-scroll scrollbar-hidden">
+              <div className="flex gap-3 py-3 overflow-x-auto">
                 {quizzes.map((el, j) => (
                   <div
                     key={j}

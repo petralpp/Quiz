@@ -13,23 +13,23 @@ const CategoryNavigation = ({ category, setCategory }: Props) => {
   const user = useAppSelector(selectUser);
 
   return (
-    <div className="flex text-center">
+    <div className="md:w-[15%] flex md:flex-col text-center">
       <div
         onClick={() => setCategory("Education")}
-        className={`cursor-pointer px-3 rounded-t-md font-semibold ${category === "Education" ? "bg-white" : "hover:text-gray-50"}`}
+        className={`cursor-pointer rounded-t-md md:rounded-none p-3 font-semibold ${category === "Education" ? "bg-white" : "hover:text-gray-50"}`}
       >
         Education <RocketLaunchIcon className="size-5 inline ml-2" />
       </div>
       <div
         onClick={() => setCategory("Entertainment")}
-        className={`cursor-pointer px-3 rounded-t-md font-semibold ${category === "Entertainment" ? "bg-white" : "hover:text-gray-50"}`}
+        className={`cursor-pointer rounded-t-md md:rounded-none p-3 font-semibold ${category === "Entertainment" ? "bg-white" : "hover:text-gray-50"}`}
       >
         Entertainment <FilmIcon className="text-center inline size-5 ml-2" />
       </div>
       {user && (
         <div
           onClick={() => setCategory("User")}
-          className={`cursor-pointer px-3 rounded-t-md font-semibold ${category === "User" ? "bg-white" : "hover:text-gray-50"}`}
+          className={`cursor-pointer rounded-t-md md:rounded-none p-3 font-semibold ${category === "User" ? "bg-white" : "hover:text-gray-50"}`}
         >
           My quizzes
         </div>
