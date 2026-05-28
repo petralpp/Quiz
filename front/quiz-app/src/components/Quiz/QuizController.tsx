@@ -1,14 +1,16 @@
 import { useState } from "react";
 
-import type { Quiz, QuizDescription } from "../../types";
+import type { Quiz, QuizDescription, User } from "../../types";
 
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { setSelectedQuiz } from "../../store/reducers/selectedQuizReducer";
 import { startQuiz } from "../../store/reducers/activeQuizReducer";
+import { deleteUserQuiz } from "../../store/reducers/userQuizzesReducer";
 import {
   selectedQuizDescription,
   selectEducationQuizzes,
   selectEntertainmentQuizzes,
+  selectUser,
   selectUserQuizzes
 } from "../../store/selectors";
 
@@ -23,6 +25,7 @@ const QuizController = () => {
   const entertainmentList: Quiz[] = useAppSelector(selectEntertainmentQuizzes);
   const educationList: Quiz[] = useAppSelector(selectEducationQuizzes);
   const userList: Quiz[] = useAppSelector(selectUserQuizzes);
+  const user: User | null = useAppSelector(selectUser);
   const selectedQuiz: QuizDescription = useAppSelector(selectedQuizDescription);
   const [category, setCategory] = useState<string>("Education");
   const [overlayIsOpen, setOverlayIsOpen] = useState<boolean>(false);
@@ -31,23 +34,7 @@ const QuizController = () => {
     setOverlayIsOpen(!overlayIsOpen);
   };
 
-  const start = () => {
-    let quizElement = null;
-    if (selectedQuiz.category === "Entertainment") {
-      quizElement = entertainmentList.find(
-        (quiz) => quiz.name === selectedQuiz.name
-      );
-    } else if (selectedQuiz.category === "Education") {
-      quizElement = educationList.find((quiz) => quiz.name === selectedQuiz.name);
-    } else {
-      quizElement = userList.find((quiz) => quiz.name === selectedQuiz.name);
-    }
-    if (quizElement) {
-      dispatch(startQuiz(quizElement));
-    }
-  };
-
-  const handleClick = (name: string, category: string) => {
+  const findQuiz = (category: string, name: string) => {
     let quiz = null;
     if (category === "Entertainment") {
       quiz = entertainmentList?.find((q) => q.name === name);
@@ -56,6 +43,18 @@ const QuizController = () => {
     } else {
       quiz = userList?.find((q) => q.name === name);
     }
+    return quiz;
+  };
+
+  const start = () => {
+    const quiz = findQuiz(selectedQuiz.category, selectedQuiz.name);
+    if (quiz) {
+      dispatch(startQuiz(quiz));
+    }
+  };
+
+  const handleClick = (name: string, category: string) => {
+    const quiz = findQuiz(category, name);
     if (quiz) {
       dispatch(
         setSelectedQuiz({
@@ -67,13 +66,29 @@ const QuizController = () => {
     }
   };
 
+  const handleDelete = (name: string) => {
+    if (!window.confirm("Do you really want to delete this quiz?")) {
+      return;
+    }
+    const quiz = findQuiz(category, name);
+    if (quiz && user) {
+      dispatch(deleteUserQuiz(quiz._id, user));
+    }
+  };
+
   return isActive ? (
     <ActiveQuizController />
   ) : (
     <div className="flex flex-col md:flex-row h-full">
       <CategoryNavigation category={category} setCategory={setCategory} />
       <QuizList category={category} handleClick={handleClick} />
-      <QuizOverlay isOpen={overlayIsOpen} onClose={toggleOverlay} start={start} />
+      <QuizOverlay
+        isOpen={overlayIsOpen}
+        onClose={toggleOverlay}
+        start={start}
+        category={category}
+        deleteQuiz={handleDelete}
+      />
     </div>
   );
 };

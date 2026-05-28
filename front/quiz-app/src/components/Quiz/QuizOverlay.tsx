@@ -5,16 +5,28 @@ interface Props {
   isOpen: boolean;
   onClose(): void;
   start(): void;
+  category: string;
+  deleteQuiz(name: string): void;
 }
 
-const QuizOverlay = ({ isOpen, onClose, start }: Props) => {
+const QuizOverlay = ({ isOpen, onClose, start, category, deleteQuiz }: Props) => {
   const quiz: QuizDescription = useAppSelector((state) => state.selectedQuiz);
 
   return (
     <>
       {isOpen && (
         <div className="overlay-background" onClick={onClose}>
-          <div className="overlay md:h-full md:max-w-2/5">
+          <div className="overlay overflow-auto max-h-full md:max-h-4/5">
+            {category === "User" && (
+              <div className="mb-3 text-right">
+                <button
+                  onClick={() => deleteQuiz(quiz.name)}
+                  className="btn btn-red"
+                >
+                  Delete
+                </button>
+              </div>
+            )}
             <div className="mb-4">
               <h2 className="wrap-anywhere text-center font-semibold text-2xl mb-3">
                 {quiz.name}
