@@ -120,4 +120,35 @@ router.get(
   }
 );
 
+router.delete(
+  "/userquizzes/:id",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const auth = getTokenFrom(req);
+      if (!auth) {
+        res.status(401).json({ error: "Invalid token" });
+        return;
+      }
+
+      const secret = config.SECRET as string;
+      const decodedToken = jwt.verify(auth, secret) as jwt.JwtPayload;
+      if (!decodedToken.id) {
+        res.status(401).json({ error: "token invalid" });
+        return;
+      }
+      const user = await UserModel.findById(decodedToken.id);
+
+      if (!user) {
+        res.status(400).json({ error: "UserId missing or not valid" });
+        return;
+      }
+      const id = req.params.id;
+      await UserQuizModel.findOneAndDelete({ _id: id, userId: user._id });
+      res.status(204).end();
+    } catch (error: unknown) {
+      next(error);
+    }
+  }
+);
+
 export default router;
