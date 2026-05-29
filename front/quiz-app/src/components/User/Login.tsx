@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { loginUser } from "../../store/reducers/userReducer";
 import { useAppDispatch } from "../../store/hooks";
-import { fetchUserQuizzes } from "../../store/reducers/userQuizzesReducer";
+import { fetchUserQuizzes } from "../../store/reducers/userReducer";
 
 const Login = () => {
   const [loginUsername, setLoginUsername] = useState("");

@@ -5,7 +5,7 @@ import type { Quiz, QuizDescription, User } from "../../types";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { setSelectedQuiz } from "../../store/reducers/selectedQuizReducer";
 import { startQuiz } from "../../store/reducers/activeQuizReducer";
-import { deleteUserQuiz } from "../../store/reducers/userQuizzesReducer";
+import { deleteUserQuiz } from "../../store/reducers/userReducer";
 import {
   selectedQuizDescription,
   selectEducationQuizzes,

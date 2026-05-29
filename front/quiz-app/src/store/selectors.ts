@@ -10,9 +10,9 @@ export const selectEducationQuizzes = (state: RootState) =>
 
 export const selectedQuizDescription = (state: RootState) => state.selectedQuiz;
 
-export const selectUser = (state: RootState) => state.userInfo.user;
+export const selectUser = (state: RootState) => state.user.user;
 
-export const selectUserQuizzes = (state: RootState) => state.userQuizzes;
+export const selectUserQuizzes = (state: RootState) => state.user.quizzes;
 
 export const notification = (state: RootState) => state.notification;
 
@@ -25,7 +25,7 @@ export const selectGroupedQuizzesByCategory = (category: string) =>
         } else if (category === "Education") {
           return state.quizzes.educationList;
         } else {
-          return state.userQuizzes;
+          return state.user.quizzes;
         }
       }
     ],

@@ -3,7 +3,7 @@ import type { NewQuiz, User } from "../../types";
 import quizService from "../../services/quizService";
 import { useAppDispatch } from "../../store/hooks";
 import { setNotification } from "../../store/reducers/notificationReducer";
-import { addUserQuiz } from "../../store/reducers/userQuizzesReducer";
+import { addQuiz } from "../../store/reducers/userReducer";
 
 const CreationPage = () => {
   const dispatch = useAppDispatch();
@@ -12,7 +12,7 @@ const CreationPage = () => {
       const quiz = await quizService.createQuiz(newQuiz, user);
       if (quiz) {
         dispatch(setNotification(`New quiz ${quiz.name} added!`, 5));
-        dispatch(addUserQuiz(quiz));
+        dispatch(addQuiz(quiz));
       }
     } catch (error: unknown) {
       console.log(error);
