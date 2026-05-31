@@ -1,4 +1,3 @@
-import { useAppSelector } from "../../store/hooks";
 import type { QuizDescription } from "../../types";
 
 interface Props {
@@ -6,12 +5,18 @@ interface Props {
   onClose(): void;
   start(): void;
   category: string;
+  quiz: QuizDescription;
   deleteQuiz(name: string): void;
 }
 
-const QuizOverlay = ({ isOpen, onClose, start, category, deleteQuiz }: Props) => {
-  const quiz: QuizDescription = useAppSelector((state) => state.selectedQuiz);
-
+const QuizOverlay = ({
+  isOpen,
+  onClose,
+  start,
+  category,
+  quiz,
+  deleteQuiz
+}: Props) => {
   return (
     <>
       {isOpen && (

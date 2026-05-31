@@ -8,8 +8,6 @@ export const selectEntertainmentQuizzes = (state: RootState) =>
 export const selectEducationQuizzes = (state: RootState) =>
   state.quizzes.educationList;
 
-export const selectedQuizDescription = (state: RootState) => state.selectedQuiz;
-
 export const selectUser = (state: RootState) => state.user.user;
 
 export const selectUserQuizzes = (state: RootState) => state.user.quizzes;

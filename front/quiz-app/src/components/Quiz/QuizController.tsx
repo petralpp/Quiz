@@ -3,11 +3,9 @@ import { useState } from "react";
 import type { Quiz, QuizDescription, User } from "../../types";
 
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
-import { setSelectedQuiz } from "../../store/reducers/selectedQuizReducer";
 import { startQuiz } from "../../store/reducers/activeQuizReducer";
 import { deleteUserQuiz } from "../../store/reducers/userReducer";
 import {
-  selectedQuizDescription,
   selectEducationQuizzes,
   selectEntertainmentQuizzes,
   selectUser,
@@ -26,7 +24,13 @@ const QuizController = () => {
   const educationList: Quiz[] = useAppSelector(selectEducationQuizzes);
   const userList: Quiz[] = useAppSelector(selectUserQuizzes);
   const user: User | null = useAppSelector(selectUser);
-  const selectedQuiz: QuizDescription = useAppSelector(selectedQuizDescription);
+  const [selectedQuiz, setSelectedQuiz] = useState<QuizDescription>({
+    category: "",
+    subcategory: "",
+    name: "",
+    description: "",
+    questions: 0
+  });
   const [category, setCategory] = useState<string>("Education");
   const [overlayIsOpen, setOverlayIsOpen] = useState<boolean>(false);
 
@@ -56,12 +60,10 @@ const QuizController = () => {
   const handleClick = (name: string, category: string) => {
     const quiz = findQuiz(category, name);
     if (quiz) {
-      dispatch(
-        setSelectedQuiz({
-          ...quiz,
-          questions: quiz.questions.length
-        })
-      );
+      setSelectedQuiz({
+        ...quiz,
+        questions: quiz.questions.length
+      });
       toggleOverlay();
     }
   };
@@ -87,6 +89,7 @@ const QuizController = () => {
         onClose={toggleOverlay}
         start={start}
         category={category}
+        quiz={selectedQuiz}
         deleteQuiz={handleDelete}
       />
     </div>
