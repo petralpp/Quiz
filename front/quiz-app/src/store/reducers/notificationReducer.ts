@@ -11,7 +11,7 @@ const notificationSlice = createSlice({
   }
 });
 
-export const setNotification = (message: string, time: number) => {
+export const setNotification = (message: string, time: number = 5) => {
   return async (dispatch: AppDispatch) => {
     dispatch(changeNotification(message));
     setTimeout(() => {

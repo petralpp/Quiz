@@ -12,24 +12,47 @@ export const errorMiddleware = (
   _next: NextFunction
 ) => {
   console.error(`${error.name}: ${error.message}`);
+
   if (error.name === "CastError") {
-    res.status(400).send(`Malformatted id: ${error.message}`);
-  } else if (
+    return res.status(400).json({
+      error: `Malformatted id: ${error.message}`
+    });
+  }
+
+  if (
     error.name === "MongoServerError" &&
     error.message.includes("E11000 duplicate key error")
   ) {
-    res.status(400).json({ error: "Username already in use" });
-  } else if (error.message.includes("Username or password is incorrect")) {
-    res.status(400).json({ error: "Username or password is incorrect" });
-  } else if (error instanceof z.ZodError) {
-    res.status(400).send({ error: "Input in wrong format" });
-  } else if (error.name === "JsonWebTokenError") {
-    res.status(401).json({ error: "token missing or invalid" });
-  } else if (error.name === "TokenExpiredError") {
-    res.status(401).json({
-      error: "token expired"
+    return res.status(400).json({
+      error: "Username already in use"
     });
-  } else {
-    res.status(500).send({ error: "Something went wrong: " });
   }
+
+  if (error.message.includes("Username or password is incorrect")) {
+    return res.status(401).json({
+      error: "Username or password is incorrect"
+    });
+  }
+
+  if (error instanceof z.ZodError) {
+    return res.status(400).json({
+      error: "Input in wrong format"
+    });
+  }
+
+  if (error.name === "JsonWebTokenError") {
+    return res.status(401).json({
+      error: "Token missing or invalid"
+    });
+  }
+
+  if (error.name === "TokenExpiredError") {
+    return res.status(401).json({
+      error: "Token expired"
+    });
+  }
+
+  return res.status(500).json({
+    error: "Something went wrong"
+  });
 };

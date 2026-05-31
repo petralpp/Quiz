@@ -40,7 +40,7 @@ router.post("/login", async (req: Request, res: Response, next: NextFunction) =>
 
     if (!(user && passwordCorrect)) {
       res.status(401).json({
-        error: "invalid username or password"
+        error: "Invalid username or password"
       });
       return;
     }

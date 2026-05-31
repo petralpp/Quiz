@@ -1,9 +1,9 @@
-import { AxiosError } from "axios";
 import { createSlice } from "@reduxjs/toolkit";
 import type { Quiz } from "../../types";
 import type { AppDispatch } from "../store";
 import { setNotification } from "./notificationReducer";
 import quizService from "../../services/quizService";
+import { getErrorMessage } from "../../utils";
 
 type State = {
   educationList: Quiz[];
@@ -40,9 +40,8 @@ export const fetchQuizzes = () => {
         dispatch(setQuizzes(quizzes));
       }
     } catch (error: unknown) {
-      if (error instanceof AxiosError) {
-        dispatch(setNotification(error.message, 6));
-      }
+      const message = getErrorMessage(error);
+      dispatch(setNotification(message));
     }
   };
 };

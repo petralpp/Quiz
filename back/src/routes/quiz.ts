@@ -30,7 +30,7 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
     const secret = config.SECRET as string;
     const decodedToken = jwt.verify(auth, secret) as jwt.JwtPayload;
     if (!decodedToken.id) {
-      res.status(401).json({ error: "token invalid" });
+      res.status(401).json({ error: "Invalid token" });
       return;
     }
     const user = await UserModel.findById(decodedToken.id);
@@ -78,7 +78,7 @@ router.get(
       const id = req.params.id;
       const answers = await quizService.getAnswers(id);
       if (!answers) {
-        res.status(404).send("Quiz not found");
+        res.status(404).json({ error: "Quiz not found" });
       } else {
         res.send(answers);
       }
@@ -102,7 +102,7 @@ router.get(
       const secret = config.SECRET as string;
       const decodedToken = jwt.verify(auth, secret) as jwt.JwtPayload;
       if (!decodedToken.id) {
-        res.status(401).json({ error: "token invalid" });
+        res.status(401).json({ error: "Invalid token" });
         return;
       }
       const user = await UserModel.findById(decodedToken.id);
@@ -133,7 +133,7 @@ router.delete(
       const secret = config.SECRET as string;
       const decodedToken = jwt.verify(auth, secret) as jwt.JwtPayload;
       if (!decodedToken.id) {
-        res.status(401).json({ error: "token invalid" });
+        res.status(401).json({ error: "Invalid token" });
         return;
       }
       const user = await UserModel.findById(decodedToken.id);

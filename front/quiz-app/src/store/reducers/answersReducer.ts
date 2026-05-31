@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { AppDispatch } from "../store";
+import { setNotification } from "./notificationReducer";
 import quizService from "../../services/quizService";
 import type { CorrectAnswer } from "../../types";
-import { setNotification } from "./notificationReducer";
+import { getErrorMessage } from "../../utils";
 
 type State = {
   playerAnswers: string[];
@@ -39,10 +40,8 @@ export const getRightAnswers = (id: string) => {
       const answerData = await quizService.getAnswers(id);
       dispatch(setRightAnswers(answerData?.answers));
     } catch (error: unknown) {
-      console.log(error);
-      if (error instanceof Error) {
-        dispatch(setNotification(error.message, 6));
-      }
+      const message = getErrorMessage(error);
+      dispatch(setNotification(message));
     }
   };
 };

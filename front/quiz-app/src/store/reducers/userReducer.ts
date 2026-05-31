@@ -1,11 +1,12 @@
-import { AxiosError } from "axios";
+import axios from "axios";
 import { createSlice } from "@reduxjs/toolkit";
 import type { AppDispatch } from "../store";
-import type { User, Quiz } from "../../types";
+import type { User, Quiz, NewQuiz } from "../../types";
 import { setNotification } from "./notificationReducer";
 import userService from "../../services/userService";
 import storageService from "../../services/storageService";
 import quizService from "../../services/quizService";
+import { getErrorMessage } from "../../utils";
 
 type UserState = {
   user: User | null;
@@ -53,20 +54,9 @@ export const loginUser = (username: string, password: string) => {
         return user;
       }
     } catch (error: unknown) {
-      if (error instanceof AxiosError) {
-        if (error.response) {
-          dispatch(setNotification(error.response?.data.error, 5));
-        } else if (error.request) {
-          dispatch(setNotification(error.request, 5));
-        } else {
-          dispatch(setNotification(error.message, 5));
-        }
-        return false;
-      } else if (error instanceof Error) {
-        dispatch(setNotification(error.message, 5));
-        return false;
-      }
-      console.log("Error: ", error);
+      const message = getErrorMessage(error);
+      dispatch(setNotification(message));
+      return false;
     }
   };
 };
@@ -82,23 +72,9 @@ export const registerUser = (username: string, password: string, name: string) =
         return true;
       }
     } catch (error: unknown) {
-      console.log("Error: ", error);
-      if (error instanceof AxiosError) {
-        if (error.response) {
-          dispatch(setNotification(error.response.data.error, 5));
-        } else if (error.request) {
-          dispatch(setNotification(error.request, 5));
-        } else {
-          dispatch(setNotification(error.message, 5));
-        }
-        return false;
-      } else if (error instanceof Error) {
-        dispatch(setNotification(error.message, 5));
-        return false;
-      } else {
-        dispatch(setNotification("Something went wrong", 5));
-        return false;
-      }
+      const message = getErrorMessage(error);
+      dispatch(setNotification(message));
+      return false;
     }
   };
 };
@@ -111,23 +87,33 @@ export const fetchUserQuizzes = (user: User) => {
         dispatch(setUserQuizList(data));
       }
     } catch (error: unknown) {
-      if (error instanceof AxiosError) {
+      const message = getErrorMessage(error);
+      if (axios.isAxiosError(error)) {
         if (error.status === 401) {
-          dispatch(setNotification("Session expired", 6));
+          dispatch(setNotification("Session expired"));
           dispatch(clearUser());
           storageService.removeUser("quizAppUser");
         } else {
-          dispatch(
-            setNotification("Something went wrong when fetching user quizzes", 6)
-          );
+          dispatch(setNotification(message));
         }
-      } else if (error instanceof Error) {
-        dispatch(setNotification(error.message, 5));
-        return false;
       } else {
-        dispatch(setNotification("Something went wrong", 5));
-        return false;
+        dispatch(setNotification(message));
       }
+    }
+  };
+};
+
+export const addUserQuiz = (newQuiz: NewQuiz, user: User) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const quiz = await quizService.createQuiz(newQuiz, user);
+      if (quiz) {
+        dispatch(addQuiz(quiz));
+        dispatch(setNotification(`New quiz ${quiz.name} added!`));
+      }
+    } catch (error: unknown) {
+      const message = getErrorMessage(error);
+      dispatch(setNotification(message));
     }
   };
 };
@@ -137,9 +123,10 @@ export const deleteUserQuiz = (id: string, user: User) => {
     try {
       await quizService.deleteQuiz(id, user);
       dispatch(deleteQuiz(id));
-      dispatch(setNotification("Quiz deleted", 5));
+      dispatch(setNotification("Quiz deleted"));
     } catch (error: unknown) {
-      console.log(error);
+      const message = getErrorMessage(error);
+      dispatch(setNotification(message));
     }
   };
 };
