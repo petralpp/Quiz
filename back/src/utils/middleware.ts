@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import z from "zod";
 import config from "./config";
 import { Token } from "../types/types";
+import { UserModel } from "../models/userModel";
 
 export const unknownEndpoint = (_req: Request, res: Response) => {
   res.status(404).send({ error: "unknown endpoint" });
@@ -69,5 +70,19 @@ export const extractToken = (req: Request, res: Response, next: NextFunction) =>
   const secret = config.SECRET as string;
   const decodedToken = jwt.verify(token, secret) as Token;
   req.token = decodedToken;
+  next();
+};
+
+export const extractUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const user = await UserModel.findById(req.token?.id);
+  if (!user) {
+    res.status(400).json({ error: "UserId missing or not valid" });
+    return;
+  }
+  req.user = user;
   next();
 };
