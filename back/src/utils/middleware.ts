@@ -1,5 +1,8 @@
 import { Request, Response, NextFunction } from "express";
+import jwt from "jsonwebtoken";
 import z from "zod";
+import config from "./config";
+import { Token } from "../types/types";
 
 export const unknownEndpoint = (_req: Request, res: Response) => {
   res.status(404).send({ error: "unknown endpoint" });
@@ -55,4 +58,16 @@ export const errorMiddleware = (
   return res.status(500).json({
     error: "Something went wrong"
   });
+};
+
+export const extractToken = (req: Request, res: Response, next: NextFunction) => {
+  const token = req.header("Authorization")?.replace("Bearer ", "");
+  if (!token) {
+    res.status(401).json({ error: "Invalid token" });
+    return;
+  }
+  const secret = config.SECRET as string;
+  const decodedToken = jwt.verify(token, secret) as Token;
+  req.token = decodedToken;
+  next();
 };

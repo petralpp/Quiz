@@ -57,3 +57,8 @@ export interface NewUser {
   name: string;
   password: string;
 }
+
+export interface Token {
+  username: string;
+  id: string;
+}

@@ -1,6 +1,6 @@
 import { UserModel } from "../models/userModel";
 import bcrypt from "bcrypt";
-import { NewUser } from "../types";
+import { NewUser } from "../types/types";
 
 const addUser = async (newUser: NewUser) => {
   const { username, name, password } = newUser;

@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { UserQuiz } from "../types";
+import { UserQuiz } from "../types/types";
 
 const userQuizSchema = new Schema<UserQuiz>({
   userId: { type: Schema.Types.ObjectId, ref: "user" },

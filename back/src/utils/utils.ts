@@ -1,6 +1,5 @@
 import { z } from "zod";
-import { NewUser, NewQuiz, CorrectAnswer } from "../types";
-import { Request } from "express";
+import { NewUser, NewQuiz, CorrectAnswer } from "../types/types";
 
 export const NewUserSchema = z.object({
   username: z.string().regex(/^[a-zA-Z0-9åÅäÄöÖ]{4,15}$/),
@@ -46,12 +45,4 @@ export const parseQuiz = (quiz: unknown): NewQuiz => {
 
 export const parseAnswers = (answers: unknown): CorrectAnswer[] => {
   return NewAnswersSchema.parse(answers);
-};
-
-export const getTokenFrom = (request: Request) => {
-  const authorization = request.get("authorization");
-  if (authorization && authorization.startsWith("Bearer ")) {
-    return authorization.replace("Bearer ", "");
-  }
-  return null;
 };

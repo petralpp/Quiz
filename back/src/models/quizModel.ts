@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { Quiz } from "../types";
+import { Quiz } from "../types/types";
 
 const quizSchema = new Schema<Quiz>({
   category: {

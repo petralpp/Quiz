@@ -1,10 +1,11 @@
 import express, { Request, Response, NextFunction } from "express";
-import userService from "../services/userService";
-import { parseUser } from "../utils/utils";
-import { UserModel } from "../models/userModel";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+
+import userService from "../services/userService";
 import config from "../utils/config";
+import { parseUser } from "../utils/utils";
+import { UserModel } from "../models/userModel";
 
 const router = express.Router();
 
