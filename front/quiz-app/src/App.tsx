@@ -13,6 +13,7 @@ import CreationPage from "./components/CreateQuiz/CreationPage";
 import Register from "./components/User/Register";
 import Notification from "./components/Notification";
 import Login from "./components/User/Login";
+import PageNotFound from "./components/PageNotFound";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -36,6 +37,7 @@ function App() {
           <Route path="/create" element={<CreationPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>
     </div>
