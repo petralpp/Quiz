@@ -1,15 +1,15 @@
 import { useState } from "react";
-import type { NewQuestion } from "../../types";
+import type { QuizQuestion } from "../../types";
 
 interface Props {
-  onAddQuestion: (question: NewQuestion) => void;
+  onAddQuestion: (question: QuizQuestion) => void;
 }
 
 const QuestionForm = ({ onAddQuestion }: Props) => {
-  const [questionText, setQuestionText] = useState("");
+  const [questionText, setQuestionText] = useState<string>("");
   const [choices, setChoices] = useState<string[]>(["", ""]);
-  const [correctAnswer, setCorrectAnswer] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [correctAnswer, setCorrectAnswer] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const handleChoiceChange = (index: number, value: string) => {
     if (choices.find((c) => c === value)) {
@@ -72,7 +72,7 @@ const QuestionForm = ({ onAddQuestion }: Props) => {
     onAddQuestion({
       question: questionText.trim(),
       choices: choices.map((c) => c.trim()),
-      correctAnswer: correctAnswer.trim()
+      answer: correctAnswer.trim()
     });
     setErrorMessage("");
     setQuestionText("");

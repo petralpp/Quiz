@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
-import { UserQuiz } from "../types/types";
+import { Quiz } from "../types/types";
 
-const userQuizSchema = new Schema<UserQuiz>({
+const userQuizSchema = new Schema<Quiz>({
   userId: { type: Schema.Types.ObjectId, ref: "user" },
   category: {
     type: String,

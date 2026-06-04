@@ -1,11 +1,11 @@
 export interface Quiz {
   _id: string;
+  userId?: string;
   category: string;
   subcategory: string;
   name: string;
   description: string;
-  questions: QuizQuestions[];
-  answersId: string;
+  questions: QuizQuestion[];
 }
 
 export interface NewQuiz {
@@ -13,30 +13,12 @@ export interface NewQuiz {
   subcategory: string;
   name: string;
   description: string;
-  questions: Questions[];
+  questions: QuizQuestion[];
 }
 
-export type Questions = NewQuestion | QuizQuestions;
-
-export interface NewQuestion {
+export interface QuizQuestion {
   question: string;
   choices: string[];
-  correctAnswer: string;
-}
-
-export interface QuizQuestions {
-  question: string;
-  choices: string[];
-}
-
-export interface QuizAnswers {
-  _id: string;
-  quizName: string;
-  answers: CorrectAnswer[];
-}
-
-export interface CorrectAnswer {
-  question: string;
   answer: string;
 }
 

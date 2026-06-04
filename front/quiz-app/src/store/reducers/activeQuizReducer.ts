@@ -4,6 +4,8 @@ import type { Quiz } from "../../types";
 type State = {
   isActive: boolean;
   quiz: Quiz;
+  playerAnswers: string[];
+  score: number;
 };
 
 const initialState: State = {
@@ -14,9 +16,10 @@ const initialState: State = {
     subcategory: "",
     name: "",
     description: "",
-    questions: [],
-    answersId: ""
-  }
+    questions: []
+  },
+  playerAnswers: [],
+  score: 0
 };
 
 export const activeQuizSlice = createSlice({
@@ -26,15 +29,34 @@ export const activeQuizSlice = createSlice({
     startQuiz(_state, action) {
       return {
         isActive: true,
-        quiz: action.payload
+        quiz: action.payload,
+        playerAnswers: [],
+        score: 0
       };
     },
     endQuiz() {
       return initialState;
+    },
+    resetQuiz(state) {
+      return {
+        ...state,
+        playerAnswers: [],
+        score: 0
+      };
+    },
+    setPlayerAnswer(state, action) {
+      return {
+        ...state,
+        playerAnswers: state.playerAnswers.concat(action.payload)
+      };
+    },
+    updateScore(state) {
+      state.score = state.score += 1;
     }
   }
 });
 
-export const { startQuiz, endQuiz } = activeQuizSlice.actions;
+export const { startQuiz, endQuiz, setPlayerAnswer, resetQuiz, updateScore } =
+  activeQuizSlice.actions;
 
 export default activeQuizSlice.reducer;

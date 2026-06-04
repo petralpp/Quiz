@@ -23,7 +23,7 @@ router.post(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       if (req.user) {
-        const { quiz } = req.body;
+        const quiz = req.body;
         const validatedQuiz = parseQuiz(quiz);
 
         const newQuiz = new UserQuizModel({

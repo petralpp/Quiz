@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import type { NewQuiz, NewQuestion, User } from "../../types";
+import type { NewQuiz, QuizQuestion, User } from "../../types";
 import { useAppSelector } from "../../store/hooks";
 import { selectUser } from "../../store/selectors";
 
@@ -12,13 +12,13 @@ interface Props {
 }
 
 const QuizForm = ({ onSubmitQuiz }: Props) => {
-  const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("");
-  const [description, setDescription] = useState("");
-  const [questions, setQuestions] = useState<NewQuestion[]>([]);
+  const [title, setTitle] = useState<string>("");
+  const [category, setCategory] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [questions, setQuestions] = useState<QuizQuestion[]>([]);
   const loggedInUser = useAppSelector(selectUser);
 
-  const addQuestion = (question: NewQuestion) => {
+  const addQuestion = (question: QuizQuestion) => {
     setQuestions((prev) => [...prev, question]);
   };
 
@@ -123,7 +123,7 @@ const QuizForm = ({ onSubmitQuiz }: Props) => {
                         <li
                           key={i}
                           className={
-                            choice === q.correctAnswer
+                            choice === q.answer
                               ? "font-semibold text-green-600 underline"
                               : ""
                           }

@@ -3,8 +3,7 @@ import { useState } from "react";
 import type { Quiz } from "../../../types";
 
 import { useAppSelector, useAppDispatch } from "../../../store/hooks";
-import { endQuiz } from "../../../store/reducers/activeQuizReducer";
-import { resetAnswers } from "../../../store/reducers/answersReducer";
+import { resetQuiz, endQuiz } from "../../../store/reducers/activeQuizReducer";
 
 import CurrentQuestion from "./CurrentQuestion";
 import Result from "./Result";
@@ -16,12 +15,11 @@ const ActiveQuizController = () => {
   const [showQuestion, setShowQuestion] = useState<boolean>(true);
 
   const restart = () => {
-    dispatch(resetAnswers());
+    dispatch(resetQuiz());
     setShowQuestion(true);
   };
 
   const quit = () => {
-    dispatch(resetAnswers());
     dispatch(endQuiz());
     setShowQuestion(true);
   };

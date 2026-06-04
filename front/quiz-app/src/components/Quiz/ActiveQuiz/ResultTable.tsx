@@ -1,17 +1,13 @@
 import { CheckCircleIcon } from "@heroicons/react/16/solid";
 import { XCircleIcon } from "@heroicons/react/16/solid";
 
-import type { CorrectAnswer } from "../../../types";
-
 import { useAppSelector } from "../../../store/hooks";
 
 const ResultTable = () => {
   const playerAnswers: string[] = useAppSelector(
-    (state) => state.answers.playerAnswers
+    (state) => state.activeQuiz.playerAnswers
   );
-  const rightAnswers: CorrectAnswer[] = useAppSelector(
-    (state) => state.answers.rightAnswers
-  );
+  const questions = useAppSelector((state) => state.activeQuiz.quiz.questions);
 
   return (
     <table className="my-3 ">
@@ -23,7 +19,7 @@ const ResultTable = () => {
         </tr>
       </thead>
       <tbody>
-        {rightAnswers.map((elem, i) => (
+        {questions.map((elem, i) => (
           <tr key={i} className="even:bg-gray-300/50">
             <td className="p-2 wrap-anywhere">
               {i + 1}. {elem.question}

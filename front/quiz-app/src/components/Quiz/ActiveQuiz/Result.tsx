@@ -1,34 +1,20 @@
 import { useState } from "react";
 
-import type { CorrectAnswer } from "../../../types";
-
 import { useAppSelector } from "../../../store/hooks";
 
 import ResultTable from "./ResultTable";
 
 const Result = () => {
   const [showAnswers, setShowAnswers] = useState<boolean>(false);
-  const playerAnswers: string[] = useAppSelector(
-    (state) => state.answers.playerAnswers
+  const playerAnswersLength: number = useAppSelector(
+    (state) => state.activeQuiz.playerAnswers.length
   );
-  const rightAnswers: CorrectAnswer[] = useAppSelector(
-    (state) => state.answers.rightAnswers
-  );
-
-  const countResult = () => {
-    let correct = 0;
-    for (let i = 0; i < rightAnswers.length; i++) {
-      if (rightAnswers[i].answer === playerAnswers[i]) {
-        correct++;
-      }
-    }
-    return correct;
-  };
+  const score: number = useAppSelector((state) => state.activeQuiz.score);
 
   return (
     <div className="flex flex-col items-center">
       <h2 className="mt-2">
-        Your result: {countResult()} / {playerAnswers.length}
+        Your result: {score} / {playerAnswersLength}
       </h2>
       {showAnswers ? (
         <>

@@ -1,6 +1,5 @@
 import axios from "axios";
-import type { QuizAnswers, Quiz, NewQuiz, User } from "../types";
-import { createNewAnswers, createNewQuiz } from "./utils";
+import type { Quiz, NewQuiz, User } from "../types";
 
 const getAllQuizzes = async () => {
   const response = await axios.get<Quiz[]>("/api/quiz");
@@ -12,30 +11,15 @@ const getUserQuizzes = async (user: User) => {
     headers: { Authorization: `Bearer ${user.token}` }
   };
 
-  const response = await axios.get("/api/quiz/userquizzes", config);
-  return response.data;
-};
-
-const getAnswers = async (id: string) => {
-  const response = await axios.get<QuizAnswers>(`/api/quiz/answers/${id}`);
+  const response = await axios.get<Quiz[]>("/api/quiz/userquizzes", config);
   return response.data;
 };
 
 const createQuiz = async (quiz: NewQuiz, user: User) => {
-  const modifiedQuiz = createNewQuiz(quiz);
-  const modifiedAnswers = createNewAnswers(quiz.questions);
-
   const config = {
     headers: { Authorization: `Bearer ${user.token}` }
   };
-  const response = await axios.post(
-    "/api/quiz/",
-    {
-      quiz: modifiedQuiz,
-      answers: modifiedAnswers
-    },
-    config
-  );
+  const response = await axios.post<NewQuiz>("/api/quiz/", quiz, config);
   return response.data;
 };
 
@@ -47,4 +31,4 @@ const deleteQuiz = async (id: string, user: User) => {
   return response;
 };
 
-export default { getAllQuizzes, getUserQuizzes, getAnswers, createQuiz, deleteQuiz };
+export default { getAllQuizzes, getUserQuizzes, createQuiz, deleteQuiz };

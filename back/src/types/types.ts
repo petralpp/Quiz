@@ -2,16 +2,7 @@ import mongoose from "mongoose";
 
 export interface Quiz {
   _id: mongoose.Types.ObjectId;
-  category: string;
-  subcategory: string;
-  name: string;
-  description: string;
-  questions: QuizQuestions[];
-}
-
-export interface UserQuiz {
-  _id: mongoose.Types.ObjectId;
-  userId: mongoose.Types.ObjectId;
+  userId?: mongoose.Types.ObjectId;
   category: string;
   subcategory: string;
   name: string;
@@ -30,7 +21,7 @@ export interface NewQuiz {
   subcategory: string;
   name: string;
   description: string;
-  questions: object[];
+  questions: QuizQuestions[];
 }
 
 export interface User {

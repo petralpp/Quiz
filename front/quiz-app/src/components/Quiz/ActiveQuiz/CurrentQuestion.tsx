@@ -11,8 +11,8 @@ import type { Quiz } from "../../../types";
 import { useAppSelector, useAppDispatch } from "../../../store/hooks";
 import {
   setPlayerAnswer,
-  getRightAnswers
-} from "../../../store/reducers/answersReducer";
+  updateScore
+} from "../../../store/reducers/activeQuizReducer";
 
 interface Props {
   setShowQuestion: Dispatch<SetStateAction<boolean>>;
@@ -25,20 +25,22 @@ const CurrentQuestion = ({ setShowQuestion }: Props) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [currentQuestion, setCurrentQuestion] = useState<string>("");
   const [currentOptions, setCurrentOptions] = useState<string[]>([]);
+  const [currentCorrectAnswer, setCurrentCorrectAnswer] = useState<string>("");
 
   useEffect(() => {
-    const question = activeQuiz.questions[currentIndex].question;
-    const options = activeQuiz.questions[currentIndex].choices;
-    setCurrentQuestion(question);
-    setCurrentOptions(options);
+    setCurrentQuestion(activeQuiz.questions[currentIndex].question);
+    setCurrentOptions(activeQuiz.questions[currentIndex].choices);
+    setCurrentCorrectAnswer(activeQuiz.questions[currentIndex].answer);
   }, [activeQuiz, currentIndex]);
 
   const handleAnswerSubmit = async (e: FormEvent) => {
     e.preventDefault();
     dispatch(setPlayerAnswer(answer));
+    if (answer === currentCorrectAnswer) {
+      dispatch(updateScore());
+    }
     const index = currentIndex + 1;
     if (index === activeQuiz.questions.length) {
-      dispatch(getRightAnswers(activeQuiz.answersId));
       setShowQuestion(false);
     } else {
       setCurrentIndex(index);
