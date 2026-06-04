@@ -1,5 +1,4 @@
 import { QuizModel } from "../models/quizModel";
-import { AnswersModel } from "../models/answersModel";
 import { UserQuizModel } from "../models/userQuizModel";
 
 const getQuizzes = async () => {
@@ -12,9 +11,4 @@ const getUserQuizzes = async (id: string) => {
   return userQuizzes;
 };
 
-const getAnswers = async (id: string) => {
-  const answers = await AnswersModel.findById(id);
-  return answers;
-};
-
-export default { getQuizzes, getUserQuizzes, getAnswers };
+export default { getQuizzes, getUserQuizzes };

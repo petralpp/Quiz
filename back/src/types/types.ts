@@ -7,7 +7,6 @@ export interface Quiz {
   name: string;
   description: string;
   questions: QuizQuestions[];
-  answersId: string;
 }
 
 export interface UserQuiz {
@@ -18,12 +17,12 @@ export interface UserQuiz {
   name: string;
   description: string;
   questions: QuizQuestions[];
-  answersId: string;
 }
 
 export interface QuizQuestions {
   question: string;
   choices: string[];
+  answer: string;
 }
 
 export interface NewQuiz {
@@ -32,17 +31,6 @@ export interface NewQuiz {
   name: string;
   description: string;
   questions: object[];
-}
-
-export interface QuizAnswers {
-  _id: mongoose.Types.ObjectId;
-  quizName: string;
-  answers: CorrectAnswer[];
-}
-
-export interface CorrectAnswer {
-  question: string;
-  answer: string;
 }
 
 export interface User {

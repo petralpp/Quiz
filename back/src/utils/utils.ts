@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { NewUser, NewQuiz, CorrectAnswer } from "../types/types";
+import { NewUser, NewQuiz } from "../types/types";
 
 export const NewUserSchema = z.object({
   username: z.string().regex(/^[a-zA-Z0-9åÅäÄöÖ]{4,15}$/),
@@ -13,7 +13,8 @@ export const QuestionSchema = z.object({
     .array(z.string().min(1).max(150))
     .refine((items) => new Set(items).size === items.length, {
       message: "Answer choices for question have to be unique"
-    })
+    }),
+  answer: z.string().min(1).max(150)
 });
 
 export const NewQuizSchema = z.object({
@@ -23,13 +24,6 @@ export const NewQuizSchema = z.object({
   description: z.string().min(1).max(450),
   questions: z.array(QuestionSchema).min(1).max(30)
 });
-
-export const NewAnswersSchema = z.array(
-  z.object({
-    question: z.string().min(1).max(150),
-    answer: z.string().max(150)
-  })
-);
 
 export const parseUser = (
   username: unknown,
@@ -41,8 +35,4 @@ export const parseUser = (
 
 export const parseQuiz = (quiz: unknown): NewQuiz => {
   return NewQuizSchema.parse(quiz);
-};
-
-export const parseAnswers = (answers: unknown): CorrectAnswer[] => {
-  return NewAnswersSchema.parse(answers);
 };

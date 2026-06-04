@@ -23,11 +23,7 @@ const quizSchema = new Schema<Quiz>({
       type: Object,
       required: true
     }
-  ],
-  answersId: {
-    type: String,
-    required: true
-  }
+  ]
 });
 
 export const QuizModel = mongoose.model("Quiz", quizSchema);

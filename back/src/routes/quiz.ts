@@ -1,8 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import quizService from "../services/quizService";
-import { parseAnswers, parseQuiz } from "../utils/utils";
+import { parseQuiz } from "../utils/utils";
 import { extractToken, extractUser } from "../utils/middleware";
-import { AnswersModel } from "../models/answersModel";
 import { UserQuizModel } from "../models/userQuizModel";
 
 const router = express.Router();
@@ -24,51 +23,15 @@ router.post(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       if (req.user) {
-        const { quiz, answers } = req.body;
+        const { quiz } = req.body;
         const validatedQuiz = parseQuiz(quiz);
-        const validatedAnswers = parseAnswers(answers);
-
-        const newAnswers = new AnswersModel({
-          quizName: quiz.name,
-          answers: validatedAnswers
-        });
-        const savedAnswers = await newAnswers.save();
 
         const newQuiz = new UserQuizModel({
           ...validatedQuiz,
-          userId: req.user._id,
-          answersId: savedAnswers._id
+          userId: req.user._id
         });
-        let savedQuiz;
-        try {
-          savedQuiz = await newQuiz.save();
-        } catch (error) {
-          await AnswersModel.findByIdAndDelete(savedAnswers._id);
-          res
-            .status(500)
-            .json({ error: "Something went wrong when saving the quiz" });
-          return;
-        }
-
+        const savedQuiz = await newQuiz.save();
         res.status(201).json(savedQuiz);
-      }
-    } catch (error: unknown) {
-      next(error);
-    }
-  }
-);
-
-router.get(
-  "/answers/:id",
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      console.log("Backend: fetching answers for quiz");
-      const id = req.params.id;
-      const answers = await quizService.getAnswers(id);
-      if (!answers) {
-        res.status(404).json({ error: "Quiz not found" });
-      } else {
-        res.send(answers);
       }
     } catch (error: unknown) {
       next(error);

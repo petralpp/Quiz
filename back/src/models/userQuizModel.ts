@@ -24,11 +24,7 @@ const userQuizSchema = new Schema<UserQuiz>({
       type: Object,
       required: true
     }
-  ],
-  answersId: {
-    type: String,
-    required: true
-  }
+  ]
 });
 
 export const UserQuizModel = mongoose.model("UserQuiz", userQuizSchema);
