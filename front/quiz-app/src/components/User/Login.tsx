@@ -29,15 +29,15 @@ const Login = () => {
     loginUsername.trim().length > 3 && loginPassword.trim().length > 13;
 
   return (
-    <div>
+    <div className="h-max py-4 px-2 bg-white">
       <Link to="/">
-        <button className="btn btn-white mx-4">Back</button>
+        <button className="btn btn-blue mx-4">Back</button>
       </Link>
-      <div className="flex justify-evenly flex-wrap gap-1 m-auto py-2">
-        <div className="bg-white rounded-2xl p-6">
+      <div className="flex justify-evenly flex-wrap gap-1 m-auto py-2 text-center">
+        <div className="p-6">
           <form className="space-y-4">
-            <h2 className="text-xl font-semibold">Login</h2>
-            <div>
+            <h1 className="text-2xl font-bold">Login</h1>
+            <div className="text-left">
               <label>
                 Username
                 <input
@@ -51,7 +51,7 @@ const Login = () => {
                 ></input>
               </label>
             </div>
-            <div>
+            <div className="text-left">
               <label>
                 Password
                 <input
