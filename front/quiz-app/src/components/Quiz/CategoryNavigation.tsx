@@ -1,6 +1,6 @@
 import { FilmIcon } from "@heroicons/react/24/outline";
 import { RocketLaunchIcon } from "@heroicons/react/24/outline";
-import type { Dispatch, SetStateAction } from "react";
+import { useEffect, type Dispatch, type SetStateAction } from "react";
 import { useAppSelector } from "../../store/hooks";
 import { selectUser } from "../../store/selectors";
 
@@ -11,6 +11,15 @@ interface Props {
 
 const CategoryNavigation = ({ category, setCategory }: Props) => {
   const user = useAppSelector(selectUser);
+
+  useEffect(() => {
+    const categories = user
+      ? ["Education", "Entertainment", "User"]
+      : ["Education", "Entertainment"];
+    if (!categories.includes(category)) {
+      setCategory(categories[0]);
+    }
+  }, [user, category, setCategory]);
 
   return (
     <div className="md:w-[15%] flex md:flex-col text-center">

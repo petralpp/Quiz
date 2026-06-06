@@ -10,16 +10,18 @@ import { selectUser } from "../store/selectors";
 import { useAppDispatch } from "../store/hooks";
 import { clearUser } from "../store/reducers/userReducer";
 import { setNotification } from "../store/reducers/notificationReducer";
+import { endQuiz } from "../store/reducers/activeQuizReducer";
 
 const NavBar = () => {
   const navigate = useNavigate();
-  const user: User | null = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
+  const user: User | null = useAppSelector(selectUser);
   const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
 
   const handleLogout = () => {
     storageService.removeUser("quizAppUser");
     dispatch(clearUser());
+    dispatch(endQuiz());
     dispatch(setNotification("Logged out successfully", 3));
     navigate("/");
   };
