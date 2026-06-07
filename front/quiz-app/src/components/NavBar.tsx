@@ -28,9 +28,11 @@ const NavBar = () => {
 
   return (
     <div className="flex justify-between items-center px-4">
-      <h1 className="text-center text-4xl p-5 mb-2 font-bold text-white leading-tight">
-        Quiz!
-      </h1>
+      <Link to="/">
+        <h1 className="text-center text-4xl p-5 mb-2 font-bold text-white leading-tight">
+          Quiz!
+        </h1>
+      </Link>
 
       <div className="md:hidden">
         <div onClick={() => setShowMobileMenu(!showMobileMenu)}>

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useAppSelector } from "../../store/hooks";
 import { selectGroupedQuizzesByCategory } from "../../store/selectors";
 
@@ -10,7 +11,7 @@ const QuizList = ({ category, handleClick }: Props) => {
   const grouped = useAppSelector(selectGroupedQuizzesByCategory(category));
 
   return (
-    <div className="md:w-[85%] h-fit py-4 bg-white">
+    <div className="md:w-[85%] min-h-screen h-fit py-4 bg-white">
       {grouped && (
         <div className="px-4">
           {Object.entries(grouped).map(([subcategory, quizzes], i) => (
@@ -35,7 +36,14 @@ const QuizList = ({ category, handleClick }: Props) => {
           ))}
         </div>
       )}
-      {Object.keys(grouped).length === 0 && <p className="text-center">Empty</p>}
+      {Object.keys(grouped).length === 0 && (
+        <p className="pt-5 text-center">
+          No quizzes created,{" "}
+          <Link to="/create" style={{ textDecoration: "underline" }}>
+            create one here
+          </Link>
+        </p>
+      )}
     </div>
   );
 };

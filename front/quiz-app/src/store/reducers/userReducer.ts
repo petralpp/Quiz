@@ -90,7 +90,7 @@ export const fetchUserQuizzes = (user: User) => {
       const message = getErrorMessage(error);
       if (axios.isAxiosError(error)) {
         if (error.status === 401) {
-          dispatch(setNotification("Session expired"));
+          dispatch(setNotification("Session expired, new login is required"));
           dispatch(clearUser());
           storageService.removeUser("quizAppUser");
         } else {
@@ -113,7 +113,17 @@ export const addUserQuiz = (newQuiz: NewQuiz, user: User) => {
       }
     } catch (error: unknown) {
       const message = getErrorMessage(error);
-      dispatch(setNotification(message));
+      if (axios.isAxiosError(error)) {
+        if (error.status === 401) {
+          dispatch(setNotification("Session expired, new login is required"));
+          dispatch(clearUser());
+          storageService.removeUser("quizAppUser");
+        } else {
+          dispatch(setNotification(message));
+        }
+      } else {
+        dispatch(setNotification(message));
+      }
     }
   };
 };
@@ -126,7 +136,17 @@ export const deleteUserQuiz = (id: string, user: User) => {
       dispatch(setNotification("Quiz deleted"));
     } catch (error: unknown) {
       const message = getErrorMessage(error);
-      dispatch(setNotification(message));
+      if (axios.isAxiosError(error)) {
+        if (error.status === 401) {
+          dispatch(setNotification("Session expired, new login is required"));
+          dispatch(clearUser());
+          storageService.removeUser("quizAppUser");
+        } else {
+          dispatch(setNotification(message));
+        }
+      } else {
+        dispatch(setNotification(message));
+      }
     }
   };
 };

@@ -7,6 +7,7 @@ import { useAppDispatch } from "../../store/hooks";
 const Register = () => {
   const [registerUsername, setRegisterUsername] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [name, setName] = useState("");
 
   const dispatch = useAppDispatch();
@@ -22,6 +23,7 @@ const Register = () => {
     if (isRegistered) {
       setRegisterUsername("");
       setRegisterPassword("");
+      setConfirmPassword("");
       setName("");
       navigate("/");
     }
@@ -30,6 +32,7 @@ const Register = () => {
   const RegisterIsValid =
     registerUsername.trim().length > 3 &&
     registerPassword.trim().length > 13 &&
+    registerPassword === confirmPassword &&
     name.trim().length > 2;
 
   return (
@@ -44,7 +47,7 @@ const Register = () => {
             <p className="text-md">Accepted characters: a-zA-ZÅåÄäÖö</p>
             <div className="text-left">
               <label>
-                Username
+                Username *
                 <input
                   type="text"
                   value={registerUsername}
@@ -58,7 +61,7 @@ const Register = () => {
             </div>
             <div className="text-left">
               <label>
-                Name
+                Name *
                 <input
                   type="text"
                   value={name}
@@ -72,7 +75,7 @@ const Register = () => {
             </div>
             <div className="text-left">
               <label>
-                Password
+                Password *
                 <input
                   type="password"
                   value={registerPassword}
@@ -86,6 +89,20 @@ const Register = () => {
                   Must contain at least one number, one uppercase and one lowercase
                   character
                 </p>
+              </label>
+            </div>
+            <div className="text-left">
+              <label>
+                Confirm password *
+                <input
+                  type="password"
+                  value={confirmPassword}
+                  minLength={14}
+                  maxLength={25}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="14-25 characters"
+                ></input>
               </label>
             </div>
             <button

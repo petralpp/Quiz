@@ -97,8 +97,8 @@ const QuizForm = ({ onSubmitQuiz }: Props) => {
         <div>
           <label className="block mb-1 font-medium">
             Description *
-            <input
-              type="text"
+            <textarea
+              name="descriptionText"
               value={description}
               maxLength={450}
               onChange={(e) => setDescription(e.target.value)}
