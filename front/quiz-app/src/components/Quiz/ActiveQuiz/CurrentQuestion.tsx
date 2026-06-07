@@ -27,9 +27,29 @@ const CurrentQuestion = ({ setShowQuestion }: Props) => {
   const [currentOptions, setCurrentOptions] = useState<string[]>([]);
   const [currentCorrectAnswer, setCurrentCorrectAnswer] = useState<string>("");
 
+  const shuffleChoices = (choices: string[]) => {
+    let currentIndex = choices.length,
+      randomIndex;
+    const shuffled = [...choices];
+
+    while (currentIndex != 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+      [shuffled[currentIndex], shuffled[randomIndex]] = [
+        shuffled[randomIndex],
+        shuffled[currentIndex]
+      ];
+    }
+
+    return shuffled;
+  };
+
   useEffect(() => {
     setCurrentQuestion(activeQuiz.questions[currentIndex].question);
-    setCurrentOptions(activeQuiz.questions[currentIndex].choices);
+    const shuffledChoices = shuffleChoices(
+      activeQuiz.questions[currentIndex].choices
+    );
+    setCurrentOptions(shuffledChoices);
     setCurrentCorrectAnswer(activeQuiz.questions[currentIndex].answer);
   }, [activeQuiz, currentIndex]);
 
