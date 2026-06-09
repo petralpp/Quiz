@@ -2,7 +2,7 @@ import type { QuizDescription } from "../../types";
 
 interface Props {
   isOpen: boolean;
-  onClose(): void;
+  toggleOpen(setting: boolean): void;
   start(): void;
   category: string;
   quiz: QuizDescription;
@@ -11,7 +11,7 @@ interface Props {
 
 const QuizOverlay = ({
   isOpen,
-  onClose,
+  toggleOpen,
   start,
   category,
   quiz,
@@ -20,8 +20,11 @@ const QuizOverlay = ({
   return (
     <>
       {isOpen && (
-        <div className="overlay-background" onClick={onClose}>
-          <div className="overlay overflow-auto max-h-full md:max-h-4/5">
+        <div className="overlay-background" onClick={() => toggleOpen(false)}>
+          <div
+            className="overlay max-h-full md:max-h-4/5 md:max-w-3/5"
+            onClick={(e) => e.stopPropagation()}
+          >
             {category === "User" && (
               <div className="mb-3 text-right">
                 <button
@@ -36,16 +39,18 @@ const QuizOverlay = ({
               <h2 className="wrap-anywhere text-center font-semibold text-2xl mb-3">
                 {quiz.name}
               </h2>
-              <p className="wrap-anywhere text-base md:text-lg lg:text-xl">
-                {quiz.description}
-              </p>
+              <div className="overflow-y-auto max-h-35">
+                <p className="wrap-anywhere text-base md:text-lg lg:text-xl">
+                  {quiz.description}
+                </p>
+              </div>
               <p className="mt-4 text-center font-semibold">
                 {quiz.questions} questions
               </p>
             </div>
             <div className="w-full m-auto flex justify-between">
               <button
-                onClick={onClose}
+                onClick={() => toggleOpen(false)}
                 className="btn btn-white border-2 border-solid"
               >
                 Cancel

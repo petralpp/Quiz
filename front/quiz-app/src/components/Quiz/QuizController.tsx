@@ -34,10 +34,6 @@ const QuizController = () => {
   const [category, setCategory] = useState<string>("Education");
   const [overlayIsOpen, setOverlayIsOpen] = useState<boolean>(false);
 
-  const toggleOverlay = () => {
-    setOverlayIsOpen(!overlayIsOpen);
-  };
-
   const findQuiz = (category: string, name: string) => {
     let quiz = null;
     if (category === "Entertainment") {
@@ -54,6 +50,7 @@ const QuizController = () => {
     const quiz = findQuiz(selectedQuiz.category, selectedQuiz.name);
     if (quiz) {
       dispatch(startQuiz(quiz));
+      setOverlayIsOpen(false);
     }
   };
 
@@ -64,7 +61,7 @@ const QuizController = () => {
         ...quiz,
         questions: quiz.questions.length
       });
-      toggleOverlay();
+      setOverlayIsOpen(true);
     }
   };
 
@@ -86,7 +83,7 @@ const QuizController = () => {
       <QuizList category={category} handleClick={handleClick} />
       <QuizOverlay
         isOpen={overlayIsOpen}
-        onClose={toggleOverlay}
+        toggleOpen={setOverlayIsOpen}
         start={start}
         category={category}
         quiz={selectedQuiz}
