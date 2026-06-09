@@ -30,7 +30,7 @@ const Register = () => {
   };
 
   const RegisterIsValid =
-    registerUsername.trim().length > 3 &&
+    registerUsername.trim().length > 2 &&
     registerPassword.trim().length > 13 &&
     registerPassword === confirmPassword &&
     name.trim().length > 2;
@@ -44,18 +44,21 @@ const Register = () => {
         <div className="p-6">
           <form className="space-y-4">
             <h1 className="text-2xl font-bold">Register</h1>
-            <p className="text-md">Accepted characters: a-zA-ZÅåÄäÖö</p>
+            <p className="text-md">
+              Only letters and numbers accepted (leading and trailing spaces will be
+              removed)
+            </p>
             <div className="text-left">
               <label>
                 Username *
                 <input
                   type="text"
                   value={registerUsername}
-                  minLength={4}
-                  maxLength={15}
+                  minLength={3}
+                  maxLength={20}
                   onChange={(e) => setRegisterUsername(e.target.value)}
                   className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="4-15 characters"
+                  placeholder="3-20 characters"
                 ></input>
               </label>
             </div>

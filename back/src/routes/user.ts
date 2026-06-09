@@ -13,7 +13,7 @@ router.post("/register", async (req: Request, res: Response, next: NextFunction)
   console.log("Backend: Registering the user");
   try {
     const { username, name, password } = req.body;
-    const newUser = parseUser(username, name, password);
+    const newUser = parseUser(username.trim(), name.trim(), password.trim());
     const savedUser = await userService.addUser(newUser);
 
     const userForToken = {

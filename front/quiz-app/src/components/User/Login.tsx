@@ -26,7 +26,7 @@ const Login = () => {
   };
 
   const LoginIsValid =
-    loginUsername.trim().length > 3 && loginPassword.trim().length > 13;
+    loginUsername.trim().length > 2 && loginPassword.trim().length > 13;
 
   return (
     <div className="h-max py-4 px-2 bg-white">
@@ -43,11 +43,11 @@ const Login = () => {
                 <input
                   type="text"
                   value={loginUsername}
-                  minLength={4}
-                  maxLength={15}
+                  minLength={3}
+                  maxLength={20}
                   onChange={(e) => setLoginUsername(e.target.value)}
                   className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="4-15 characters"
+                  placeholder="3-20 characters"
                 ></input>
               </label>
             </div>

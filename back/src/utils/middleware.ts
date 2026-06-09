@@ -23,6 +23,12 @@ export const errorMiddleware = (
     });
   }
 
+  if (error.name === "ValidationError") {
+    return res.status(400).json({
+      error: error.message
+    });
+  }
+
   if (
     error.name === "MongoServerError" &&
     error.message.includes("E11000 duplicate key error")
@@ -40,7 +46,7 @@ export const errorMiddleware = (
 
   if (error instanceof z.ZodError) {
     return res.status(400).json({
-      error: "Input in wrong format"
+      error: error.issues[0].message
     });
   }
 

@@ -6,8 +6,8 @@ const userSchema = new Schema<User>({
     type: String,
     required: true,
     unique: true,
-    minLength: 4,
-    maxLength: 15
+    minLength: 3,
+    maxLength: 20
   },
   name: {
     type: String,

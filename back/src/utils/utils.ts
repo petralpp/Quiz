@@ -2,9 +2,27 @@ import { z } from "zod";
 import { NewUser, NewQuiz } from "../types/types";
 
 export const NewUserSchema = z.object({
-  username: z.string().regex(/^[a-zA-Z0-9åÅäÄöÖ]{4,15}$/),
-  name: z.string().regex(/^[a-zA-ZåÅäÄöÖ]{3,20}$/),
-  password: z.string().regex(/^(?=.*[a-zåäö])(?=.*[A-ZÅÄÖ])(?=.*\d)\S{14,25}$/)
+  username: z
+    .string()
+    .min(3, "Username has to be at least 3 characters long.")
+    .max(20, "Username can't be more than 20 characters long.")
+    .regex(
+      /^[a-zA-Z0-9åÅäÄöÖ]{3,20}$/,
+      "Username can only contain letters and numbers."
+    ),
+  name: z
+    .string()
+    .min(3, "Name has to be at least 3 characters long.")
+    .max(20, "Name can't be more than 20 characters long.")
+    .regex(
+      /^(?=.*[A-Za-zÅÄÖåäö0-9])[A-Za-zÅÄÖåäö0-9 ]{3,20}$/,
+      "Name can only contain letters, numbers and spaces."
+    ),
+  password: z
+    .string()
+    .min(14, "Password has to be at least 14 characters long.")
+    .max(25, "Password can't be more than 25 characters long.")
+    .regex(/^(?=.*[a-zåäö])(?=.*[A-ZÅÄÖ])(?=.*\d)\S{14,25}$/)
 });
 
 export const QuestionSchema = z.object({
