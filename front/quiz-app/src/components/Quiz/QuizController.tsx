@@ -16,6 +16,7 @@ import QuizList from "./QuizList";
 import CategoryNavigation from "./CategoryNavigation";
 import QuizOverlay from "./QuizOverlay";
 import ActiveQuizController from "./ActiveQuiz/ActiveQuizController";
+import NavBar from "../NavBar";
 
 const QuizController = () => {
   const dispatch = useAppDispatch();
@@ -78,9 +79,12 @@ const QuizController = () => {
   return isActive ? (
     <ActiveQuizController />
   ) : (
-    <div className="flex flex-col md:flex-row h-full">
+    <div className="flex flex-col md:flex-row h-fit">
       <CategoryNavigation category={category} setCategory={setCategory} />
-      <QuizList category={category} handleClick={handleClick} />
+      <div className="w-full">
+        <NavBar />
+        <QuizList category={category} handleClick={handleClick} />
+      </div>
       <QuizOverlay
         isOpen={overlayIsOpen}
         toggleOpen={setOverlayIsOpen}

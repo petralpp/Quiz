@@ -22,7 +22,10 @@ const CategoryNavigation = ({ category, setCategory }: Props) => {
   }, [user, category, setCategory]);
 
   return (
-    <div className="md:w-[15%] flex md:flex-col text-center">
+    <div className="md:w-[20%] flex md:flex-col text-center bg-linear-to-r from-indigo-500 to-purple-500">
+      <h1 className="text-center text-4xl p-5 mb-2 font-bold text-white leading-tight">
+        Quiz!
+      </h1>
       <div
         onClick={() => setCategory("Education")}
         className={`cursor-pointer rounded-t-md md:rounded-none p-3 font-semibold ${category === "Education" ? "bg-white" : "hover:text-gray-50"}`}

@@ -27,13 +27,7 @@ const NavBar = () => {
   };
 
   return (
-    <div className="flex justify-between items-center px-4">
-      <Link to="/">
-        <h1 className="text-center text-4xl p-5 mb-2 font-bold text-white leading-tight">
-          Quiz!
-        </h1>
-      </Link>
-
+    <div>
       <div className="md:hidden">
         <div onClick={() => setShowMobileMenu(!showMobileMenu)}>
           <Bars4Icon className="size-8 cursor-pointer hover:text-white" />
@@ -78,7 +72,7 @@ const NavBar = () => {
         )}
       </div>
 
-      <div className="hidden md:flex gap-2">
+      <div className="hidden md:p-4 md:flex md:justify-end gap-2">
         {user && <p className="m-2 text-white font-semibold">Hello {user.name}</p>}
         <Link to="/create">
           <button className="btn btn-blue font-semibold">Create</button>

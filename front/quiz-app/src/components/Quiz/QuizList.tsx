@@ -11,7 +11,7 @@ const QuizList = ({ category, handleClick }: Props) => {
   const grouped = useAppSelector(selectGroupedQuizzesByCategory(category));
 
   return (
-    <div className="md:w-[85%] min-h-screen h-fit py-4 bg-white">
+    <div className="min-h-screen h-fit py-4 bg-white">
       {grouped && (
         <div className="px-4">
           {Object.entries(grouped).map(([subcategory, quizzes], i) => (

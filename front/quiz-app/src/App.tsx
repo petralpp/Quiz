@@ -7,7 +7,6 @@ import { useAppDispatch } from "./store/hooks";
 import { fetchQuizzes } from "./store/reducers/quizReducer";
 import { fetchUserQuizzes, setUser } from "./store/reducers/userReducer";
 
-import NavBar from "./components/NavBar";
 import QuizController from "./components/Quiz/QuizController";
 import CreationPage from "./components/CreateQuiz/CreationPage";
 import Register from "./components/User/Register";
@@ -30,7 +29,6 @@ function App() {
   return (
     <div className="h-full font-sans text-lg">
       <Router>
-        <NavBar />
         <Notification />
         <Routes>
           <Route path="/" element={<QuizController />} />

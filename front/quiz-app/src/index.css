@@ -6,7 +6,7 @@ html,
 }
 
 body {
-  @apply h-full bg-linear-to-r from-indigo-500 to-purple-500;
+  @apply h-full bg-white;
 }
 
 .btn {
