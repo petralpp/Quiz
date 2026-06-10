@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import type { Quiz, QuizDescription, User } from "../../types";
+import useIsDesktop from "../../hooks";
 
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { startQuiz } from "../../store/reducers/activeQuizReducer";
@@ -16,11 +17,13 @@ import QuizList from "./QuizList";
 import CategoryNavigation from "./CategoryNavigation";
 import QuizOverlay from "./QuizOverlay";
 import ActiveQuizController from "./ActiveQuiz/ActiveQuizController";
-import NavBar from "../NavBar";
+import NavBarDesktop from "../NavBarDesktop";
+import NavBarMobile from "../NavBarMobile";
 
 const QuizController = () => {
   const dispatch = useAppDispatch();
   const isActive = useAppSelector((state) => state.activeQuiz.isActive);
+  const isDesktop = useIsDesktop();
   const entertainmentList: Quiz[] = useAppSelector(selectEntertainmentQuizzes);
   const educationList: Quiz[] = useAppSelector(selectEducationQuizzes);
   const userList: Quiz[] = useAppSelector(selectUserQuizzes);
@@ -78,13 +81,27 @@ const QuizController = () => {
 
   return isActive ? (
     <ActiveQuizController />
-  ) : (
-    <div className="flex flex-col md:flex-row h-fit">
+  ) : isDesktop ? (
+    <div className="flex flex-row h-fit">
       <CategoryNavigation category={category} setCategory={setCategory} />
       <div className="w-full">
-        <NavBar />
+        <NavBarDesktop />
         <QuizList category={category} handleClick={handleClick} />
       </div>
+      <QuizOverlay
+        isOpen={overlayIsOpen}
+        toggleOpen={setOverlayIsOpen}
+        start={start}
+        category={category}
+        quiz={selectedQuiz}
+        deleteQuiz={handleDelete}
+      />
+    </div>
+  ) : (
+    <div>
+      <NavBarMobile />
+      <CategoryNavigation category={category} setCategory={setCategory} />
+      <QuizList category={category} handleClick={handleClick} />
       <QuizOverlay
         isOpen={overlayIsOpen}
         toggleOpen={setOverlayIsOpen}
