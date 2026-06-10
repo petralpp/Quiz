@@ -22,23 +22,25 @@ const CategoryNavMobile = ({ category, setCategory }: Props) => {
   }, [user, category, setCategory]);
 
   return (
-    <div className="flex text-center bg-white">
+    <div className="flex pt-2 bg-white">
       <div
         onClick={() => setCategory("Education")}
-        className={`cursor-pointer p-3 font-semibold ${category === "Education" ? "underline" : "hover:underline"}`}
+        className={`cursor-pointer p-3 ${category === "Education" ? "underline font-semibold" : "hover:underline"}`}
       >
-        Education <RocketLaunchIcon className="size-5 inline ml-2" />
+        <RocketLaunchIcon className="inline size-5 mr-3" />
+        Education
       </div>
       <div
         onClick={() => setCategory("Entertainment")}
-        className={`cursor-pointer p-3 font-semibold ${category === "Entertainment" ? "underline" : "hover:underline"}`}
+        className={`cursor-pointer p-3 ${category === "Entertainment" ? "underline font-semibold" : "hover:underline"}`}
       >
-        Entertainment <FilmIcon className="text-center inline size-5 ml-2" />
+        <FilmIcon className="inline size-5 mr-3" />
+        Entertainment
       </div>
       {user && (
         <div
           onClick={() => setCategory("User")}
-          className={`cursor-pointer p-3 font-semibold ${category === "User" ? "underline" : "hover:underline"}`}
+          className={`cursor-pointer p-3 ${category === "User" ? "underline font-semibold" : "hover:underline"}`}
         >
           My quizzes
         </div>
