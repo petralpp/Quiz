@@ -14,9 +14,10 @@ import {
 } from "../../store/selectors";
 
 import QuizList from "./QuizList";
-import CategoryNavigation from "./CategoryNavigation";
 import QuizOverlay from "./QuizOverlay";
 import ActiveQuizController from "./ActiveQuiz/ActiveQuizController";
+import CategoryNavDesktop from "./CategoryNavDesktop";
+import CategoryNavMobile from "./CategoryNavMobile";
 import NavBarDesktop from "../NavBarDesktop";
 import NavBarMobile from "../NavBarMobile";
 
@@ -83,7 +84,7 @@ const QuizController = () => {
     <ActiveQuizController />
   ) : isDesktop ? (
     <div className="flex flex-row h-fit">
-      <CategoryNavigation category={category} setCategory={setCategory} />
+      <CategoryNavDesktop category={category} setCategory={setCategory} />
       <div className="w-full">
         <NavBarDesktop />
         <QuizList category={category} handleClick={handleClick} />
@@ -100,7 +101,7 @@ const QuizController = () => {
   ) : (
     <div>
       <NavBarMobile />
-      <CategoryNavigation category={category} setCategory={setCategory} />
+      <CategoryNavMobile category={category} setCategory={setCategory} />
       <QuizList category={category} handleClick={handleClick} />
       <QuizOverlay
         isOpen={overlayIsOpen}

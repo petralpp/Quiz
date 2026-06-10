@@ -9,7 +9,7 @@ interface Props {
   setCategory: Dispatch<SetStateAction<string>>;
 }
 
-const CategoryNavigation = ({ category, setCategory }: Props) => {
+const CategoryNavMobile = ({ category, setCategory }: Props) => {
   const user = useAppSelector(selectUser);
 
   useEffect(() => {
@@ -22,26 +22,23 @@ const CategoryNavigation = ({ category, setCategory }: Props) => {
   }, [user, category, setCategory]);
 
   return (
-    <div className="md:w-[20%] flex md:flex-col text-center bg-linear-to-r from-indigo-500 to-purple-500">
-      <h1 className="text-center text-4xl p-5 mb-2 font-bold text-white leading-tight">
-        Quiz!
-      </h1>
+    <div className="flex text-center bg-white">
       <div
         onClick={() => setCategory("Education")}
-        className={`cursor-pointer rounded-t-md md:rounded-none p-3 font-semibold ${category === "Education" ? "bg-white" : "hover:text-gray-50"}`}
+        className={`cursor-pointer p-3 font-semibold ${category === "Education" ? "underline" : "hover:underline"}`}
       >
         Education <RocketLaunchIcon className="size-5 inline ml-2" />
       </div>
       <div
         onClick={() => setCategory("Entertainment")}
-        className={`cursor-pointer rounded-t-md md:rounded-none p-3 font-semibold ${category === "Entertainment" ? "bg-white" : "hover:text-gray-50"}`}
+        className={`cursor-pointer p-3 font-semibold ${category === "Entertainment" ? "underline" : "hover:underline"}`}
       >
         Entertainment <FilmIcon className="text-center inline size-5 ml-2" />
       </div>
       {user && (
         <div
           onClick={() => setCategory("User")}
-          className={`cursor-pointer rounded-t-md md:rounded-none p-3 font-semibold ${category === "User" ? "bg-white" : "hover:text-gray-50"}`}
+          className={`cursor-pointer p-3 font-semibold ${category === "User" ? "underline" : "hover:underline"}`}
         >
           My quizzes
         </div>
@@ -50,4 +47,4 @@ const CategoryNavigation = ({ category, setCategory }: Props) => {
   );
 };
 
-export default CategoryNavigation;
+export default CategoryNavMobile;
