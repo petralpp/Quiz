@@ -39,6 +39,14 @@ export const userSlice = createSlice({
         ...state,
         quizzes: state.quizzes.filter((quiz) => quiz._id !== action.payload)
       };
+    },
+    editQuiz(state, action) {
+      return {
+        ...state,
+        quizzes: state.quizzes.map((quiz) =>
+          quiz._id === action.payload._id ? action.payload : quiz
+        )
+      };
     }
   }
 });
@@ -151,7 +159,32 @@ export const deleteUserQuiz = (id: string, user: User) => {
   };
 };
 
-export const { setUser, clearUser, setUserQuizList, addQuiz, deleteQuiz } =
+export const editUserQuiz = (id: string, quiz: NewQuiz, user: User) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const updatedQuiz = await quizService.updateQuiz(id, quiz, user);
+      if (updatedQuiz) {
+        dispatch(editQuiz(updatedQuiz));
+        dispatch(setNotification(`Quiz ${updatedQuiz.name} updated!`));
+      }
+    } catch (error: unknown) {
+      const message = getErrorMessage(error);
+      if (axios.isAxiosError(error)) {
+        if (error.status === 401) {
+          dispatch(setNotification("Session expired, new login is required"));
+          dispatch(clearUser());
+          storageService.removeUser("quizAppUser");
+        } else {
+          dispatch(setNotification(message));
+        }
+      } else {
+        dispatch(setNotification(message));
+      }
+    }
+  };
+};
+
+export const { setUser, clearUser, setUserQuizList, addQuiz, deleteQuiz, editQuiz } =
   userSlice.actions;
 
 export default userSlice.reducer;

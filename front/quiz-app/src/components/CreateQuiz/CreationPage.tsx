@@ -1,18 +1,27 @@
-import QuizForm from "./QuizForm";
+import { useNavigate, useParams } from "react-router-dom";
+
 import type { NewQuiz, User } from "../../types";
+
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { addUserQuiz } from "../../store/reducers/userReducer";
-import { useParams } from "react-router-dom";
+import { addUserQuiz, editUserQuiz } from "../../store/reducers/userReducer";
 import { selectQuizById } from "../../store/selectors";
+
+import QuizForm from "./QuizForm";
 import PageNotFound from "../PageNotFound";
 
 const CreationPage = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const id = useParams().id;
   const quiz = useAppSelector(selectQuizById(id));
+
   const handleSubmit = async (newQuiz: NewQuiz, user: User) => {
-    dispatch(addUserQuiz(newQuiz, user));
-    // TÄNNE varmaa tarkistus et jos id ja quiz ni muokkaus, muute uusi
+    if (id && quiz) {
+      dispatch(editUserQuiz(id, newQuiz, user));
+      navigate("/create");
+    } else {
+      dispatch(addUserQuiz(newQuiz, user));
+    }
   };
 
   if (id && !quiz) {

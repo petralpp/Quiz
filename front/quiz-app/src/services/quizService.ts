@@ -31,15 +31,11 @@ const deleteQuiz = async (id: string, user: User) => {
   return response;
 };
 
-const updateQuiz = async (quiz: Quiz, user: User) => {
+const updateQuiz = async (id: string, quiz: NewQuiz, user: User) => {
   const config = {
     headers: { Authorization: `Bearer ${user.token}` }
   };
-  const response = await axios.put(
-    `/api/quiz/userquizzes/${quiz._id}`,
-    quiz,
-    config
-  );
+  const response = await axios.put(`/api/quiz/userquizzes/${id}`, quiz, config);
   return response.data;
 };
 

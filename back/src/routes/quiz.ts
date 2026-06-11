@@ -89,7 +89,8 @@ router.put(
           res.status(404).json({ error: "The edited quiz was not found" });
           return;
         }
-        if (previousQuiz.userId !== req.user._id) {
+
+        if (!previousQuiz.userId?.equals(req.user._id)) {
           res.status(400).json({ error: "userId not valid" });
           return;
         }
