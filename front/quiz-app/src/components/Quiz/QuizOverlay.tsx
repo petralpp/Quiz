@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import type { QuizDescription } from "../../types";
 
 interface Props {
@@ -33,6 +34,9 @@ const QuizOverlay = ({
                 >
                   Delete
                 </button>
+                <Link to={`/create/${quiz._id}`}>
+                  <button className="btn btn-white">Edit</button>
+                </Link>
               </div>
             )}
             <div className="mb-4">

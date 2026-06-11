@@ -12,6 +12,10 @@ export const selectUser = (state: RootState) => state.user.user;
 
 export const selectUserQuizzes = (state: RootState) => state.user.quizzes;
 
+export const selectQuizById = (id: string | undefined) => (state: RootState) => {
+  return state.user.quizzes.find((q) => q._id === id);
+};
+
 export const notification = (state: RootState) => state.notification;
 
 export const selectGroupedQuizzesByCategory = (category: string) =>

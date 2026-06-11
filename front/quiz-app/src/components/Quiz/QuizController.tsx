@@ -30,6 +30,7 @@ const QuizController = () => {
   const userList: Quiz[] = useAppSelector(selectUserQuizzes);
   const user: User | null = useAppSelector(selectUser);
   const [selectedQuiz, setSelectedQuiz] = useState<QuizDescription>({
+    _id: "",
     category: "",
     subcategory: "",
     name: "",

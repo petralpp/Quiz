@@ -23,6 +23,7 @@ export interface QuizQuestion {
 }
 
 export interface QuizDescription {
+  _id: string;
   category: string;
   subcategory: string;
   name: string;

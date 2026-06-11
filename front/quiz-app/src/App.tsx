@@ -32,7 +32,7 @@ function App() {
         <Notification />
         <Routes>
           <Route path="/" element={<QuizController />} />
-          <Route path="/create" element={<CreationPage />} />
+          <Route path="/create/:id?" element={<CreationPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="*" element={<PageNotFound />} />

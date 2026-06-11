@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import type { NewQuiz, QuizQuestion, User } from "../../types";
+import type { NewQuiz, Quiz, QuizQuestion, User } from "../../types";
 import { useAppSelector } from "../../store/hooks";
 import { selectUser } from "../../store/selectors";
 
@@ -9,13 +9,18 @@ import QuestionForm from "./QuestionForm";
 
 interface Props {
   onSubmitQuiz: (quiz: NewQuiz, user: User) => void;
+  initQuiz?: Quiz;
 }
 
-const QuizForm = ({ onSubmitQuiz }: Props) => {
-  const [title, setTitle] = useState<string>("");
-  const [category, setCategory] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
-  const [questions, setQuestions] = useState<QuizQuestion[]>([]);
+const QuizForm = ({ onSubmitQuiz, initQuiz }: Props) => {
+  const [title, setTitle] = useState<string>(initQuiz?.name ?? "");
+  const [category, setCategory] = useState<string>(initQuiz?.category ?? "");
+  const [description, setDescription] = useState<string>(
+    initQuiz?.description ?? ""
+  );
+  const [questions, setQuestions] = useState<QuizQuestion[]>(
+    initQuiz?.questions ?? []
+  );
   const loggedInUser = useAppSelector(selectUser);
 
   const addQuestion = (question: QuizQuestion) => {
