@@ -1,15 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { QuizQuestion } from "../../types";
 
 interface Props {
   onAddQuestion: (question: QuizQuestion) => void;
+  initQuestion?: { index: number; question: QuizQuestion };
 }
 
-const QuestionForm = ({ onAddQuestion }: Props) => {
+const QuestionForm = ({ onAddQuestion, initQuestion }: Props) => {
   const [questionText, setQuestionText] = useState<string>("");
   const [choices, setChoices] = useState<string[]>(["", ""]);
   const [correctAnswer, setCorrectAnswer] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
+
+  useEffect(() => {
+    if (initQuestion) {
+      setQuestionText(initQuestion.question.question);
+      setChoices(initQuestion.question.choices);
+      setCorrectAnswer(initQuestion.question.answer);
+    }
+  }, [initQuestion]);
 
   const handleChoiceChange = (index: number, value: string) => {
     if (choices.find((c) => c === value)) {

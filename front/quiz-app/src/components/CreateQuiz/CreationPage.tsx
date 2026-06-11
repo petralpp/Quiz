@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { addUserQuiz } from "../../store/reducers/userReducer";
 import { useParams } from "react-router-dom";
 import { selectQuizById } from "../../store/selectors";
+import PageNotFound from "../PageNotFound";
 
 const CreationPage = () => {
   const dispatch = useAppDispatch();
@@ -11,7 +12,12 @@ const CreationPage = () => {
   const quiz = useAppSelector(selectQuizById(id));
   const handleSubmit = async (newQuiz: NewQuiz, user: User) => {
     dispatch(addUserQuiz(newQuiz, user));
+    // TÄNNE varmaa tarkistus et jos id ja quiz ni muokkaus, muute uusi
   };
+
+  if (id && !quiz) {
+    return <PageNotFound />;
+  }
 
   return (
     <div className="h-max py-4 px-2 bg-white">

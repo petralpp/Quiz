@@ -14,7 +14,7 @@ interface Props {
 
 const QuizForm = ({ onSubmitQuiz, initQuiz }: Props) => {
   const [title, setTitle] = useState<string>(initQuiz?.name ?? "");
-  const [category, setCategory] = useState<string>(initQuiz?.category ?? "");
+  const [category, setCategory] = useState<string>(initQuiz?.subcategory ?? "");
   const [description, setDescription] = useState<string>(
     initQuiz?.description ?? ""
   );
@@ -22,9 +22,20 @@ const QuizForm = ({ onSubmitQuiz, initQuiz }: Props) => {
     initQuiz?.questions ?? []
   );
   const loggedInUser = useAppSelector(selectUser);
+  const [mutableQuestion, setMutableQuestion] = useState<
+    { index: number; question: QuizQuestion } | undefined
+  >(undefined);
 
-  const addQuestion = (question: QuizQuestion) => {
-    setQuestions((prev) => [...prev, question]);
+  const addQuestion = (newQuestion: QuizQuestion) => {
+    if (mutableQuestion) {
+      setQuestions((prev) =>
+        prev.map((q, index) => (index === mutableQuestion.index ? newQuestion : q))
+      );
+
+      setMutableQuestion(undefined);
+    } else {
+      setQuestions((prev) => [...prev, newQuestion]);
+    }
   };
 
   const removeQuestion = (index: number) => {
@@ -146,6 +157,13 @@ const QuizForm = ({ onSubmitQuiz, initQuiz }: Props) => {
                 >
                   Remove
                 </button>
+                <button
+                  type="button"
+                  onClick={() => setMutableQuestion({ index: index, question: q })}
+                  className="btn btn-white mt-4 ml-2 text-sm"
+                >
+                  Edit
+                </button>
               </div>
             ))
           ) : (
@@ -173,7 +191,9 @@ const QuizForm = ({ onSubmitQuiz, initQuiz }: Props) => {
           </button>
         </div>
       </form>
-      {questions.length < 30 && <QuestionForm onAddQuestion={addQuestion} />}
+      {(questions.length < 30 || mutableQuestion) && (
+        <QuestionForm initQuestion={mutableQuestion} onAddQuestion={addQuestion} />
+      )}
     </div>
   );
 };
