@@ -22,7 +22,7 @@ const CategoryNavMobile = ({ category, setCategory }: Props) => {
   }, [user, category, setCategory]);
 
   return (
-    <div className="flex pt-2 bg-white">
+    <div className="flex pt-2 text-center bg-white">
       <div
         onClick={() => setCategory("Education")}
         className={`cursor-pointer p-3 ${category === "Education" ? "underline font-semibold" : "hover:underline"}`}
