@@ -17,6 +17,8 @@ export interface QuizQuestions {
 }
 
 export interface NewQuiz {
+  _id?: mongoose.Types.ObjectId;
+  userId?: mongoose.Types.ObjectId;
   category: string;
   subcategory: string;
   name: string;

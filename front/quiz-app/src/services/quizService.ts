@@ -31,4 +31,16 @@ const deleteQuiz = async (id: string, user: User) => {
   return response;
 };
 
-export default { getAllQuizzes, getUserQuizzes, createQuiz, deleteQuiz };
+const updateQuiz = async (quiz: Quiz, user: User) => {
+  const config = {
+    headers: { Authorization: `Bearer ${user.token}` }
+  };
+  const response = await axios.put(
+    `/api/quiz/userquizzes/${quiz._id}`,
+    quiz,
+    config
+  );
+  return response.data;
+};
+
+export default { getAllQuizzes, getUserQuizzes, createQuiz, deleteQuiz, updateQuiz };

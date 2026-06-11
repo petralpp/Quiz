@@ -76,4 +76,38 @@ router.delete(
   }
 );
 
+router.put(
+  "/userquizzes/:id",
+  extractToken,
+  extractUser,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      if (req.user) {
+        const id = req.params.id;
+        const previousQuiz = await UserQuizModel.findById(id);
+        if (!previousQuiz) {
+          res.status(404).json({ error: "The edited quiz was not found" });
+          return;
+        }
+        if (previousQuiz.userId !== req.user._id) {
+          res.status(400).json({ error: "userId not valid" });
+          return;
+        }
+        const newQuiz = req.body;
+        const validatedQuiz = parseQuiz(newQuiz);
+
+        previousQuiz.name = validatedQuiz.name;
+        previousQuiz.category = validatedQuiz.category;
+        previousQuiz.subcategory = validatedQuiz.subcategory;
+        previousQuiz.description = validatedQuiz.description;
+        previousQuiz.questions = validatedQuiz.questions;
+
+        const updatedQuiz = await previousQuiz.save();
+        res.json(updatedQuiz);
+      }
+    } catch (error: unknown) {
+      next(error);
+    }
+  }
+);
 export default router;
