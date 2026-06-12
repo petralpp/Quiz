@@ -8,11 +8,13 @@ import { getErrorMessage } from "../../utils";
 type State = {
   educationList: Quiz[];
   entertainmentList: Quiz[];
+  generalList: Quiz[];
 };
 
 const initialState: State = {
   educationList: [],
-  entertainmentList: []
+  entertainmentList: [],
+  generalList: []
 };
 
 export const quizzesSlice = createSlice({
@@ -22,12 +24,21 @@ export const quizzesSlice = createSlice({
     setQuizzes(_state, action) {
       const educationList: Quiz[] = [];
       const entertainmentList: Quiz[] = [];
-      action.payload.forEach((quiz: Quiz) =>
-        quiz.category === "Education"
-          ? educationList.push(quiz)
-          : entertainmentList.push(quiz)
-      );
-      return { educationList, entertainmentList };
+      const generalList: Quiz[] = [];
+      action.payload.forEach((quiz: Quiz) => {
+        switch (quiz.category) {
+          case "Education":
+            educationList.push(quiz);
+            break;
+          case "Entertainment":
+            entertainmentList.push(quiz);
+            break;
+          default:
+            generalList.push(quiz);
+            break;
+        }
+      });
+      return { educationList, entertainmentList, generalList };
     }
   }
 });

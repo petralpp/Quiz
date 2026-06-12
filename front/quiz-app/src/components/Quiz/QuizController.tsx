@@ -9,6 +9,7 @@ import { deleteUserQuiz } from "../../store/reducers/userReducer";
 import {
   selectEducationQuizzes,
   selectEntertainmentQuizzes,
+  selectGeneralQuizzes,
   selectUser,
   selectUserQuizzes
 } from "../../store/selectors";
@@ -27,6 +28,7 @@ const QuizController = () => {
   const isDesktop = useIsDesktop();
   const entertainmentList: Quiz[] = useAppSelector(selectEntertainmentQuizzes);
   const educationList: Quiz[] = useAppSelector(selectEducationQuizzes);
+  const generalList: Quiz[] = useAppSelector(selectGeneralQuizzes);
   const userList: Quiz[] = useAppSelector(selectUserQuizzes);
   const user: User | null = useAppSelector(selectUser);
   const [selectedQuiz, setSelectedQuiz] = useState<QuizDescription>({
@@ -42,12 +44,19 @@ const QuizController = () => {
 
   const findQuiz = (category: string, name: string) => {
     let quiz = null;
-    if (category === "Entertainment") {
-      quiz = entertainmentList?.find((q) => q.name === name);
-    } else if (category === "Education") {
-      quiz = educationList?.find((q) => q.name === name);
-    } else {
-      quiz = userList?.find((q) => q.name === name);
+    switch (category) {
+      case "Education":
+        quiz = educationList?.find((q) => q.name === name);
+        break;
+      case "Entertainment":
+        quiz = entertainmentList?.find((q) => q.name === name);
+        break;
+      case "General":
+        quiz = generalList?.find((q) => q.name === name);
+        break;
+      default:
+        quiz = userList?.find((q) => q.name === name);
+        break;
     }
     return quiz;
   };

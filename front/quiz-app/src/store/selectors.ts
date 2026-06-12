@@ -8,6 +8,8 @@ export const selectEntertainmentQuizzes = (state: RootState) =>
 export const selectEducationQuizzes = (state: RootState) =>
   state.quizzes.educationList;
 
+export const selectGeneralQuizzes = (state: RootState) => state.quizzes.generalList;
+
 export const selectUser = (state: RootState) => state.user.user;
 
 export const selectUserQuizzes = (state: RootState) => state.user.quizzes;
@@ -26,6 +28,8 @@ export const selectGroupedQuizzesByCategory = (category: string) =>
           return state.quizzes.entertainmentList;
         } else if (category === "Education") {
           return state.quizzes.educationList;
+        } else if (category === "General") {
+          return state.quizzes.generalList;
         } else {
           return state.user.quizzes;
         }

@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { FilmIcon } from "@heroicons/react/24/outline";
 import { RocketLaunchIcon } from "@heroicons/react/24/outline";
-
+import { GlobeAltIcon } from "@heroicons/react/24/outline";
+import { UserCircleIcon } from "@heroicons/react/24/outline";
 import { useAppSelector } from "../../store/hooks";
 import { selectGroupedQuizzesByCategory } from "../../store/selectors";
 
@@ -19,10 +20,17 @@ const QuizList = ({ category, handleClick }: Props) => {
         <div className="px-4">
           <h1 className="pb-4 text-3xl">
             {category}{" "}
-            {category === "Education" ? (
+            {category === "Education" && (
               <RocketLaunchIcon className="inline size-5 mr-3" />
-            ) : (
+            )}
+            {category === "Entertainment" && (
               <FilmIcon className="inline size-5 mr-3" />
+            )}
+            {category === "General" && (
+              <GlobeAltIcon className="inline size-5 mr-3" />
+            )}
+            {category === "User" && (
+              <UserCircleIcon className="inline size-5 mr-3" />
             )}
           </h1>{" "}
           {Object.entries(grouped).map(([subcategory, quizzes], i) => (
