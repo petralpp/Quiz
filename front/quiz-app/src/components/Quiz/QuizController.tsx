@@ -39,7 +39,7 @@ const QuizController = () => {
     description: "",
     questions: 0
   });
-  const [category, setCategory] = useState<string>("Education");
+  const [category, setCategory] = useState<string>("Entertainment");
   const [overlayIsOpen, setOverlayIsOpen] = useState<boolean>(false);
 
   const findQuiz = (category: string, name: string) => {

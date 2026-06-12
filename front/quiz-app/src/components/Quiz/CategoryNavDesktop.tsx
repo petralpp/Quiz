@@ -55,7 +55,7 @@ const CategoryNavDesktop = ({ category, setCategory }: Props) => {
           className={`cursor-pointer p-3 text-left ${category === "User" ? "bg-white font-semibold" : "hover:text-gray-50"}`}
         >
           <UserCircleIcon className="inline size-5 mr-3" />
-          My quizzes
+          My Quizzes
         </div>
       )}
     </div>

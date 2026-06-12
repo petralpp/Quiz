@@ -24,35 +24,30 @@ const CategoryNavMobile = ({ category, setCategory }: Props) => {
   }, [user, category, setCategory]);
 
   return (
-    <div className="flex pt-2 text-center bg-white">
+    <div className="flex justify-around pt-2 bg-white text-gray-500">
       <div
         onClick={() => setCategory("Entertainment")}
-        className={`cursor-pointer p-3 ${category === "Entertainment" ? "underline font-semibold" : "hover:underline"}`}
+        className="cursor-pointer p-3"
       >
-        <FilmIcon className="inline size-5 mr-3" />
-        Entertainment
+        <FilmIcon
+          className={`inline size-5 mx-auto ${category === "Entertainment" && "text-blue-700 scale-140"}`}
+        />
       </div>
-      <div
-        onClick={() => setCategory("Education")}
-        className={`cursor-pointer p-3 ${category === "Education" ? "underline font-semibold" : "hover:underline"}`}
-      >
-        <RocketLaunchIcon className="inline size-5 mr-3" />
-        Education
+      <div onClick={() => setCategory("Education")} className="cursor-pointer p-3">
+        <RocketLaunchIcon
+          className={`inline size-5 mx-auto ${category === "Education" && "text-blue-700 scale-140"}`}
+        />
       </div>
-      <div
-        onClick={() => setCategory("General")}
-        className={`cursor-pointer p-3 ${category === "General" ? "underline font-semibold" : "hover:underline"}`}
-      >
-        <GlobeAltIcon className="inline size-5 mr-3" />
-        General
+      <div onClick={() => setCategory("General")} className="cursor-pointer p-3">
+        <GlobeAltIcon
+          className={`inline size-5 mx-auto ${category === "General" && "text-blue-700 scale-140"}`}
+        />
       </div>
       {user && (
-        <div
-          onClick={() => setCategory("User")}
-          className={`cursor-pointer p-3 ${category === "User" ? "underline font-semibold" : "hover:underline"}`}
-        >
-          <UserCircleIcon className="inline size-5 mr-3" />
-          My quizzes
+        <div onClick={() => setCategory("User")} className="cursor-pointer p-3">
+          <UserCircleIcon
+            className={`inline size-5 mx-auto ${category === "User" && "text-blue-700 scale-140"}`}
+          />
         </div>
       )}
     </div>
