@@ -28,7 +28,10 @@ const QuizOverlay = ({
           >
             {category === "User" && (
               <div className="mb-3 text-right">
-                <button onClick={() => deleteQuiz(quiz._id)} className="btn btn-red">
+                <button
+                  onClick={() => deleteQuiz(quiz._id)}
+                  className="btn btn-white"
+                >
                   Delete
                 </button>
                 <Link to={`/create/${quiz._id}`}>

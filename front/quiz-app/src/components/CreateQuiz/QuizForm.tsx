@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 import type { NewQuiz, Quiz, QuizQuestion, User } from "../../types";
@@ -13,6 +13,7 @@ interface Props {
 }
 
 const QuizForm = ({ onSubmitQuiz, initQuiz }: Props) => {
+  const questionFormRef = useRef<HTMLDivElement | null>(null);
   const [title, setTitle] = useState<string>(initQuiz?.name ?? "");
   const [category, setCategory] = useState<string>(initQuiz?.subcategory ?? "");
   const [description, setDescription] = useState<string>(
@@ -40,6 +41,15 @@ const QuizForm = ({ onSubmitQuiz, initQuiz }: Props) => {
 
   const removeQuestion = (index: number) => {
     setQuestions((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const handleEditClick = (index: number, question: QuizQuestion) => {
+    setMutableQuestion({ index: index, question: question });
+
+    questionFormRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
   };
 
   const isValid =
@@ -159,7 +169,7 @@ const QuizForm = ({ onSubmitQuiz, initQuiz }: Props) => {
                 </button>
                 <button
                   type="button"
-                  onClick={() => setMutableQuestion({ index: index, question: q })}
+                  onClick={() => handleEditClick(index, q)}
                   className="btn btn-white mt-4 ml-2 text-sm"
                 >
                   Edit
@@ -192,7 +202,9 @@ const QuizForm = ({ onSubmitQuiz, initQuiz }: Props) => {
         </div>
       </form>
       {(questions.length < 30 || mutableQuestion) && (
-        <QuestionForm initQuestion={mutableQuestion} onAddQuestion={addQuestion} />
+        <div ref={questionFormRef}>
+          <QuestionForm initQuestion={mutableQuestion} onAddQuestion={addQuestion} />
+        </div>
       )}
     </div>
   );
