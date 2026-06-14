@@ -14,34 +14,41 @@ export const selectUser = (state: RootState) => state.user.user;
 
 export const selectUserQuizzes = (state: RootState) => state.user.quizzes;
 
-export const selectQuizById = (id: string | undefined) => (state: RootState) => {
-  return state.user.quizzes.find((q) => q._id === id);
-};
-
 export const notification = (state: RootState) => state.notification;
 
-export const selectGroupedQuizzesByCategory = (category: string) =>
-  createSelector(
-    [
-      (state: RootState) => {
-        if (category === "Entertainment") {
-          return state.quizzes.entertainmentList;
-        } else if (category === "Education") {
-          return state.quizzes.educationList;
-        } else if (category === "General") {
-          return state.quizzes.generalList;
-        } else {
-          return state.user.quizzes;
-        }
-      }
-    ],
-    (quizzes) => {
-      const grouped: Record<string, Quiz[]> = {};
+const selectCategoryList = (category: string) => (state: RootState) =>
+  ({
+    Education: state.quizzes.educationList,
+    Entertainment: state.quizzes.entertainmentList,
+    General: state.quizzes.generalList,
+    User: state.user.quizzes
+  })[category] ?? [];
 
-      for (const quiz of quizzes) {
-        grouped[quiz.subcategory] ??= [];
-        grouped[quiz.subcategory].push(quiz);
-      }
-      return grouped;
+export const selectGroupedQuizzesByCategory = (category: string) =>
+  createSelector([selectCategoryList(category)], (quizzes) => {
+    const grouped: Record<string, Quiz[]> = {};
+
+    for (const quiz of quizzes) {
+      grouped[quiz.subcategory] ??= [];
+      grouped[quiz.subcategory].push(quiz);
     }
-  );
+    return grouped;
+  });
+
+export const selectQuizMap = createSelector(
+  [
+    (state) => state.quizzes.educationList,
+    (state) => state.quizzes.entertainmentList,
+    (state) => state.quizzes.generalList,
+    (state) => state.user.quizzes
+  ],
+  (edu, ent, gen, user) => {
+    const map: Record<string, Quiz> = {};
+
+    [...edu, ...ent, ...gen, ...user].forEach((quiz) => {
+      map[quiz._id] = quiz;
+    });
+
+    return map;
+  }
+);

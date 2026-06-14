@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { useAppSelector } from "./store/hooks";
+import { selectQuizMap } from "./store/selectors";
 
-const useIsDesktop = () => {
+export const useIsDesktop = () => {
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
 
   useEffect(() => {
@@ -20,4 +22,11 @@ const useIsDesktop = () => {
   return isDesktop;
 };
 
-export default useIsDesktop;
+export const useQuiz = (id?: string) => {
+  const quizMap = useAppSelector((state) => selectQuizMap(state));
+  if (!id) {
+    return undefined;
+  }
+
+  return quizMap[id] ?? undefined;
+};

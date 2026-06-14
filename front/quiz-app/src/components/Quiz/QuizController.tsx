@@ -1,18 +1,12 @@
 import { useState } from "react";
 
-import type { Quiz, QuizDescription, User } from "../../types";
-import useIsDesktop from "../../hooks";
+import type { QuizDescription, User } from "../../types";
+import { useIsDesktop } from "../../hooks";
 
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { startQuiz } from "../../store/reducers/activeQuizReducer";
 import { deleteUserQuiz } from "../../store/reducers/userReducer";
-import {
-  selectEducationQuizzes,
-  selectEntertainmentQuizzes,
-  selectGeneralQuizzes,
-  selectUser,
-  selectUserQuizzes
-} from "../../store/selectors";
+import { selectQuizMap, selectUser } from "../../store/selectors";
 
 import QuizList from "./QuizList";
 import QuizOverlay from "./QuizOverlay";
@@ -26,10 +20,7 @@ const QuizController = () => {
   const dispatch = useAppDispatch();
   const isActive = useAppSelector((state) => state.activeQuiz.isActive);
   const isDesktop = useIsDesktop();
-  const entertainmentList: Quiz[] = useAppSelector(selectEntertainmentQuizzes);
-  const educationList: Quiz[] = useAppSelector(selectEducationQuizzes);
-  const generalList: Quiz[] = useAppSelector(selectGeneralQuizzes);
-  const userList: Quiz[] = useAppSelector(selectUserQuizzes);
+  const quizMap = useAppSelector((state) => selectQuizMap(state));
   const user: User | null = useAppSelector(selectUser);
   const [selectedQuiz, setSelectedQuiz] = useState<QuizDescription>({
     _id: "",
@@ -42,35 +33,16 @@ const QuizController = () => {
   const [category, setCategory] = useState<string>("Entertainment");
   const [overlayIsOpen, setOverlayIsOpen] = useState<boolean>(false);
 
-  const findQuiz = (category: string, name: string) => {
-    let quiz = null;
-    switch (category) {
-      case "Education":
-        quiz = educationList?.find((q) => q.name === name);
-        break;
-      case "Entertainment":
-        quiz = entertainmentList?.find((q) => q.name === name);
-        break;
-      case "General":
-        quiz = generalList?.find((q) => q.name === name);
-        break;
-      default:
-        quiz = userList?.find((q) => q.name === name);
-        break;
-    }
-    return quiz;
-  };
-
   const start = () => {
-    const quiz = findQuiz(selectedQuiz.category, selectedQuiz.name);
+    const quiz = quizMap[selectedQuiz._id];
     if (quiz) {
       dispatch(startQuiz(quiz));
       setOverlayIsOpen(false);
     }
   };
 
-  const handleClick = (name: string, category: string) => {
-    const quiz = findQuiz(category, name);
+  const handleClick = (id: string) => {
+    const quiz = quizMap[id];
     if (quiz) {
       setSelectedQuiz({
         ...quiz,
@@ -80,11 +52,11 @@ const QuizController = () => {
     }
   };
 
-  const handleDelete = (name: string) => {
+  const handleDelete = (id: string) => {
     if (!window.confirm("Do you really want to delete this quiz?")) {
       return;
     }
-    const quiz = findQuiz(category, name);
+    const quiz = quizMap[id];
     if (quiz && user) {
       dispatch(deleteUserQuiz(quiz._id, user));
     }

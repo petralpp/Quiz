@@ -4,7 +4,7 @@ import { selectGroupedQuizzesByCategory } from "../../store/selectors";
 
 interface Props {
   category: string;
-  handleClick(name: string, category: string): void;
+  handleClick(_id: string): void;
 }
 
 const headings: Record<string, string> = {
@@ -31,7 +31,7 @@ const QuizList = ({ category, handleClick }: Props) => {
                 {quizzes.map((el, j) => (
                   <div
                     key={j}
-                    onClick={() => handleClick(el.name, el.category)}
+                    onClick={() => handleClick(el._id)}
                     className="cursor-pointer flex items-center justify-center min-w-50 h-30 px-2 overflow-hidden bg-indigo-500 hover:bg-blue-700 shadow-md hover:shadow-xl rounded-2xl text-center"
                   >
                     <p className="text-white text-base lg:text-lg overflow-hidden">
@@ -44,7 +44,7 @@ const QuizList = ({ category, handleClick }: Props) => {
           ))}
         </div>
       )}
-      {Object.keys(grouped).length === 0 && (
+      {Object.keys(grouped).length === 0 && category === "User" && (
         <p className="pt-5 text-center">
           No quizzes created,{" "}
           <Link to="/create" style={{ textDecoration: "underline" }}>

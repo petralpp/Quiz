@@ -7,7 +7,7 @@ interface Props {
   start(): void;
   category: string;
   quiz: QuizDescription;
-  deleteQuiz(name: string): void;
+  deleteQuiz(id: string): void;
 }
 
 const QuizOverlay = ({
@@ -28,10 +28,7 @@ const QuizOverlay = ({
           >
             {category === "User" && (
               <div className="mb-3 text-right">
-                <button
-                  onClick={() => deleteQuiz(quiz.name)}
-                  className="btn btn-red"
-                >
+                <button onClick={() => deleteQuiz(quiz._id)} className="btn btn-red">
                   Delete
                 </button>
                 <Link to={`/create/${quiz._id}`}>
