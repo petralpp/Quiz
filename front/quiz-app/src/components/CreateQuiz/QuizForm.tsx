@@ -68,7 +68,7 @@ const QuizForm = ({ onSubmitQuiz, initQuiz }: Props) => {
       {
         name: title.trim(),
         description: description.trim(),
-        category: "UserQuiz",
+        category: "User",
         subcategory: category.trim(),
         questions
       },

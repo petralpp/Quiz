@@ -1,15 +1,14 @@
 import express, { Request, Response, NextFunction } from "express";
-import quizService from "../services/quizService";
 import { parseQuiz } from "../utils/utils";
 import { extractToken, extractUser } from "../utils/middleware";
 import { UserQuizModel } from "../models/userQuizModel";
+import { QuizModel } from "../models/quizModel";
 
 const router = express.Router();
 
 router.get("/", async (_req: Request, res: Response, next: NextFunction) => {
-  console.log("Backend: fetching all quizzes!");
   try {
-    const quizzes = await quizService.getQuizzes();
+    const quizzes = await QuizModel.find({});
     res.send(quizzes);
   } catch (error) {
     next(error);
@@ -45,12 +44,8 @@ router.get(
   extractUser,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      console.log("Backend: fetching quizzes for user");
-
       if (req.user) {
-        const userQuizzes = await quizService.getUserQuizzes(
-          req.user._id.toString()
-        );
+        const userQuizzes = await UserQuizModel.find({ userId: req.user._id });
         res.send(userQuizzes);
       }
     } catch (error: unknown) {

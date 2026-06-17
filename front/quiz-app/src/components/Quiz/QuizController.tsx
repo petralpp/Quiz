@@ -59,6 +59,7 @@ const QuizController = () => {
     const quiz = quizMap[id];
     if (quiz && user) {
       dispatch(deleteUserQuiz(quiz._id, user));
+      setOverlayIsOpen(false);
     }
   };
 

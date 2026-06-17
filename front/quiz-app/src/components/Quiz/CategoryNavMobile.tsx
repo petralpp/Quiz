@@ -30,23 +30,23 @@ const CategoryNavMobile = ({ category, setCategory }: Props) => {
         className="cursor-pointer p-3"
       >
         <FilmIcon
-          className={`inline size-5 mx-auto ${category === "Entertainment" && "text-blue-700 scale-140"}`}
+          className={`inline size-5 mx-auto ${category === "Entertainment" && "text-blue-700 size-7"}`}
         />
       </div>
       <div onClick={() => setCategory("Education")} className="cursor-pointer p-3">
         <RocketLaunchIcon
-          className={`inline size-5 mx-auto ${category === "Education" && "text-blue-700 scale-140"}`}
+          className={`inline size-5 mx-auto ${category === "Education" && "text-blue-700 size-7"}`}
         />
       </div>
       <div onClick={() => setCategory("General")} className="cursor-pointer p-3">
         <GlobeAltIcon
-          className={`inline size-5 mx-auto ${category === "General" && "text-blue-700 scale-140"}`}
+          className={`inline size-5 mx-auto ${category === "General" && "text-blue-700 size-7"}`}
         />
       </div>
       {user && (
         <div onClick={() => setCategory("User")} className="cursor-pointer p-3">
           <UserCircleIcon
-            className={`inline size-5 mx-auto ${category === "User" && "text-blue-700 scale-140"}`}
+            className={`inline size-5 mx-auto ${category === "User" && "text-blue-700 size-7"}`}
           />
         </div>
       )}

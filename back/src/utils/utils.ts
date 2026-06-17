@@ -36,7 +36,7 @@ export const QuestionSchema = z.object({
 });
 
 export const NewQuizSchema = z.object({
-  category: z.string().min(1).max(30),
+  category: z.string("User"),
   subcategory: z.string().min(1).max(30),
   name: z.string().min(1).max(35),
   description: z.string().min(1).max(450),
