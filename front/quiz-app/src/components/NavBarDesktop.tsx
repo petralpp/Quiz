@@ -26,7 +26,7 @@ const NavBarDesktop = () => {
   return (
     <div>
       <div className="p-4 flex justify-end gap-2">
-        {user && <p className="m-2 text-white font-semibold">Hello {user.name}</p>}
+        {user && <p className="m-2">Hello {user.name}</p>}
         <Link to="/create">
           <button className="btn btn-blue font-semibold">Create</button>
         </Link>

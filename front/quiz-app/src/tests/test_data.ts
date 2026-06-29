@@ -1,4 +1,4 @@
-import { type Quiz, type CorrectAnswer } from "../types";
+import { type Quiz } from "../types";
 
 /* Data and functions for testing components */
 
@@ -6,6 +6,7 @@ const testQuizzes: Quiz[] = [
   {
     _id: "quiz-1",
     category: "Education",
+    subcategory: "Computer Science",
     name: "HTML Basics",
     description: "Test your knowledge of HTML concepts.",
     questions: [
@@ -15,60 +16,68 @@ const testQuizzes: Quiz[] = [
           "HyperText Markup Language",
           "HighText Machine Language",
           "HyperTool Markup Language"
-        ]
+        ],
+        answer: "HyperText Markup Language"
       },
       {
         question: "Which HTML tag is used to create a hyperlink?",
-        choices: ["<a>", "<link>", "<href>"]
+        choices: ["<a>", "<link>", "<href>"],
+        answer: "<a>"
       },
       {
         question: "Which tag is used to display an image?",
-        choices: ["<img>", "<image>", "<pic>"]
+        choices: ["<img>", "<image>", "<pic>"],
+        answer: "<img>"
       }
-    ],
-    answersId: "1"
+    ]
   },
   {
     _id: "quiz-2",
     category: "Education",
+    subcategory: "Computer Science",
     name: "CSS Fundamentals",
     description: "A short quiz covering basic CSS concepts.",
     questions: [
       {
         question: "Which CSS property is used to change text color?",
-        choices: ["color", "font-color", "text-style"]
+        choices: ["color", "font-color", "text-style"],
+        answer: "color"
       },
       {
         question: "Which CSS property adds space inside an element?",
-        choices: ["padding", "margin", "spacing"]
+        choices: ["padding", "margin", "spacing"],
+        answer: "padding"
       },
       {
         question: "Which display value enables Flexbox?",
-        choices: ["flex", "block", "inline"]
+        choices: ["flex", "block", "inline"],
+        answer: "flex"
       }
-    ],
-    answersId: "2"
+    ]
   },
   {
     _id: "quiz-3",
     category: "Entertainment",
+    subcategory: "Films",
     name: "Movie Classics",
     description: "Test your knowledge of popular and classic movies.",
     questions: [
       {
         question: "Which movie features the quote “I'll be back”?",
-        choices: ["The Terminator", "Die Hard", "Predator"]
+        choices: ["The Terminator", "Die Hard", "Predator"],
+        answer: "The Terminator"
       },
       {
         question: "Who directed the movie Inception?",
-        choices: ["Christopher Nolan", "Steven Spielberg", "James Cameron"]
+        choices: ["Christopher Nolan", "Steven Spielberg", "James Cameron"],
+        answer: "Christopher Nolan"
       },
       {
         question: "Which movie won the Oscar for Best Picture in 1994?",
-        choices: ["Forrest Gump", "Pulp Fiction", "The Shawshank Redemption"]
+        choices: ["Forrest Gump", "Pulp Fiction", "The Shawshank Redemption"],
+        answer: "Forrest Gump"
       }
-    ],
-    answersId: "3"
+    ]
   }
 ];
 
@@ -89,27 +98,11 @@ const testQuestions: string[] = [
   "Is this the final one?"
 ];
 
-const testCorrectAnswers: CorrectAnswer[] = [
-  {
-    question: "What year was this test data made?",
-    answer: "2026"
-  },
-  {
-    question: "Should this one be wrong?",
-    answer: "Yes"
-  },
-  {
-    question: "Is this the final one?",
-    answer: "Maybe"
-  }
-];
-
 const testPlayerAnswers: string[] = ["2026", "No", "Maybe"];
 
 export default {
   testQuizzes,
   getSeparatedData,
   testQuestions,
-  testCorrectAnswers,
   testPlayerAnswers
 };

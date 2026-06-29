@@ -124,6 +124,7 @@ const QuizForm = ({ onSubmitQuiz, initQuiz }: Props) => {
               name="descriptionText"
               value={description}
               maxLength={450}
+              rows={4}
               onChange={(e) => setDescription(e.target.value)}
               className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Describe the quiz"
