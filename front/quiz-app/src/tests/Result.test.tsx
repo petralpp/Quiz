@@ -1,17 +1,27 @@
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Result from "../components/Result";
+
 import testData from "./test_data";
-import { setPlayerAnswer, setRightAnswers } from "../reducers/answersReducer";
 import { renderWithProviders } from "./test_utils";
-import { setupStore } from "../store";
+
+import { setupStore } from "../store/store";
+import {
+  setPlayerAnswer,
+  startQuiz,
+  updateScore
+} from "../store/reducers/activeQuizReducer";
+
+import Result from "../components/Quiz/ActiveQuiz/Result";
 
 describe("Result component", () => {
   beforeEach(() => {
     const store = setupStore();
-    const playerAnswers = testData.testPlayerAnswers;
-    const correctAnswers = testData.testCorrectAnswers;
-    store.dispatch(setRightAnswers(correctAnswers));
+    const testQuiz = testData.testQuizzes[1];
+    const playerAnswers = testData.testPlayerAnswers_Quiz1;
+
+    store.dispatch(startQuiz(testQuiz));
+    store.dispatch(updateScore());
+    store.dispatch(updateScore());
     for (const answer of playerAnswers) {
       store.dispatch(setPlayerAnswer(answer));
     }

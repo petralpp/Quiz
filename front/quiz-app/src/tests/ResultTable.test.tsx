@@ -1,19 +1,30 @@
 import { screen } from "@testing-library/react";
-import ResultTable from "../components/ResultTable";
-import testData from "./test_data";
-import { setupStore } from "../store";
-import { setPlayerAnswer, setRightAnswers } from "../reducers/answersReducer";
+
 import { renderWithProviders } from "./test_utils";
+import testData from "./test_data";
+
+import { setupStore } from "../store/store";
+import {
+  setPlayerAnswer,
+  startQuiz,
+  updateScore
+} from "../store/reducers/activeQuizReducer";
+
+import ResultTable from "../components/Quiz/ActiveQuiz/ResultTable";
 
 describe("ResultTable component", () => {
   beforeEach(() => {
     const store = setupStore();
-    const playerAnswers = testData.testPlayerAnswers;
-    const correctAnswers = testData.testCorrectAnswers;
-    store.dispatch(setRightAnswers(correctAnswers));
+    const testQuiz = testData.testQuizzes[0];
+    const playerAnswers = testData.testPlayerAnswers_Quiz1;
+
+    store.dispatch(startQuiz(testQuiz));
+    store.dispatch(updateScore());
+    store.dispatch(updateScore());
     for (const answer of playerAnswers) {
       store.dispatch(setPlayerAnswer(answer));
     }
+
     renderWithProviders(<ResultTable />, store);
   });
   it("displays the table head correctly", () => {
@@ -26,15 +37,24 @@ describe("ResultTable component", () => {
     expect(userAnswerText).toBeInTheDocument();
   });
   it("displays the questions", () => {
-    const questionOne = screen.getByText(testData.testQuestions[0], {
-      exact: false
-    });
-    const questionTwo = screen.getByText(testData.testQuestions[1], {
-      exact: false
-    });
-    const questionThree = screen.getByText(testData.testQuestions[2], {
-      exact: false
-    });
+    const questionOne = screen.getByText(
+      testData.testQuizzes[0].questions[0].question,
+      {
+        exact: false
+      }
+    );
+    const questionTwo = screen.getByText(
+      testData.testQuizzes[0].questions[1].question,
+      {
+        exact: false
+      }
+    );
+    const questionThree = screen.getByText(
+      testData.testQuizzes[0].questions[2].question,
+      {
+        exact: false
+      }
+    );
 
     expect(questionOne).toBeInTheDocument();
     expect(questionTwo).toBeInTheDocument();
@@ -42,13 +62,13 @@ describe("ResultTable component", () => {
   });
   it("displays both answer columns correctly", async () => {
     const correctAnswerOne = await screen.findAllByText(
-      testData.testCorrectAnswers[0].answer
+      testData.testQuizzes[0].questions[0].answer
     );
     const correctAnswerTwo = await screen.findAllByText(
-      testData.testCorrectAnswers[1].answer
+      testData.testQuizzes[0].questions[1].answer
     );
     const correctAnswerThree = await screen.findAllByText(
-      testData.testCorrectAnswers[2].answer
+      testData.testQuizzes[0].questions[2].answer
     );
 
     expect(correctAnswerOne).toHaveLength(2);

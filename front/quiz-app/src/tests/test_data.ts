@@ -81,28 +81,14 @@ const testQuizzes: Quiz[] = [
   }
 ];
 
-const getSeparatedData = () => {
-  const entertainment: Quiz[] = [];
-  const education: Quiz[] = [];
-  testQuizzes.forEach((quiz) =>
-    quiz.category === "Entertainment"
-      ? entertainment.push(quiz)
-      : education.push(quiz)
-  );
-  return { entertainment, education };
-};
-
-const testQuestions: string[] = [
-  "What year was this test data made?",
-  "Should this one be wrong?",
-  "Is this the final one?"
+// true, false, true (2/3)
+const testPlayerAnswers_Quiz1: string[] = [
+  "HyperText Markup Language",
+  "<link>",
+  "<img>"
 ];
-
-const testPlayerAnswers: string[] = ["2026", "No", "Maybe"];
 
 export default {
   testQuizzes,
-  getSeparatedData,
-  testQuestions,
-  testPlayerAnswers
+  testPlayerAnswers_Quiz1
 };
