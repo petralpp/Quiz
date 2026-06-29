@@ -1,12 +1,13 @@
 import axios from "axios";
 import { createSlice } from "@reduxjs/toolkit";
-import type { AppDispatch } from "../store";
+import type { AppDispatch, RootState } from "../store";
 import type { User, Quiz, NewQuiz } from "../../types";
 import { setNotification } from "./notificationReducer";
 import userService from "../../services/userService";
 import storageService from "../../services/storageService";
 import quizService from "../../services/quizService";
 import { getErrorMessage } from "../../utils";
+import { selectUser } from "../selectors";
 
 type UserState = {
   user: User | null;
@@ -87,9 +88,13 @@ export const registerUser = (username: string, password: string, name: string) =
   };
 };
 
-export const fetchUserQuizzes = (user: User) => {
-  return async (dispatch: AppDispatch) => {
+export const fetchUserQuizzes = () => {
+  return async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
+      const user = selectUser(getState());
+      if (!user) {
+        throw new Error("User not found");
+      }
       const data = await quizService.getUserQuizzes(user);
       if (data) {
         dispatch(setUserQuizList(data));
@@ -111,9 +116,13 @@ export const fetchUserQuizzes = (user: User) => {
   };
 };
 
-export const addUserQuiz = (newQuiz: NewQuiz, user: User) => {
-  return async (dispatch: AppDispatch) => {
+export const addUserQuiz = (newQuiz: NewQuiz) => {
+  return async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
+      const user = selectUser(getState());
+      if (!user) {
+        throw new Error("User not found");
+      }
       const quiz = await quizService.createQuiz(newQuiz, user);
       if (quiz) {
         dispatch(addQuiz(quiz));
@@ -136,9 +145,13 @@ export const addUserQuiz = (newQuiz: NewQuiz, user: User) => {
   };
 };
 
-export const deleteUserQuiz = (id: string, user: User) => {
-  return async (dispatch: AppDispatch) => {
+export const deleteUserQuiz = (id: string) => {
+  return async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
+      const user = selectUser(getState());
+      if (!user) {
+        throw new Error("User not found");
+      }
       await quizService.deleteQuiz(id, user);
       dispatch(deleteQuiz(id));
       dispatch(setNotification("Quiz deleted"));
@@ -159,9 +172,13 @@ export const deleteUserQuiz = (id: string, user: User) => {
   };
 };
 
-export const editUserQuiz = (id: string, quiz: NewQuiz, user: User) => {
-  return async (dispatch: AppDispatch) => {
+export const editUserQuiz = (id: string, quiz: NewQuiz) => {
+  return async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
+      const user = selectUser(getState());
+      if (!user) {
+        throw new Error("User not found");
+      }
       const updatedQuiz = await quizService.updateQuiz(id, quiz, user);
       if (updatedQuiz) {
         dispatch(editQuiz(updatedQuiz));

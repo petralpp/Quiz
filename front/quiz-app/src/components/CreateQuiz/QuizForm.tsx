@@ -1,14 +1,14 @@
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
-import type { NewQuiz, Quiz, QuizQuestion, User } from "../../types";
+import type { NewQuiz, Quiz, QuizQuestion } from "../../types";
 import { useAppSelector } from "../../store/hooks";
 import { selectUser } from "../../store/selectors";
 
 import QuestionForm from "./QuestionForm";
 
 interface Props {
-  onSubmitQuiz: (quiz: NewQuiz, user: User) => void;
+  onSubmitQuiz: (quiz: NewQuiz) => void;
   initQuiz?: Quiz;
 }
 
@@ -64,16 +64,13 @@ const QuizForm = ({ onSubmitQuiz, initQuiz }: Props) => {
     if (!isValid) return;
     if (!loggedInUser) return;
 
-    onSubmitQuiz(
-      {
-        name: title.trim(),
-        description: description.trim(),
-        category: "User",
-        subcategory: category.trim(),
-        questions
-      },
-      loggedInUser
-    );
+    onSubmitQuiz({
+      name: title.trim(),
+      description: description.trim(),
+      category: "User",
+      subcategory: category.trim(),
+      questions
+    });
 
     setTitle("");
     setDescription("");

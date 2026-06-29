@@ -4,7 +4,7 @@ import { selectGroupedQuizzesByCategory } from "../../store/selectors";
 
 interface Props {
   category: string;
-  handleClick(_id: string): void;
+  selectQuiz(_id: string): void;
 }
 
 const headings: Record<string, string> = {
@@ -14,14 +14,16 @@ const headings: Record<string, string> = {
   User: "My Quizzes"
 };
 
-const QuizList = ({ category, handleClick }: Props) => {
+const QuizList = ({ category, selectQuiz }: Props) => {
   const grouped = useAppSelector(selectGroupedQuizzesByCategory(category));
 
   return (
     <div className="min-h-screen h-fit p-2 md:p-4 bg-white">
       {grouped && (
         <div className="px-4">
-          <h1 className="pb-4 text-3xl">{headings[category]} </h1>{" "}
+          <h1 className="md:hidden pb-4 text-2xl font-semibold">
+            {headings[category]}{" "}
+          </h1>{" "}
           {Object.entries(grouped).map(([subcategory, quizzes], i) => (
             <div key={i}>
               <h2 className="pt-3 wrap-anywhere text-xl font-semibold">
@@ -31,7 +33,7 @@ const QuizList = ({ category, handleClick }: Props) => {
                 {quizzes.map((el, j) => (
                   <div
                     key={j}
-                    onClick={() => handleClick(el._id)}
+                    onClick={() => selectQuiz(el._id)}
                     className="cursor-pointer flex items-center justify-center min-w-50 h-30 px-2 overflow-hidden bg-indigo-500 hover:bg-blue-700 shadow-md hover:shadow-xl rounded-2xl text-center"
                   >
                     <p className="text-white text-base lg:text-lg overflow-hidden">

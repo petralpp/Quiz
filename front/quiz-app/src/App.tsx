@@ -22,7 +22,7 @@ function App() {
     const foundUser = storageService.getUser("quizAppUser");
     if (foundUser) {
       dispatch(setUser(foundUser));
-      dispatch(fetchUserQuizzes(foundUser));
+      dispatch(fetchUserQuizzes());
     }
   }, [dispatch]);
 

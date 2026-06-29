@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 
-import type { NewQuiz, User } from "../../types";
+import type { NewQuiz } from "../../types";
 
 import { useAppDispatch } from "../../store/hooks";
 import { addUserQuiz, editUserQuiz } from "../../store/reducers/userReducer";
@@ -15,12 +15,12 @@ const CreationPage = () => {
   const id = useParams().id;
   const quiz = useQuiz(id);
 
-  const handleSubmit = async (newQuiz: NewQuiz, user: User) => {
+  const handleSubmit = async (newQuiz: NewQuiz) => {
     if (id && quiz) {
-      dispatch(editUserQuiz(id, newQuiz, user));
+      dispatch(editUserQuiz(id, newQuiz));
       navigate("/create");
     } else {
-      dispatch(addUserQuiz(newQuiz, user));
+      dispatch(addUserQuiz(newQuiz));
     }
   };
 

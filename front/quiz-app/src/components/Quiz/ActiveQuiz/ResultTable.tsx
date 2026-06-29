@@ -32,7 +32,7 @@ const ResultTable = () => {
               {elem.answer === playerAnswers[i] ? (
                 <CheckCircleIcon className="size-5 text-green-500 inline ml-2 float-right" />
               ) : (
-                <XCircleIcon className="size-5 text-red-600 inline float-right" />
+                <XCircleIcon className="size-5 text-red-600 inline ml-2 float-right" />
               )}
             </td>
           </tr>

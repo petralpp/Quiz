@@ -1,12 +1,12 @@
 import { useState } from "react";
 
-import type { QuizDescription, User } from "../../types";
+import type { QuizDescription } from "../../types";
 import { useIsDesktop } from "../../hooks";
 
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { startQuiz } from "../../store/reducers/activeQuizReducer";
 import { deleteUserQuiz } from "../../store/reducers/userReducer";
-import { selectQuizMap, selectUser } from "../../store/selectors";
+import { selectQuizMap } from "../../store/selectors";
 
 import QuizList from "./QuizList";
 import QuizOverlay from "./QuizOverlay";
@@ -21,7 +21,6 @@ const QuizController = () => {
   const isActive = useAppSelector((state) => state.activeQuiz.isActive);
   const isDesktop = useIsDesktop();
   const quizMap = useAppSelector((state) => selectQuizMap(state));
-  const user: User | null = useAppSelector(selectUser);
   const [selectedQuiz, setSelectedQuiz] = useState<QuizDescription>({
     _id: "",
     category: "",
@@ -41,7 +40,7 @@ const QuizController = () => {
     }
   };
 
-  const handleClick = (id: string) => {
+  const handleSelect = (id: string) => {
     const quiz = quizMap[id];
     if (quiz) {
       setSelectedQuiz({
@@ -57,8 +56,8 @@ const QuizController = () => {
       return;
     }
     const quiz = quizMap[id];
-    if (quiz && user) {
-      dispatch(deleteUserQuiz(quiz._id, user));
+    if (quiz) {
+      dispatch(deleteUserQuiz(quiz._id));
       setOverlayIsOpen(false);
     }
   };
@@ -70,7 +69,7 @@ const QuizController = () => {
       <CategoryNavDesktop category={category} setCategory={setCategory} />
       <div className="w-full">
         <NavBarDesktop />
-        <QuizList category={category} handleClick={handleClick} />
+        <QuizList category={category} selectQuiz={handleSelect} />
       </div>
       <QuizOverlay
         isOpen={overlayIsOpen}
@@ -85,7 +84,7 @@ const QuizController = () => {
     <div>
       <NavBarMobile />
       <CategoryNavMobile category={category} setCategory={setCategory} />
-      <QuizList category={category} handleClick={handleClick} />
+      <QuizList category={category} selectQuiz={handleSelect} />
       <QuizOverlay
         isOpen={overlayIsOpen}
         toggleOpen={setOverlayIsOpen}
