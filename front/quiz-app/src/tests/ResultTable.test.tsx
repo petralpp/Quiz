@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react";
+import { cleanup, screen } from "@testing-library/react";
 
 import { renderWithProviders } from "./test_utils";
 import testData from "./test_data";
@@ -13,7 +13,7 @@ import {
 import ResultTable from "../components/Quiz/ActiveQuiz/ResultTable";
 
 describe("ResultTable component", () => {
-  beforeEach(() => {
+  beforeAll(() => {
     const store = setupStore();
     const testQuiz = testData.testQuizzes[0];
     const playerAnswers = testData.testPlayerAnswers_Quiz1;
@@ -24,8 +24,10 @@ describe("ResultTable component", () => {
     for (const answer of playerAnswers) {
       store.dispatch(setPlayerAnswer(answer));
     }
-
     renderWithProviders(<ResultTable />, store);
+  });
+  afterAll(() => {
+    cleanup();
   });
   it("displays the table head correctly", () => {
     const questionText = screen.getByText("Question");

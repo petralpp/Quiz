@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react";
+import { cleanup, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import testData from "./test_data";
@@ -14,7 +14,7 @@ import {
 import Result from "../components/Quiz/ActiveQuiz/Result";
 
 describe("Result component", () => {
-  beforeEach(() => {
+  beforeAll(() => {
     const store = setupStore();
     const testQuiz = testData.testQuizzes[1];
     const playerAnswers = testData.testPlayerAnswers_Quiz1;
@@ -26,6 +26,9 @@ describe("Result component", () => {
       store.dispatch(setPlayerAnswer(answer));
     }
     renderWithProviders(<Result />, store);
+  });
+  afterAll(() => {
+    cleanup();
   });
   it("displays the correct numeral result", () => {
     const resultText = screen.getByText("Your result: 2 / 3", { exact: false });
@@ -42,6 +45,8 @@ describe("Result component", () => {
 
     const hideButton = screen.getByRole("button", { name: "Hide" });
     expect(hideButton).toBeInTheDocument();
+
+    await user.click(hideButton);
   });
   it("doesn't render the ResultTable component before a button click", () => {
     const tableCell = screen.queryByText("Question");

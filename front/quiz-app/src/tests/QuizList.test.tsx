@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react";
+import { cleanup, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { Mock, Procedure } from "@vitest/spy";
 
@@ -14,7 +14,7 @@ const testData = testUtils.testQuizzes;
 const overlayHandler: Mock<Procedure> = vi.fn();
 
 describe("QuizList component", () => {
-  beforeEach(() => {
+  beforeAll(() => {
     const store = setupStore();
     store.dispatch(setQuizzes(testData));
 
@@ -22,6 +22,9 @@ describe("QuizList component", () => {
       <QuizList category="Education" selectQuiz={overlayHandler} />,
       store
     );
+  });
+  afterAll(() => {
+    cleanup();
   });
   it("displays the correct subcategories and titles", () => {
     expect(screen.getByText("Computer Science")).toBeInTheDocument();
