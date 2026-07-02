@@ -20,7 +20,7 @@ const Login = () => {
     if (loggedInUser) {
       setLoginUsername("");
       setLoginPassword("");
-      dispatch(fetchUserQuizzes(loggedInUser));
+      dispatch(fetchUserQuizzes());
       navigate("/");
     }
   };

@@ -5,7 +5,7 @@ import type { Quiz } from "../../../types";
 import { useAppSelector, useAppDispatch } from "../../../store/hooks";
 import { resetQuiz, endQuiz } from "../../../store/reducers/activeQuizReducer";
 
-import CurrentQuestion from "./CurrentQuestion";
+import Questions from "./Questions";
 import Result from "./Result";
 
 const ActiveQuizController = () => {
@@ -34,7 +34,7 @@ const ActiveQuizController = () => {
           {activeQuiz.name} ({activeQuiz.questions.length} questions)
         </h2>
         {showQuestion ? (
-          <CurrentQuestion setShowQuestion={setShowQuestion} />
+          <Questions setShowQuestion={setShowQuestion} />
         ) : (
           <div>
             <Result />
