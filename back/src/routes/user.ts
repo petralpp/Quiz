@@ -13,6 +13,10 @@ router.post("/register", async (req: Request, res: Response, next: NextFunction)
   console.log("Backend: Registering the user");
   try {
     const { username, name, password } = req.body;
+    if (!username || !password || !name) {
+      res.status(400).json({ error: "Credentials missing" });
+      return;
+    }
     const newUser = parseUser(username.trim(), name.trim(), password.trim());
     const savedUser = await userService.addUser(newUser);
 
@@ -35,6 +39,10 @@ router.post("/login", async (req: Request, res: Response, next: NextFunction) =>
   console.log("Backend: Login user");
   try {
     const { username, password } = req.body;
+    if (!username || !password) {
+      res.status(400).json({ error: "Credentials missing" });
+      return;
+    }
     const user = await UserModel.findOne({ username });
     const passwordCorrect =
       user === null ? false : await bcrypt.compare(password, user.passwordHash);
