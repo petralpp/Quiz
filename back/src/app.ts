@@ -6,6 +6,7 @@ import { unknownEndpoint, errorMiddleware } from "./utils/middleware";
 import config from "./utils/config";
 
 const app = express();
+app.use(express.static("dist"));
 app.use(express.json());
 
 mongoose.set("strictQuery", false);
