@@ -55,7 +55,7 @@ const QuizOverlay = ({
             <div className="w-full m-auto flex justify-between">
               <button
                 onClick={() => toggleOpen(false)}
-                className="btn btn-white border-2 border-solid"
+                className="btn btn-white-border"
               >
                 Cancel
               </button>

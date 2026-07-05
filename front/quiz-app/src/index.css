@@ -29,6 +29,10 @@ body {
   @apply bg-white hover:bg-orange-400 text-indigo-500 hover:text-white font-semibold;
 }
 
+.btn-white-border {
+  @apply bg-white border-2 border-solid hover:bg-orange-400 text-indigo-500 hover:text-white font-semibold;
+}
+
 .btn-red {
   @apply bg-red-500 hover:bg-orange-400 text-white;
 }

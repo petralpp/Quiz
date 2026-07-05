@@ -29,7 +29,7 @@ const CreationPage = () => {
   }
 
   return (
-    <div className="h-max py-4 px-2 bg-white">
+    <div className="h-max py-4 px-2">
       <QuizForm onSubmitQuiz={handleSubmit} initQuiz={quiz} />
     </div>
   );

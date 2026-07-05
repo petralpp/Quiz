@@ -186,7 +186,7 @@ const QuizForm = ({ onSubmitQuiz, initQuiz }: Props) => {
         )}
         <div className="flex justify-between">
           <Link to="/">
-            <button className="btn btn-white border-2 border-solid">Cancel </button>
+            <button className="btn btn-white-border">Cancel </button>
           </Link>
           <button
             type="submit"

@@ -27,11 +27,11 @@ const NavBarMobile = () => {
   };
 
   return (
-    <div className="flex justify-between bg-linear-to-r from-indigo-500 to-purple-500">
-      <h1 className="text-center text-4xl p-5 mb-2 font-bold text-white leading-tight">
+    <div className="flex justify-between items-center p-5 bg-linear-to-r from-indigo-500 to-purple-500">
+      <h1 className="text-center text-4xl font-bold text-white leading-tight">
         Quiz!
       </h1>
-      <div onClick={() => setShowMobileMenu(!showMobileMenu)} className="pt-2 pr-2">
+      <div onClick={() => setShowMobileMenu(!showMobileMenu)}>
         <Bars4Icon className="size-8 cursor-pointer hover:text-white" />
       </div>
       {showMobileMenu && (
