@@ -74,7 +74,7 @@ const Questions = ({ setShowQuestion }: Props) => {
 
   return (
     <div className="flex flex-col items-center">
-      <p className="wrap-anywhere mt-3 text-base md:text-lg lg:text-xl">
+      <p className="wrap-anywhere my-4 text-base md:text-lg lg:text-xl">
         {currentIndex + 1}. {currentQuestion}
       </p>
       <form onSubmit={handleAnswerSubmit} className="m-2">
