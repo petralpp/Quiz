@@ -106,7 +106,9 @@ const Register = () => {
           </div>
           <div className="flex justify-between">
             <Link to="/">
-              <button className="btn btn-white-border">Cancel</button>
+              <button type="button" className="btn btn-white-border">
+                Cancel
+              </button>
             </Link>
             <button
               type="submit"

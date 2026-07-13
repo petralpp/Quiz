@@ -123,10 +123,11 @@ export const addUserQuiz = (newQuiz: NewQuiz) => {
       if (!user) {
         throw new Error("User not found");
       }
+      dispatch(setNotification("Saving the quiz, you can continue use"));
       const quiz = await quizService.createQuiz(newQuiz, user);
       if (quiz) {
         dispatch(addQuiz(quiz));
-        dispatch(setNotification(`New quiz ${quiz.name} added!`));
+        dispatch(setNotification(`New quiz "${quiz.name}" added!`));
       }
     } catch (error: unknown) {
       const message = getErrorMessage(error);
@@ -179,10 +180,11 @@ export const editUserQuiz = (id: string, quiz: NewQuiz) => {
       if (!user) {
         throw new Error("User not found");
       }
+      dispatch(setNotification("Saving the quiz, you can continue use"));
       const updatedQuiz = await quizService.updateQuiz(id, quiz, user);
       if (updatedQuiz) {
         dispatch(editQuiz(updatedQuiz));
-        dispatch(setNotification(`Quiz ${updatedQuiz.name} updated!`));
+        dispatch(setNotification(`Quiz "${updatedQuiz.name}" updated!`));
       }
     } catch (error: unknown) {
       const message = getErrorMessage(error);
