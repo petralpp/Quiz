@@ -6,6 +6,8 @@
 
 Implemented with TypeScript, React, Redux Toolkit, Node.js, Express, Tailwind, MongoDB and Mongoose.
 
+AI was used with quiz creation components and redux selectors.
+
 Testing:
 
 - Backend: Jest

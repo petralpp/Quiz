@@ -1,3 +1,5 @@
+/** This component was partially generated with AI */
+
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 

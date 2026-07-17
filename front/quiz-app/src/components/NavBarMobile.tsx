@@ -9,7 +9,7 @@ import { useAppSelector } from "../store/hooks";
 import { selectUser } from "../store/selectors";
 import { useAppDispatch } from "../store/hooks";
 import { clearUser } from "../store/reducers/userReducer";
-import { setNotification } from "../store/reducers/notificationReducer";
+import { setTimedNotification } from "../store/reducers/notificationReducer";
 import { endQuiz } from "../store/reducers/activeQuizReducer";
 
 const NavBarMobile = () => {
@@ -22,7 +22,7 @@ const NavBarMobile = () => {
     storageService.removeUser("quizAppUser");
     dispatch(clearUser());
     dispatch(endQuiz());
-    dispatch(setNotification("Logged out successfully", 3));
+    dispatch(setTimedNotification("Logged out successfully", 3));
     navigate("/");
   };
 

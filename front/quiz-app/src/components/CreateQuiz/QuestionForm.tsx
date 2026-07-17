@@ -1,3 +1,5 @@
+/** This component was partially generated with AI */
+
 import { useEffect, useState } from "react";
 import type { QuizQuestion } from "../../types";
 

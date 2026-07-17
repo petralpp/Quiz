@@ -2,7 +2,7 @@ import axios from "axios";
 import { createSlice } from "@reduxjs/toolkit";
 import type { AppDispatch, RootState } from "../store";
 import type { User, Quiz, NewQuiz } from "../../types";
-import { setNotification } from "./notificationReducer";
+import { changeNotification, setTimedNotification } from "./notificationReducer";
 import userService from "../../services/userService";
 import storageService from "../../services/storageService";
 import quizService from "../../services/quizService";
@@ -55,16 +55,18 @@ export const userSlice = createSlice({
 export const loginUser = (username: string, password: string) => {
   return async (dispatch: AppDispatch) => {
     try {
+      dispatch(changeNotification("Logging in..."));
       const user: User = await userService.login(username, password);
       if (user) {
         storageService.addUser("quizAppUser", user);
 
         dispatch(setUser(user));
+        dispatch(changeNotification(null));
         return user;
       }
     } catch (error: unknown) {
       const message = getErrorMessage(error);
-      dispatch(setNotification(message));
+      dispatch(setTimedNotification(message));
       return false;
     }
   };
@@ -73,16 +75,18 @@ export const loginUser = (username: string, password: string) => {
 export const registerUser = (username: string, password: string, name: string) => {
   return async (dispatch: AppDispatch) => {
     try {
+      dispatch(changeNotification("Registration in progress..."));
       const user: User = await userService.register(username, password, name);
       if (user) {
         storageService.addUser("quizAppUser", user);
 
         dispatch(setUser(user));
+        dispatch(changeNotification(null));
         return true;
       }
     } catch (error: unknown) {
       const message = getErrorMessage(error);
-      dispatch(setNotification(message));
+      dispatch(setTimedNotification(message));
       return false;
     }
   };
@@ -95,22 +99,24 @@ export const fetchUserQuizzes = () => {
       if (!user) {
         throw new Error("User not found");
       }
+      dispatch(changeNotification("Fetching quizzes..."));
       const data = await quizService.getUserQuizzes(user);
       if (data) {
         dispatch(setUserQuizList(data));
+        dispatch(changeNotification(null));
       }
     } catch (error: unknown) {
       const message = getErrorMessage(error);
       if (axios.isAxiosError(error)) {
         if (error.status === 401) {
-          dispatch(setNotification("Session expired, new login is required"));
+          dispatch(setTimedNotification("Session expired, new login is required"));
           dispatch(clearUser());
           storageService.removeUser("quizAppUser");
         } else {
-          dispatch(setNotification(message));
+          dispatch(setTimedNotification(message));
         }
       } else {
-        dispatch(setNotification(message));
+        dispatch(setTimedNotification(message));
       }
     }
   };
@@ -123,24 +129,24 @@ export const addUserQuiz = (newQuiz: NewQuiz) => {
       if (!user) {
         throw new Error("User not found");
       }
-      dispatch(setNotification("Saving the quiz, you can continue use"));
+      dispatch(changeNotification("Saving the quiz..."));
       const quiz = await quizService.createQuiz(newQuiz, user);
       if (quiz) {
         dispatch(addQuiz(quiz));
-        dispatch(setNotification(`New quiz "${quiz.name}" added!`));
+        dispatch(setTimedNotification(`New quiz "${quiz.name}" added!`));
       }
     } catch (error: unknown) {
       const message = getErrorMessage(error);
       if (axios.isAxiosError(error)) {
         if (error.status === 401) {
-          dispatch(setNotification("Session expired, new login is required"));
+          dispatch(setTimedNotification("Session expired, new login is required"));
           dispatch(clearUser());
           storageService.removeUser("quizAppUser");
         } else {
-          dispatch(setNotification(message));
+          dispatch(setTimedNotification(message));
         }
       } else {
-        dispatch(setNotification(message));
+        dispatch(setTimedNotification(message));
       }
     }
   };
@@ -155,19 +161,19 @@ export const deleteUserQuiz = (id: string) => {
       }
       await quizService.deleteQuiz(id, user);
       dispatch(deleteQuiz(id));
-      dispatch(setNotification("Quiz deleted"));
+      dispatch(setTimedNotification("Quiz deleted"));
     } catch (error: unknown) {
       const message = getErrorMessage(error);
       if (axios.isAxiosError(error)) {
         if (error.status === 401) {
-          dispatch(setNotification("Session expired, new login is required"));
+          dispatch(setTimedNotification("Session expired, new login is required"));
           dispatch(clearUser());
           storageService.removeUser("quizAppUser");
         } else {
-          dispatch(setNotification(message));
+          dispatch(setTimedNotification(message));
         }
       } else {
-        dispatch(setNotification(message));
+        dispatch(setTimedNotification(message));
       }
     }
   };
@@ -180,24 +186,24 @@ export const editUserQuiz = (id: string, quiz: NewQuiz) => {
       if (!user) {
         throw new Error("User not found");
       }
-      dispatch(setNotification("Saving the quiz, you can continue use"));
+      dispatch(changeNotification("Saving the quiz..."));
       const updatedQuiz = await quizService.updateQuiz(id, quiz, user);
       if (updatedQuiz) {
         dispatch(editQuiz(updatedQuiz));
-        dispatch(setNotification(`Quiz "${updatedQuiz.name}" updated!`));
+        dispatch(setTimedNotification(`Quiz "${updatedQuiz.name}" updated!`));
       }
     } catch (error: unknown) {
       const message = getErrorMessage(error);
       if (axios.isAxiosError(error)) {
         if (error.status === 401) {
-          dispatch(setNotification("Session expired, new login is required"));
+          dispatch(setTimedNotification("Session expired, new login is required"));
           dispatch(clearUser());
           storageService.removeUser("quizAppUser");
         } else {
-          dispatch(setNotification(message));
+          dispatch(setTimedNotification(message));
         }
       } else {
-        dispatch(setNotification(message));
+        dispatch(setTimedNotification(message));
       }
     }
   };

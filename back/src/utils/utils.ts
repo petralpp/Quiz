@@ -22,7 +22,10 @@ export const NewUserSchema = z.object({
     .string()
     .min(14, "Password has to be at least 14 characters long.")
     .max(25, "Password can't be more than 25 characters long.")
-    .regex(/^(?=.*[a-zåäö])(?=.*[A-ZÅÄÖ])(?=.*\d)\S{14,25}$/)
+    .regex(
+      /^(?=.*[a-zåäö])(?=.*[A-ZÅÄÖ])(?=.*\d)\S{14,25}$/,
+      "Password does not match requirements."
+    )
 });
 
 export const QuestionSchema = z.object({

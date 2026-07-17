@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { Quiz } from "../../types";
 import type { AppDispatch } from "../store";
-import { setNotification } from "./notificationReducer";
+import { changeNotification, setTimedNotification } from "./notificationReducer";
 import quizService from "../../services/quizService";
 import { getErrorMessage } from "../../utils";
 
@@ -46,13 +46,15 @@ export const quizzesSlice = createSlice({
 export const fetchQuizzes = () => {
   return async (dispatch: AppDispatch) => {
     try {
+      dispatch(changeNotification("Fetching quizzes..."));
       const quizzes = await quizService.getAllQuizzes();
       if (quizzes) {
         dispatch(setQuizzes(quizzes));
+        dispatch(changeNotification(null));
       }
     } catch (error: unknown) {
       const message = getErrorMessage(error);
-      dispatch(setNotification(message));
+      dispatch(setTimedNotification(message));
     }
   };
 };

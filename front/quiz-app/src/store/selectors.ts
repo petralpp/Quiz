@@ -1,3 +1,5 @@
+/** Some of these selectors were generated with AI */
+
 import { createSelector } from "@reduxjs/toolkit";
 import type { RootState } from "./store";
 import type { Quiz } from "../types";
